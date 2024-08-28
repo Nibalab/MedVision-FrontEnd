@@ -1,62 +1,63 @@
 .signup-container {
     display: flex;
     height: 100vh;
-  }
-  
-  .left-side {
+    background-color: #01A29D; /* Background color for the whole container */
+}
+
+.left-side {
     flex: 1;
     background-color: #ffffff; /* White background for the left side */
     display: flex;
+    border-top-right-radius: 50px; /* Adjust radius as needed */
+    border-bottom-right-radius: 50px; /* Adjust radius as needed */
     justify-content: center;
     align-items: center;
-  }
-  
-  .logo {
+}
+
+.logo {
     max-width: 80%;
     height: auto;
-  }
-  
-  .right-side {
+}
+
+.right-side {
     flex: 1;
-    background-color: #01A29D; /* Background color */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
     padding: 20px;
-  }
-  
-  h2 {
+}
+
+h2 {
     margin-bottom: 20px;
-  }
-  
-  .signup-button {
-    width: 200px;
-    padding: 10px 20px;
-    margin: 10px 0;
+}
+
+.signup-button {
+    width: 350px;
+    padding: 20px 30px;
+    margin: 15px 0;
     font-size: 16px;
     color: #01A29D;
     background-color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .signup-button.doctor::before {
+}
+
+.signup-button.doctor::before {
     content: "👨‍⚕️";
-    margin-right: 10px;
-  }
-  
-  .signup-button.patient::before {
+    margin-right: 20px;
+}
+
+.signup-button.patient::before {
     content: "👤";
-    margin-right: 10px;
-  }
-  
-  .signup-button:hover {
+    margin-right: 20px;
+}
+
+.signup-button:hover {
     background-color: #e0f7f5;
-  }
-  
+}
