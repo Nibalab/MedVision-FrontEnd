@@ -26,7 +26,7 @@
 
 .doctor-input-group {
     display: flex;
-    gap: 10px; /* Add a gap between the two input fields */
+    gap: 10px; 
     margin-bottom: 10px;
 }
 
@@ -68,8 +68,8 @@
 }
 
 .doctor-right-side {
-    flex: 0.9; /* Reduce the width slightly */
-    background-color: #f8f8f8; /* Ensure a contrasting background color */
+    flex: 0.9; 
+    background-color: #f8f8f8; 
     display: flex;
     justify-content: center;
     align-items: center;
