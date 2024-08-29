@@ -1,0 +1,84 @@
+.doctor-signup-container {
+    display: flex;
+    height: 100vh;
+}
+
+.doctor-left-side {
+    flex: 1;
+    background-color: #01A29D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.doctor-signup-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 500px;
+}
+
+.doctor-signup-box h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.doctor-input-group {
+    display: flex;
+    gap: 10px; /* Add a gap between the two input fields */
+    margin-bottom: 10px;
+}
+
+.doctor-input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.doctor-signup-box input {
+    width: 96%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+}
+
+.doctor-upload-button {
+    width: 30%;
+    padding: 10px;
+    background-color: #01A29D;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.doctor-signup-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #004d40;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.doctor-right-side {
+    flex: 0.9; /* Reduce the width slightly */
+    background-color: #f8f8f8; /* Ensure a contrasting background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 50px; 
+    border-top-left-radius: 50px;
+    margin-left: -50px;
+}
+
+.doctor-logo {
+    max-width: 70%;
+    height: auto;
+}

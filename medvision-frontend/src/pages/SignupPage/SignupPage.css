@@ -29,11 +29,11 @@
     padding: 20px;
 }
 
-h2 {
+.right-side h2 {
     margin-bottom: 20px;
 }
 
-.signup-button {
+.right-side .signup-button {
     width: 350px;
     padding: 20px 30px;
     margin: 15px 0;
@@ -48,14 +48,14 @@ h2 {
     justify-content: center;
 }
 
-.signup-button.doctor::before {
+.right-side .signup-button.doctor::before {
     margin-right: 20px;
 }
 
-.signup-button.patient::before {
+.right-side .signup-button.patient::before {
     margin-right: 20px;
 }
 
-.signup-button:hover {
+.right-side .signup-button:hover {
     background-color: #e0f7f5;
 }
