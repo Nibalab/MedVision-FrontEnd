@@ -20,7 +20,7 @@ const SignupPage = () => {
           <img src={logo} alt="MedVision Logo" className="logo" />
         </div>
         <div className="right-side">
-          <h2>Please SignUp</h2>
+          <h2>SignUp</h2>
           <button className="signup-button doctor" onClick={handleDoctorSignup}>
             Sign up as a doctor
           </button>

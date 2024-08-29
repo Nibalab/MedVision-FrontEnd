@@ -49,12 +49,10 @@ h2 {
 }
 
 .signup-button.doctor::before {
-    content: "👨‍⚕️";
     margin-right: 20px;
 }
 
 .signup-button.patient::before {
-    content: "👤";
     margin-right: 20px;
 }
 
