@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './DoctorSignUp.css'; 
 import logo from '../../Images/Logo.png';
 
 const DoctorSignup = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
   return (
     <div className="doctor-signup-container">
       <div className="doctor-left-side">
@@ -17,7 +23,21 @@ const DoctorSignup = () => {
           <input type="text" placeholder="Phone number" />
           <input type="password" placeholder="Password" />
           <input type="password" placeholder="Confirm Password" />
-          <button className="doctor-upload-button">Add Profile Picture</button>
+          
+          <div className="doctor-upload-button-wrapper">
+            <label htmlFor="profile-picture" className="doctor-upload-button">
+              Add Profile Picture
+            </label>
+            <input 
+              type="file" 
+              id="profile-picture" 
+              style={{ display: 'none' }} 
+              accept=".png" 
+              onChange={handleFileChange} 
+            />
+            {selectedFile && <span className="file-name">{selectedFile.name}</span>}
+          </div>
+          
           <button className="doctor-signup-button">Sign In</button>
         </div>
       </div>
