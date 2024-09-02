@@ -33,8 +33,8 @@ const PatientSignup = () => {
 
     // Basic validation
     if (formData.password !== formData.password_confirmation) {
-      setErrorMessage('Passwords do not match');
-      return;
+        setErrorMessage('Passwords do not match');
+        return;
     }
 
     // Prepare form data for API request
@@ -47,28 +47,30 @@ const PatientSignup = () => {
     data.append('password_confirmation', formData.password_confirmation); // Ensure this matches the backend expectation
 
     if (selectedFile) {
-      data.append('profilePicture', selectedFile);
+        data.append('profilePicture', selectedFile);
     }
 
     try {
-      // Make the API request to register the patient
-      const response = await axios.post('http://127.0.0.1:8000/api/register/patient', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+        const response = await axios.post('http://127.0.0.1:8000/api/register/patient', data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
 
-      // Handle successful registration
-      console.log('Patient registered successfully:', response.data);
-      setErrorMessage(''); // Clear any error messages
-      // Perform further actions like redirecting or showing success message
-
+        console.log('Patient registered successfully:', response.data);
+        setErrorMessage(''); 
     } catch (error) {
-      // Handle errors
-      console.error('Error registering patient:', error);
-      setErrorMessage('Registration failed. Please try again.');
+        console.error('Error registering patient:', error);
+        if (error.response) {
+            console.log('Server validation errors:', error.response.data.errors);
+            setErrorMessage('Registration failed. Please check the form fields.');
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            }
+        }
     }
-  };
+};
+
 
   return (
     <div className="patient-signup-container">
