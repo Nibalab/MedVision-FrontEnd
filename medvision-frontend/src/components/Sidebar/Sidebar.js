@@ -50,23 +50,38 @@ const Sidebar = () => {
         <h2 className="doctor-name">Dr. {doctorName}</h2>
       </div>
       <nav className="menu-items">
-        <NavLink to="/doctor-dashboard" activeClassName="active" className="menu-item">
+        <NavLink 
+          to="/doctor-dashboard" 
+          className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}
+        >
           <Home size={20} />
           <span>Dashboard</span>
         </NavLink>
-        <NavLink to="/upload" activeClassName="active" className="menu-item">
+        <NavLink 
+          to="/upload" 
+          className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}
+        >
           <Upload size={20} />
           <span>Upload</span>
         </NavLink>
-        <NavLink to="/schedule" activeClassName="active" className="menu-item">
+        <NavLink 
+          to="/schedule" 
+          className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}
+        >
           <Calendar size={20} />
           <span>Schedule</span>
         </NavLink>
-        <NavLink to="/patient" activeClassName="active" className="menu-item">
+        <NavLink 
+          to="/patient" 
+          className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}
+        >
           <User size={20} />
           <span>Patient</span>
         </NavLink>
-        <NavLink to="/messages" activeClassName="active" className="menu-item">
+        <NavLink 
+          to="/messages" 
+          className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}
+        >
           <MessageSquare size={20} />
           <span>Messages</span>
         </NavLink>
