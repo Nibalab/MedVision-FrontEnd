@@ -1,14 +1,53 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Home, Upload, Calendar, User, MessageSquare, LogOut } from 'lucide-react';
+import axios from 'axios';
 import './Sidebar.css';
 
 const Sidebar = () => {
+  const [doctorName, setDoctorName] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        console.error('No token found');
+        navigate('/'); // Redirect to login if token is not available
+        return;
+      }
+
+      axios.get('http://127.0.0.1:8000/api/me', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        const user = response.data.user;
+        setDoctorName(user.name);
+        setProfilePicture(user.profile_picture);
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/');
+        }
+      });
+    }, 500); // Small delay of 500ms for debugging
+  }, [navigate]);
+
   return (
     <div className="sidebar-container">
       <div className="profile-section">
-        <img src="/path/to/profile-picture.jpg" alt="Profile" className="profile-picture" />
-        <h2 className="doctor-name">Dr. Example</h2>
+        <img 
+          src={profilePicture ? `http://127.0.0.1:8000/storage/${profilePicture.replace('public/', '')}` : '/path/to/default-profile-picture.jpg'} 
+          alt="Profile" 
+          className="profile-picture" 
+        />
+        <h2 className="doctor-name">Dr. {doctorName}</h2>
       </div>
       <nav className="menu-items">
         <NavLink to="/doctor-dashboard" activeClassName="active" className="menu-item">

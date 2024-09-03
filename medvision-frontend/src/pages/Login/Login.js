@@ -30,7 +30,7 @@ const LoginPage = () => {
       const { token, user } = response.data;
 
       // Store the token in local storage
-      localStorage.setItem('authToken', token);
+      localStorage.setItem('token', token);
 
       // Navigate based on user role
       const { role } = user;
