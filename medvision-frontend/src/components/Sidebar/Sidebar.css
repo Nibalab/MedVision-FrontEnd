@@ -1,0 +1,79 @@
+.sidebar-container {
+    width: 200px;
+    height: 87vh;
+    background-color: #01a29d;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px;
+    margin-left: 20px; /* Margin from the left */
+    margin-top: 30px;
+    position: fixed; /* Prevent scrolling */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
+    overflow: hidden; /* Prevent overflow issues */
+  }
+  
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    border: 3px solid white; /* Add border for better visibility */
+  }
+  
+  .doctor-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .menu-section {
+    width: 100%;
+  }
+  
+  .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px; /* Adjust padding for better clickability */
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 10px 0;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.2s; /* Smooth hover effects */
+  }
+  
+  .menu-item svg {
+    margin-right: 10px;
+  }
+  
+  .menu-item:hover,
+  .menu-item.active {
+    background-color: #004d40; /* Active and hover state color */
+    transform: translateY(-2px); /* Slight lift on hover */
+  }
+  
+  .logout-section {
+    width: 100%;
+  }
+  
+  .logout-section .menu-item {
+    color: #fff;
+  }
+  
+  .logout-section .menu-item:hover {
+    background-color: #00332f; /* Darker hover state for logout */
+    transform: translateY(-2px); /* Consistent lift effect */
+  }
+  

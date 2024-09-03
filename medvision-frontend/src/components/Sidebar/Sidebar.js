@@ -1,0 +1,45 @@
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { Home, Upload, Calendar, User, MessageSquare, LogOut } from 'lucide-react';
+import './Sidebar.css';
+
+const Sidebar = () => {
+  return (
+    <div className="sidebar-container">
+      <div className="profile-section">
+        <img src="/path/to/profile-picture.jpg" alt="Profile" className="profile-picture" />
+        <h2 className="doctor-name">Dr. Example</h2>
+      </div>
+      <nav className="menu-items">
+        <NavLink to="/doctor-dashboard" activeClassName="active" className="menu-item">
+          <Home size={20} />
+          <span>Dashboard</span>
+        </NavLink>
+        <NavLink to="/upload" activeClassName="active" className="menu-item">
+          <Upload size={20} />
+          <span>Upload</span>
+        </NavLink>
+        <NavLink to="/schedule" activeClassName="active" className="menu-item">
+          <Calendar size={20} />
+          <span>Schedule</span>
+        </NavLink>
+        <NavLink to="/patient" activeClassName="active" className="menu-item">
+          <User size={20} />
+          <span>Patient</span>
+        </NavLink>
+        <NavLink to="/messages" activeClassName="active" className="menu-item">
+          <MessageSquare size={20} />
+          <span>Messages</span>
+        </NavLink>
+      </nav>
+      <div className="logout-section">
+        <NavLink to="/logout" className="menu-item">
+          <LogOut size={20} />
+          <span>Log out</span>
+        </NavLink>
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;
