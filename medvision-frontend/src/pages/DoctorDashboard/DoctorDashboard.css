@@ -1,48 +1,145 @@
 .doctor-dashboard-container {
   display: flex;
+  min-height: 100vh; /* Ensures the container stretches the full height */
 }
 
 .main-content {
   flex: 1;
   padding: 20px;
-  padding-left: 320px; 
+  padding-left: 320px; /* Reserved space for the sidebar */
 }
 
 .stats-container {
   display: flex;
+  flex-wrap: wrap; /* Makes the stat boxes responsive */
   justify-content: space-between;
   margin-top: 20px;
 }
 
 .stat-box {
-  flex: 1;
+  flex: 1 1 300px; /* This makes the boxes flexible, ensuring they shrink/grow as needed */
   margin: 7px;
-  padding: 15px; 
+  padding: 15px;
   background-color: #f7f7f7;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-align: center;
-  max-width: 450px; 
+  max-width: 450px;
+  transition: transform 0.3s ease; /* Adds subtle hover effect */
+}
+
+.stat-box:hover {
+  transform: scale(1.05); /* Hover effect on the stat boxes */
 }
 
 .stat-box h3 {
-  font-size: 16px; 
+  font-size: 16px;
   margin-bottom: 8px;
 }
 
 .stat-box p {
-  font-size: 20px; 
+  font-size: 20px;
   font-weight: bold;
 }
+
+.chart-and-appointments-container {
+  display: flex;
+  justify-content: space-between; /* Ensures proper spacing between the chart and appointments */
+  gap: 30px; /* Adjust the space between the chart and appointments */
+  margin-top: 30px;
+}
+
 .chart-container {
   display: flex;
-    justify-content: flex-start; /* Align the chart to the left */
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    height: 300px;
+  justify-content: flex-start; /* Aligns the chart to the left */
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  height: 300px;
+  flex: 1; /* Ensures the chart takes up equal space */
 }
+
 canvas {
   max-width: 370px; /* Adjust the width as needed */
   height: 250px;
+}
+
+.appointments-container {
+  flex: 1; /* Ensures the appointments section takes up equal space next to the chart */
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  max-height: 300px;
+  overflow-y: auto; /* Scrollable if the appointment list gets long */
+}
+
+.appointments-container h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.appointment-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #01a29d;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.appointment-item:hover {
+  background-color: #019c90;
+}
+
+/* Add spacing between appointments if needed */
+.appointment-item + .appointment-item {
+  margin-top: 10px;
+}
+
+/* Media queries for better responsiveness */
+@media screen and (max-width: 1200px) {
+  .chart-and-appointments-container {
+    flex-direction: column;
+  }
+
+  .chart-container,
+  .appointments-container {
+    width: 100%;
+    margin-bottom: 20px; /* Add spacing between chart and appointments on smaller screens */
+  }
+
+  .appointments-container {
+    max-height: none; /* Remove fixed height to allow better adjustment */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    padding-left: 0;
+  }
+
+  .stat-box {
+    max-width: 100%;
+  }
+}
+
+/* Additional small screen adjustments */
+@media screen and (max-width: 576px) {
+  .stat-box {
+    font-size: 14px;
+  }
+
+  .stat-box p {
+    font-size: 18px;
+  }
+
+  .appointments-container {
+    padding: 15px;
+  }
+
+  .appointment-item {
+    font-size: 14px;
+  }
 }

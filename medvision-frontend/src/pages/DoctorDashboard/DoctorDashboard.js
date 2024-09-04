@@ -13,6 +13,8 @@ const DoctorDashboard = () => {
     oldPatients: 0,
   });
 
+  const [appointmentsToday, setAppointmentsToday] = useState([]);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -25,13 +27,26 @@ const DoctorDashboard = () => {
       },
     })
     .then(response => {
-      const { totalCtScans, totalPatients, totalAppointmentsToday, newPatients, oldPatients } = response.data;
+      const { 
+        totalCtScans, 
+        totalPatients, 
+        totalAppointmentsToday, 
+        newPatients, 
+        oldPatients, 
+        appointmentsToday 
+      } = response.data;
+
       setStats({ totalCtScans, totalPatients, totalAppointmentsToday, newPatients, oldPatients });
+      setAppointmentsToday(appointmentsToday); // Set today's appointments
     })
     .catch(error => {
       console.error('Error fetching stats:', error);
     });
   }, []);
+
+  const showPatientDetails = (appointment) => {
+    alert(`Patient Name: ${appointment.patient.name}\nTime: ${appointment.appointment_time}`);
+  };
 
   return (
     <div className="doctor-dashboard-container">
@@ -52,12 +67,29 @@ const DoctorDashboard = () => {
             <p>{stats.totalAppointmentsToday}</p>
           </div>
         </div>
-        <div className="chart-container">
-          <PatientSummaryChart 
-            newPatients={stats.newPatients} 
-            oldPatients={stats.oldPatients} 
-            totalPatients={stats.totalPatients} 
-          />
+
+        {/* Container to hold chart and appointments side by side */}
+        <div className="chart-and-appointments-container">
+          <div className="chart-container">
+            <PatientSummaryChart 
+              newPatients={stats.newPatients} 
+              oldPatients={stats.oldPatients} 
+              totalPatients={stats.totalPatients} 
+            />
+          </div>
+          <div className="appointments-container">
+            <h3>Today's Appointments</h3>
+            <ul>
+              {appointmentsToday.map((appointment, index) => (
+                <li 
+                  key={index} 
+                  className="appointment-item"
+                  onClick={() => showPatientDetails(appointment)}>
+                  {appointment.patient.name} - {appointment.appointment_time}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
