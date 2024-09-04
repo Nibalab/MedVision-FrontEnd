@@ -34,3 +34,15 @@
   font-size: 20px; 
   font-weight: bold;
 }
+.chart-container {
+  display: flex;
+    justify-content: flex-start; /* Align the chart to the left */
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    height: 300px;
+}
+canvas {
+  max-width: 370px; /* Adjust the width as needed */
+  height: 250px;
+}

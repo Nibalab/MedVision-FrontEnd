@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
+import PatientSummaryChart from '../../components/PatientSummaryChart/PatientSummaryChart';
 import axios from 'axios';
 import './DoctorDashboard.css';
 
@@ -8,6 +9,8 @@ const DoctorDashboard = () => {
     totalCtScans: 0,
     totalPatients: 0,
     totalAppointmentsToday: 0,
+    newPatients: 0,
+    oldPatients: 0,
   });
 
   useEffect(() => {
@@ -22,8 +25,8 @@ const DoctorDashboard = () => {
       },
     })
     .then(response => {
-      const { totalCtScans, totalPatients, totalAppointmentsToday } = response.data;
-      setStats({ totalCtScans, totalPatients, totalAppointmentsToday });
+      const { totalCtScans, totalPatients, totalAppointmentsToday, newPatients, oldPatients } = response.data;
+      setStats({ totalCtScans, totalPatients, totalAppointmentsToday, newPatients, oldPatients });
     })
     .catch(error => {
       console.error('Error fetching stats:', error);
@@ -48,6 +51,13 @@ const DoctorDashboard = () => {
             <h3>Total Appointments Today</h3>
             <p>{stats.totalAppointmentsToday}</p>
           </div>
+        </div>
+        <div className="chart-container">
+          <PatientSummaryChart 
+            newPatients={stats.newPatients} 
+            oldPatients={stats.oldPatients} 
+            totalPatients={stats.totalPatients} 
+          />
         </div>
       </div>
     </div>

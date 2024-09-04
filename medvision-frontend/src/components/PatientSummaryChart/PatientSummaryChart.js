@@ -1,23 +1,44 @@
-import React from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import React, { useEffect, useRef } from 'react';
+import { Chart, ArcElement, Tooltip, Legend, DoughnutController } from 'chart.js';
+
+Chart.register(ArcElement, Tooltip, Legend, DoughnutController);
 
 const PatientSummaryChart = ({ newPatients, oldPatients, totalPatients }) => {
-  const data = {
-    labels: ['New Patients', 'Old Patients', 'Total Patients'],
-    datasets: [
-      {
-        data: [newPatients, oldPatients, totalPatients],
-        backgroundColor: ['#01a29d', '#555', '#ccc'],
-        hoverBackgroundColor: ['#019087', '#444', '#bbb'],
-      },
-    ],
-  };
+  const chartRef = useRef(null);
 
-  return (
-    <div style={{ width: '300px', height: '300px' }}>
-      <Doughnut data={data} />
-    </div>
-  );
+  useEffect(() => {
+    if (chartRef.current) {
+      const chart = new Chart(chartRef.current, {
+        type: 'doughnut',
+        data: {
+          labels: ['New Patients', 'Old Patients', 'Total Patients'],
+          datasets: [
+            {
+              data: [newPatients, oldPatients, totalPatients],
+              backgroundColor: ['#01a29d', '#555', '#ccc'],
+              hoverBackgroundColor: ['#01a29d', '#555', '#ccc'],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+            },
+          },
+        },
+      });
+
+      // Cleanup function to destroy the chart instance before reusing the canvas
+      return () => {
+        chart.destroy();
+      };
+    }
+  }, [newPatients, oldPatients, totalPatients]);
+
+  return <canvas ref={chartRef} />;
 };
 
 export default PatientSummaryChart;
