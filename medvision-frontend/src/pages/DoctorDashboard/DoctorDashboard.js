@@ -14,6 +14,7 @@ const DoctorDashboard = () => {
   });
 
   const [appointmentsToday, setAppointmentsToday] = useState([]);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -45,7 +46,11 @@ const DoctorDashboard = () => {
   }, []);
 
   const showPatientDetails = (appointment) => {
-    alert(`Patient Name: ${appointment.patient.name}\nTime: ${appointment.appointment_time}`);
+    setSelectedAppointment(appointment); // Show the modal with the selected appointment details
+  };
+
+  const closeModal = () => {
+    setSelectedAppointment(null); // Close the modal
   };
 
   return (
@@ -91,6 +96,27 @@ const DoctorDashboard = () => {
             </ul>
           </div>
         </div>
+
+        {/* Modal for showing patient details */}
+        {selectedAppointment && (
+          <div className="modal-background" onClick={closeModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h2>Patient Details</h2>
+              {selectedAppointment.patient.profile_picture && (
+                <img 
+                  src={selectedAppointment.patient.profile_picture} 
+                  alt={`${selectedAppointment.patient.name}'s profile`} 
+                  className="patient-profile-picture"
+                />
+              )}
+              <p><strong>Name:</strong> {selectedAppointment.patient.name}</p>
+              <p><strong>Email:</strong> {selectedAppointment.patient.email}</p>
+              <p><strong>Gender:</strong> {selectedAppointment.patient.gender}</p>
+              <p><strong>Appointment Time:</strong> {selectedAppointment.appointment_time}</p>
+              <button onClick={closeModal}>Close</button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
