@@ -23,11 +23,11 @@
   }
   
   .profile-picture {
-    width: 80px;
-    height: 80px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     margin-bottom: 5px;
-    border: 3px solid white; /* Add border for better visibility */
+    border: 4px solid white; /* Add border for better visibility */
   }
   
   .doctor-name {
@@ -61,7 +61,12 @@
   .menu-item:hover,
   .menu-item.active {
     background-color: #004d40; /* Active and hover state color */
-    transform: translateY(-2px); /* Slight lift on hover */
+    transform: translateY(-2px);
+    padding-left: 30px; /* Increase padding to make the rectangle wider */
+  padding-right: 25px; /* Ensure symmetry on both sides */
+  width: 80%; /* Adjust the width of the active menu item */
+  transition: background-color 0.3s, transform 0.2s, width 0.3s, padding 0.3s; /* Smooth transitions */
+  
   }
   
   .logout-section {
