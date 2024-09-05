@@ -40,8 +40,10 @@ const DoctorDashboard = () => {
         appointmentsToday = [] 
       } = response.data;
 
+      const confirmedAppointments = appointmentsToday.filter(appointment => appointment.status === 'confirmed');
+
       setStats({ totalCtScans, totalPatients, totalAppointmentsToday, newPatients, oldPatients });
-      setAppointmentsToday(appointmentsToday); // Set today's appointments
+      setAppointmentsToday(confirmedAppointments); // Set only confirmed appointments for today
     })
     .catch(error => {
       console.error('Error fetching stats:', error);
@@ -59,7 +61,7 @@ const DoctorDashboard = () => {
     .catch(error => {
       console.error('Error fetching pending appointments:', error);
     });
-  }, []);
+  }, []); // No need to include appointmentRequests in the dependency array
 
   const showPatientDetails = (appointment) => {
     setSelectedAppointment(appointment); // Show the modal with the selected appointment details
@@ -77,7 +79,7 @@ const DoctorDashboard = () => {
       { headers: { Authorization: `Bearer ${token}` } })
     .then(() => {
       // Update the appointmentRequests state to remove the accepted request
-      setAppointmentRequests(appointmentRequests.filter(req => req.id !== appointmentId));
+      setAppointmentRequests(prevRequests => prevRequests.filter(req => req.id !== appointmentId));
     })
     .catch(error => {
       console.error('Error accepting appointment:', error);
@@ -92,7 +94,7 @@ const DoctorDashboard = () => {
       { headers: { Authorization: `Bearer ${token}` } })
     .then(() => {
       // Update the appointmentRequests state to remove the declined request
-      setAppointmentRequests(appointmentRequests.filter(req => req.id !== appointmentId));
+      setAppointmentRequests(prevRequests => prevRequests.filter(req => req.id !== appointmentId));
     })
     .catch(error => {
       console.error('Error declining appointment:', error);
