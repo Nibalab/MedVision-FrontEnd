@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons for accept and decline
 import Sidebar from '../../components/Sidebar/Sidebar';
 import PatientSummaryChart from '../../components/PatientSummaryChart/PatientSummaryChart';
 import axios from 'axios';
@@ -13,7 +14,8 @@ const DoctorDashboard = () => {
     oldPatients: 0,
   });
 
-  const [appointmentsToday, setAppointmentsToday] = useState([]);
+  const [appointmentsToday, setAppointmentsToday] = useState([]); // Initialize as an empty array
+  const [appointmentRequests, setAppointmentRequests] = useState([]); // Initialize as an empty array
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   useEffect(() => {
@@ -22,6 +24,7 @@ const DoctorDashboard = () => {
       return;
     }
 
+    // Fetch the dashboard stats including today's appointments
     axios.get('http://127.0.0.1:8000/api/doctor-dashboard/stats', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -34,7 +37,7 @@ const DoctorDashboard = () => {
         totalAppointmentsToday, 
         newPatients, 
         oldPatients, 
-        appointmentsToday 
+        appointmentsToday = [] 
       } = response.data;
 
       setStats({ totalCtScans, totalPatients, totalAppointmentsToday, newPatients, oldPatients });
@@ -42,6 +45,19 @@ const DoctorDashboard = () => {
     })
     .catch(error => {
       console.error('Error fetching stats:', error);
+    });
+
+    // Fetch pending appointment requests
+    axios.get('http://127.0.0.1:8000/api/doctor-dashboard/pending-appointments', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(response => {
+      setAppointmentRequests(response.data); // Set pending appointment requests
+    })
+    .catch(error => {
+      console.error('Error fetching pending appointments:', error);
     });
   }, []);
 
@@ -51,6 +67,36 @@ const DoctorDashboard = () => {
 
   const closeModal = () => {
     setSelectedAppointment(null); // Close the modal
+  };
+
+  // Function to accept an appointment request
+  const acceptAppointment = (appointmentId) => {
+    const token = localStorage.getItem('token');
+    axios.put(`http://127.0.0.1:8000/api/appointments/${appointmentId}/accept`, 
+      { status: 'confirmed' }, 
+      { headers: { Authorization: `Bearer ${token}` } })
+    .then(() => {
+      // Update the appointmentRequests state to remove the accepted request
+      setAppointmentRequests(appointmentRequests.filter(req => req.id !== appointmentId));
+    })
+    .catch(error => {
+      console.error('Error accepting appointment:', error);
+    });
+  };
+
+  // Function to decline an appointment request
+  const declineAppointment = (appointmentId) => {
+    const token = localStorage.getItem('token');
+    axios.put(`http://127.0.0.1:8000/api/appointments/${appointmentId}/decline`, 
+      { status: 'canceled' }, 
+      { headers: { Authorization: `Bearer ${token}` } })
+    .then(() => {
+      // Update the appointmentRequests state to remove the declined request
+      setAppointmentRequests(appointmentRequests.filter(req => req.id !== appointmentId));
+    })
+    .catch(error => {
+      console.error('Error declining appointment:', error);
+    });
   };
 
   return (
@@ -85,16 +131,40 @@ const DoctorDashboard = () => {
           <div className="appointments-container">
             <h3>Today's Appointments</h3>
             <ul>
-              {appointmentsToday.map((appointment, index) => (
-                <li 
-                  key={index} 
-                  className="appointment-item"
-                  onClick={() => showPatientDetails(appointment)}>
-                  {appointment.patient.name} - {appointment.appointment_time}
-                </li>
-              ))}
+              {Array.isArray(appointmentsToday) && appointmentsToday.length > 0 ? (
+                appointmentsToday.map((appointment, index) => (
+                  <li 
+                    key={index} 
+                    className="appointment-item"
+                    onClick={() => showPatientDetails(appointment)}>
+                    {appointment.patient.name} - {appointment.appointment_time}
+                  </li>
+                ))
+              ) : (
+                <p>No appointments for today.</p>
+              )}
             </ul>
           </div>
+        </div>
+
+        {/* Appointment Requests Section */}
+        <div className="appointment-requests-container">
+          <h3>Appointment Requests</h3>
+          <ul>
+            {Array.isArray(appointmentRequests) && appointmentRequests.length > 0 ? (
+              appointmentRequests.map((request, index) => (
+                <li key={index} className="appointment-request-item">
+                  {request.patient.name} - {request.appointment_date} at {request.appointment_time}
+                  <div className="action-icons">
+                    <FaCheck className="accept-icon" onClick={() => acceptAppointment(request.id)} />
+                    <FaTimes className="decline-icon" onClick={() => declineAppointment(request.id)} />
+                  </div>
+                </li>
+              ))
+            ) : (
+              <p>No appointment requests at the moment.</p>
+            )}
+          </ul>
         </div>
 
         {/* Modal for showing patient details */}
