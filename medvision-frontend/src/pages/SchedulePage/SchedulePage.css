@@ -1,0 +1,158 @@
+/* Schedule Page Container */
+.schedule-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.schedule-page .main-content {
+  flex-grow: 1;
+  padding: 20px;
+  padding-left: 250px;
+}
+
+.schedule-page .calendar-container {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 25px;
+  margin-top: 30px;
+}
+
+/* Custom styles for the calendar */
+.schedule-page .rbc-calendar {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.schedule-page .rbc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.schedule-page .rbc-toolbar-label {
+  font-size: 1.6rem;
+  color: #019c90;
+}
+
+.schedule-page .rbc-btn-group button {
+  background-color: #01a29d;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.schedule-page .rbc-btn-group button:hover {
+  background-color: #019c90;
+}
+
+.schedule-page .rbc-day-slot .rbc-time-slot {
+  border-top: 1px solid #dedede;
+}
+
+.schedule-page .rbc-day-slot .rbc-time-slot:hover {
+  background-color: #e0f3f3;
+}
+
+/* Appointment/Events styling */
+.schedule-page .rbc-event {
+  background-color: #01a29d !important;
+  color: #fff !important;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+}
+
+.schedule-page .rbc-event:hover {
+  background-color: #019c90 !important;
+}
+
+/* Sidebar custom styles */
+.schedule-page .sidebar {
+  background-color: #019c90;
+  padding: 20px;
+}
+
+/* View Toggle Buttons */
+.view-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.toggle-button {
+  background-color: #e0f7f7;
+  border: none;
+  padding: 10px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: none;
+  border-radius: 30px;
+  position: relative;
+  margin-right: -15px; /* Overlapping buttons */
+  z-index: 1;
+}
+
+.toggle-button + .toggle-button {
+  margin-left: 0px; /* Overlap buttons slightly */
+}
+
+.toggle-button:hover {
+  background-color: #b9e3e3;
+}
+
+.toggle-button.active {
+  background-color: #01a29d;
+  color: white;
+  z-index: 2;
+}
+
+.toggle-button.active:first-of-type {
+  border-radius: 30px 0 0 30px;
+}
+
+.toggle-button.active:last-of-type {
+  border-radius: 0 30px 30px 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .schedule-page .main-content {
+    padding-left: 0;
+  }
+
+  .schedule-page .calendar-container {
+    padding: 15px;
+  }
+
+  .view-toggle {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .toggle-button {
+    margin: 10px 0;
+    width: 90%;
+  }
+
+  .toggle-button + .toggle-button {
+    margin-left: 0;
+  }
+}
+
+/* Smaller screens */
+@media (max-width: 480px) {
+  .schedule-page .rbc-toolbar-label {
+    font-size: 1.4rem;
+  }
+
+  .schedule-page .rbc-event {
+    font-size: 0.85rem;
+  }
+}
