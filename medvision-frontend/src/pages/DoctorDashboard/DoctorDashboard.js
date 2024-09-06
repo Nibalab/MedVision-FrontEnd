@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons for accept and decline
+import { FaCheck, FaTimes } from 'react-icons/fa'; 
 import Sidebar from '../../components/Sidebar/Sidebar';
 import PatientSummaryChart from '../../components/PatientSummaryChart/PatientSummaryChart';
 import axios from 'axios';
@@ -14,8 +14,8 @@ const DoctorDashboard = () => {
     oldPatients: 0,
   });
 
-  const [appointmentsToday, setAppointmentsToday] = useState([]); // Initialize as an empty array
-  const [appointmentRequests, setAppointmentRequests] = useState([]); // Initialize as an empty array
+  const [appointmentsToday, setAppointmentsToday] = useState([]); 
+  const [appointmentRequests, setAppointmentRequests] = useState([]); 
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const DoctorDashboard = () => {
       return;
     }
 
-    // Fetch the dashboard stats including today's appointments
+   
     axios.get('http://127.0.0.1:8000/api/doctor-dashboard/stats', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -43,42 +43,42 @@ const DoctorDashboard = () => {
       const confirmedAppointments = appointmentsToday.filter(appointment => appointment.status === 'confirmed');
 
       setStats({ totalCtScans, totalPatients, totalAppointmentsToday, newPatients, oldPatients });
-      setAppointmentsToday(confirmedAppointments); // Set only confirmed appointments for today
+      setAppointmentsToday(confirmedAppointments); 
     })
     .catch(error => {
       console.error('Error fetching stats:', error);
     });
 
-    // Fetch pending appointment requests
+    
     axios.get('http://127.0.0.1:8000/api/doctor-dashboard/pending-appointments', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
     .then(response => {
-      setAppointmentRequests(response.data); // Set pending appointment requests
+      setAppointmentRequests(response.data); 
     })
     .catch(error => {
       console.error('Error fetching pending appointments:', error);
     });
-  }, []); // No need to include appointmentRequests in the dependency array
+  }, []); 
 
   const showPatientDetails = (appointment) => {
-    setSelectedAppointment(appointment); // Show the modal with the selected appointment details
+    setSelectedAppointment(appointment); 
   };
 
   const closeModal = () => {
-    setSelectedAppointment(null); // Close the modal
+    setSelectedAppointment(null); 
   };
 
-  // Function to accept an appointment request
+ 
   const acceptAppointment = (appointmentId) => {
     const token = localStorage.getItem('token');
     axios.put(`http://127.0.0.1:8000/api/appointments/${appointmentId}/accept`, 
       { status: 'confirmed' }, 
       { headers: { Authorization: `Bearer ${token}` } })
     .then(() => {
-      // Update the appointmentRequests state to remove the accepted request
+      
       setAppointmentRequests(prevRequests => prevRequests.filter(req => req.id !== appointmentId));
     })
     .catch(error => {
@@ -86,14 +86,14 @@ const DoctorDashboard = () => {
     });
   };
 
-  // Function to decline an appointment request
+  
   const declineAppointment = (appointmentId) => {
     const token = localStorage.getItem('token');
     axios.put(`http://127.0.0.1:8000/api/appointments/${appointmentId}/decline`, 
       { status: 'canceled' }, 
       { headers: { Authorization: `Bearer ${token}` } })
     .then(() => {
-      // Update the appointmentRequests state to remove the declined request
+     
       setAppointmentRequests(prevRequests => prevRequests.filter(req => req.id !== appointmentId));
     })
     .catch(error => {
@@ -120,8 +120,6 @@ const DoctorDashboard = () => {
             <p>{stats.totalAppointmentsToday}</p>
           </div>
         </div>
-
-        {/* Container to hold chart and appointments side by side */}
         <div className="chart-and-appointments-container">
           <div className="chart-container">
             <PatientSummaryChart 
@@ -148,8 +146,6 @@ const DoctorDashboard = () => {
             </ul>
           </div>
         </div>
-
-        {/* Appointment Requests Section */}
         <div className="appointment-requests-container">
           <h3>Appointment Requests</h3>
           <ul>
@@ -168,8 +164,6 @@ const DoctorDashboard = () => {
             )}
           </ul>
         </div>
-
-        {/* Modal for showing patient details */}
         {selectedAppointment && (
           <div className="modal-background" onClick={closeModal}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
