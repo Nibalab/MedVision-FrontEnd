@@ -32,6 +32,7 @@
 .modal-content p {
   font-size: 18px;
   margin: 10px 0;
+  text-align: left;
 }
 
 /* Profile picture styling */

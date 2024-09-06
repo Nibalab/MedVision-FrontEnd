@@ -36,8 +36,27 @@ const Sidebar = () => {
           navigate('/');
         }
       });
-    }, 500); // Small delay of 500ms for debugging
+    }, 5); // Small delay for debugging
   }, [navigate]);
+
+  const handleLogout = () => {
+    const token = localStorage.getItem('token');
+
+    axios.post('http://127.0.0.1:8000/api/logout', {}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(() => {
+      // Remove token from localStorage
+      localStorage.removeItem('token');
+      // Redirect to login page
+      navigate('/');
+    })
+    .catch(error => {
+      console.error('Error logging out:', error);
+    });
+  };
 
   return (
     <div className="sidebar-container">
@@ -87,7 +106,7 @@ const Sidebar = () => {
         </NavLink>
       </nav>
       <div className="logout-section">
-        <NavLink to="/logout" className="menu-item">
+        <NavLink to="/" className="menu-item" onClick={handleLogout}>
           <LogOut size={20} />
           <span>Log out</span>
         </NavLink>
