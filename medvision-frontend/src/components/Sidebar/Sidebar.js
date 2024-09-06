@@ -15,7 +15,7 @@ const Sidebar = () => {
       
       if (!token) {
         console.error('No token found');
-        navigate('/'); // Redirect to login if token is not available
+        navigate('/'); 
         return;
       }
 
@@ -36,7 +36,7 @@ const Sidebar = () => {
           navigate('/');
         }
       });
-    }, 5); // Small delay for debugging
+    }, 5); 
   }, [navigate]);
 
   const handleLogout = () => {
@@ -48,9 +48,7 @@ const Sidebar = () => {
       },
     })
     .then(() => {
-      // Remove token from localStorage
       localStorage.removeItem('token');
-      // Redirect to login page
       navigate('/');
     })
     .catch(error => {
