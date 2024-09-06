@@ -8,11 +8,11 @@
     justify-content: space-between;
     align-items: center;
     border-radius: 20px;
-    margin-left: 20px; /* Margin from the left */
+    margin-left: 20px; 
     margin-top: 30px;
-    position: fixed; /* Prevent scrolling */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
-    overflow: hidden; /* Prevent overflow issues */
+    position: fixed; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    overflow: hidden; 
   }
   
   .profile-section {
@@ -27,7 +27,7 @@
     height: 140px;
     border-radius: 50%;
     margin-bottom: 5px;
-    border: 4px solid white; /* Add border for better visibility */
+    border: 4px solid white; 
   }
   
   .doctor-name {
@@ -45,13 +45,13 @@
   .menu-item {
     display: flex;
     align-items: center;
-    padding: 12px 15px; /* Adjust padding for better clickability */
+    padding: 12px 15px; 
     color: white;
     text-decoration: none;
     font-size: 16px;
     margin: 10px 0;
     border-radius: 10px;
-    transition: background-color 0.3s, transform 0.2s; /* Smooth hover effects */
+    transition: background-color 0.3s, transform 0.2s; 
   }
   
   .menu-item svg {
@@ -60,12 +60,12 @@
   
   .menu-item:hover,
   .menu-item.active {
-    background-color: #004d40; /* Active and hover state color */
+    background-color: #004d40; 
     transform: translateY(-2px);
-    padding-left: 30px; /* Increase padding to make the rectangle wider */
-  padding-right: 25px; /* Ensure symmetry on both sides */
-  width: 80%; /* Adjust the width of the active menu item */
-  transition: background-color 0.3s, transform 0.2s, width 0.3s, padding 0.3s; /* Smooth transitions */
+    padding-left: 30px; 
+  padding-right: 25px; 
+  width: 80%; 
+  transition: background-color 0.3s, transform 0.2s, width 0.3s, padding 0.3s; 
   
   }
   
@@ -78,7 +78,7 @@
   }
   
   .logout-section .menu-item:hover {
-    background-color: #00332f; /* Darker hover state for logout */
-    transform: translateY(-2px); /* Consistent lift effect */
+    background-color: #00332f; 
+    transform: translateY(-2px); 
   }
   
