@@ -1,19 +1,18 @@
-/* Blur the background when modal is open */
 .modal-background {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Dark transparent background */
-  backdrop-filter: blur(8px); /* Blur effect */
+  background: rgba(0, 0, 0, 0.5); 
+  backdrop-filter: blur(8px); 
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
 }
 
-/* Modal content styling */
+
 .modal-content {
   background-color: white;
   padding: 20px;
@@ -35,7 +34,7 @@
   text-align: left;
 }
 
-/* Profile picture styling */
+
 .patient-profile-picture {
   width: 100px;
   height: 100px;
@@ -59,7 +58,7 @@
   background-color: #019c90;
 }
 
-/* Doctor dashboard container styles */
+
 .doctor-dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -71,7 +70,7 @@
   padding-left: 320px;
 }
 
-/* Stats container styling */
+
 .stats-container {
   display: flex;
   justify-content: space-between;
@@ -122,7 +121,7 @@
   background-color: #019c90;
 }
 
-/* Appointment Requests Section Styling */
+
 .appointment-requests-container {
   margin-top: 30px;
   background-color: #f7f7f7;
@@ -137,7 +136,7 @@
   color: #333;
 }
 
-/* Appointment request list */
+
 .appointment-request-item {
   display: flex;
   justify-content: space-between;
@@ -154,7 +153,7 @@
   font-size: 16px;
 }
 
-/* Action icons for accept and decline */
+
 .action-icons {
   display: flex;
   gap: 10px;
@@ -182,7 +181,7 @@
   transform: scale(1.2);
 }
 
-/* Responsiveness */
+
 @media screen and (max-width: 1200px) {
   .chart-and-appointments-container {
     flex-direction: column;
@@ -190,7 +189,7 @@
 
   .chart-container, .appointments-container {
     width: 100%;
-    margin-bottom: 20px; /* Add spacing between chart and appointments on smaller screens */
+    margin-bottom: 20px; 
   }
 
   .appointments-container {
