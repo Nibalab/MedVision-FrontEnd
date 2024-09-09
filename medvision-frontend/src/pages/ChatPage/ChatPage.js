@@ -1,9 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
+import io from 'socket.io-client'; // Import Socket.IO for real-time updates
 import Sidebar from '../../components/Sidebar/Sidebar';
 import MessageList from '../../components/MessageList/MessageList';
 import ChatWindow from '../../components/ChatWindow/ChatWindow';
 import './ChatPage.css'; 
+
+// Initialize the socket connection
+const socket = io('http://localhost:3001');
 
 const ChatPage = () => {
   const [currentChat, setCurrentChat] = useState(null);  // Currently selected chat
@@ -54,7 +58,6 @@ const ChatPage = () => {
       console.error('Error marking message as read:', error);
     }
   };
-  
   
 
   // Fetch all chats for the logged-in doctor
@@ -126,9 +129,9 @@ const ChatPage = () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/messages', {
         params: {
-          receiver_type: 'doctor',  // The receiver is the doctor
-          receiver_id: doctorId,    // The logged-in doctor's ID
-          sender_id: senderId,      // The sender's ID (user or doctor)
+          receiver_type: 'doctor',  
+          receiver_id: doctorId,   
+          sender_id: senderId,      
         },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -141,7 +144,7 @@ const ChatPage = () => {
       // Mark each unread message as read
       fetchedMessages.forEach((message) => {
         if (!message.is_read) {
-          markMessageAsRead(message.id);  // Call the function to mark the message as read
+          markMessageAsRead(message.id);  
         }
       });
   
@@ -156,7 +159,11 @@ const ChatPage = () => {
       console.error('Error fetching messages:', error);
     }
   };
-  
+
+  // Add a new message to the chat without reloading
+  const addNewMessage = (newMessage) => {
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
 
   useEffect(() => {
     fetchDoctorInfo();  
@@ -168,6 +175,19 @@ const ChatPage = () => {
     }
   }, [doctorId, chatType, fetchChats]);  
   
+  // Handle incoming new messages from the Socket.IO server
+  useEffect(() => {
+    socket.on('message', (newMessage) => {
+      if (currentChat && newMessage.sender_id === currentChat.id) {
+        addNewMessage(newMessage);  // Append new message without reloading the chat
+      }
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => {
+      socket.off('message');
+    };
+  }, [currentChat]);
 
   const handleChatTypeSwitch = (type) => {
     setChatType(type);  
@@ -215,6 +235,7 @@ const ChatPage = () => {
             <ChatWindow
               messages={messages}
               currentChat={currentChat}
+              addNewMessage={addNewMessage}  // Pass down the function to append new messages
             />
           ) : (
             <div className="no-chat-selected">Select a conversation to start</div>

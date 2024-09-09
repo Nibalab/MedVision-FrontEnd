@@ -1,103 +1,107 @@
-/* Scope all styles under the chat-window-container class to avoid conflicts */
-
 /* General chat window container styling */
 .chat-window-container {
     display: flex;
     flex-direction: column;
-    height: 400px;
     height: 100%;
     background-color: #fff;
     border-radius: 40px;
-    
-    
-  }
-  
-  /* Header styling with profile picture and name */
-  .chat-window-container .chat-header {
+    overflow: hidden;
+}
+
+/* Header styling with profile picture and name */
+.chat-window-container .chat-header {
     display: flex;
     align-items: center;
     padding: 15px;
     background-color: #f7f7f7;
     border-bottom: 1px solid #e0e0e0;
-    border-radius: 30px;
-    
-  }
-  
-  .chat-window-container .profile-picture {
+}
+
+.chat-window-container .profile-picture {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-right: 15px;
-  }
-  
-  .chat-window-container .chat-participant-name {
+}
+
+.chat-window-container .chat-participant-name {
     font-size: 18px;
     font-weight: bold;
-  }
-  
-  /* Chat message container with messages going from bottom to top */
-  .chat-window-container .chat-messages {
+}
+
+/* Chat message container */
+.chat-window-container .chat-messages {
     flex-grow: 1;
     display: flex;
-    flex-direction: column-reverse; /* Messages appear bottom to top */
+    flex-direction: column; /* Natural flow of messages from top to bottom */
     padding: 20px;
-    overflow-y: auto;
+    overflow-y: auto;  /* Enable scrolling when messages overflow */
     gap: 10px;
-  }
-  
-  /* Message bubble styling */
-  .chat-window-container .chat-message {
+    justify-content: flex-start; /* Ensure messages start at the top and new ones go to the bottom */
+}
+
+/* Message bubble styling */
+.chat-window-container .chat-message {
     display: flex;
     align-items: center;
-  }
-  
-  /* Sender messages on the right */
-  .chat-window-container .chat-message.sender {
+    flex-shrink: 0;
+}
+
+/* Sent messages on the right */
+.chat-window-container .chat-message.sender {
     justify-content: flex-end;
-  }
-  
-  /* Receiver messages on the left */
-  .chat-window-container .chat-message.receiver {
+}
+
+/* Received messages on the left */
+.chat-window-container .chat-message.receiver {
     justify-content: flex-start;
-  }
-  
-  /* Message bubble design */
-  .chat-window-container .message-bubble {
+}
+
+/* Message bubble design */
+.chat-window-container .message-bubble {
     max-width: 60%;
     padding: 10px;
     border-radius: 15px;
-    background-color: #f0f0f0;
+    font-size: 16px;
+    word-wrap: break-word;
+    overflow-wrap: break-word; /* Ensure long words are wrapped properly */
+}
+
+/* Sent message bubbles (right, grey) */
+.chat-window-container .chat-message.sender .message-bubble {
+    background-color: #e0e0e0;
     color: #333;
-  }
-  
-  .chat-window-container .chat-message.sender .message-bubble {
-    background-color: #009688; /* Customize the color for the sender */
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 15px;
+}
+
+/* Received message bubbles (left, green) */
+.chat-window-container .chat-message.receiver .message-bubble {
+    background-color: #009688;
     color: white;
-  }
-  
-  .chat-window-container .chat-message.receiver .message-bubble {
-    background-color: #f0f0f0; /* Customize the color for the receiver */
-    color: #333;
-  }
-  
-  /* Input area for typing messages */
-  .chat-window-container .message-input-container {
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 15px;
+}
+
+/* Input area for typing messages */
+.chat-window-container .message-input-container {
     display: flex;
     align-items: center;
     padding: 15px;
     background-color: #f7f7f7;
     border-top: 1px solid #e0e0e0;
-  }
-  
-  .chat-window-container .message-input {
+}
+
+.chat-window-container .message-input {
     flex-grow: 1;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 20px;
     outline: none;
-  }
-  
-  .chat-window-container .send-button {
+    font-size: 16px;
+}
+
+.chat-window-container .send-button {
     background-color: #009688;
     color: white;
     padding: 10px 15px;
@@ -105,9 +109,8 @@
     border: none;
     margin-left: 10px;
     cursor: pointer;
-  }
-  
-  .chat-window-container .send-button:hover {
+}
+
+.chat-window-container .send-button:hover {
     background-color: #00796b;
-  }
-  
+}
