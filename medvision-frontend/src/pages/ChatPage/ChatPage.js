@@ -1,22 +1,22 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import Sidebar from '../../components/Sidebar/Sidebar';  // Import Sidebar component
+import Sidebar from '../../components/Sidebar/Sidebar';
 import MessageList from '../../components/MessageList/MessageList';
 import ChatWindow from '../../components/ChatWindow/ChatWindow';
-import './ChatPage.css'; // Import the CSS file for styles
+import './ChatPage.css'; 
 
 const ChatPage = () => {
   const [currentChat, setCurrentChat] = useState(null);  // Currently selected chat
-  const [chatType, setChatType] = useState('patient');   // 'patient' or 'doctor'
-  const [messages, setMessages] = useState([]);          // Current chat messages
-  const [chats, setChats] = useState([]);                // List of chats (users)
-  const [loading, setLoading] = useState(false);         // Loading state
-  const [doctorId, setDoctorId] = useState(null);        // Store the doctor ID from the API response
-  const [searchQuery, setSearchQuery] = useState('');    // Store the search query
+  const [chatType, setChatType] = useState('patient');   
+  const [messages, setMessages] = useState([]);          
+  const [chats, setChats] = useState([]);                
+  const [loading, setLoading] = useState(false);         
+  const [doctorId, setDoctorId] = useState(null);        
+  const [searchQuery, setSearchQuery] = useState('');    
 
   // Fetch the doctor info using the token
   const fetchDoctorInfo = async () => {
-    const token = localStorage.getItem('token');  // Assuming the token is stored in localStorage
+    const token = localStorage.getItem('token');  
   
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/me', {
@@ -26,8 +26,7 @@ const ChatPage = () => {
       });
   
       if (response.data.user && response.data.user.id) {
-        setDoctorId(response.data.user.id);  // Store the doctor ID in state
-        console.log('Doctor ID:', response.data.user.id);  // Check if Doctor ID is set properly
+        setDoctorId(response.data.user.id); 
       } else {
         console.error('No doctor ID in the response');
       }
@@ -38,67 +37,61 @@ const ChatPage = () => {
   
 
   // Fetch all chats for the logged-in doctor
-  // Fetch all chats for the logged-in doctor
-const fetchChats = useCallback(async () => {
-  setLoading(true);
-  const token = localStorage.getItem('token');
+  const fetchChats = useCallback(async () => {
+    setLoading(true);
+    const token = localStorage.getItem('token');
+  
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/messages', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      const messages = response.data.messages;
+      const chatMap = {};
+  
+      messages.forEach((message) => {
+        const senderId = message.sender_id; 
 
-  try {
-    const response = await axios.get('http://127.0.0.1:8000/api/messages', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+        if (!senderId) {
+          console.error('Sender ID is missing in message:', message);
+          return;
+        }
 
-    const messages = response.data.messages;
-    const chatMap = {};
+        const senderType = (chatType === 'patient' && message.sender_type.includes('User'))
+          ? 'patient'
+          : (chatType === 'doctor' && message.sender_type.includes('Doctor'))
+          ? 'doctor'
+          : null;
 
-    messages.forEach((message) => {
-      const senderId = message.sender_id;  // Use the sender_id from the response
-
-      if (!senderId) {
-        console.error('Sender ID is missing in message:', message);
-        return;
-      }
-
-      // Determine sender type based on whether chatType is 'patient' or 'doctor'
-      const senderType = (chatType === 'patient' && message.sender_type.includes('User'))
-        ? 'patient'
-        : (chatType === 'doctor' && message.sender_type.includes('Doctor'))
-        ? 'doctor'
-        : null;
-
-      // Only process the messages that match the current chatType
-      if (senderType) {
-        if (!chatMap[senderId]) {
-          chatMap[senderId] = {
-            id: senderId,
-            type: senderType,
-            name: message.sender_name || 'Unknown Sender',
-            profile_picture: message.sender_profile_picture || "/path/to/default-profile.jpg",
-            last_message: message.message_text,
-            unread_count: message.is_read === 0 ? 1 : 0,
-          };
-        } else {
-          chatMap[senderId].last_message = message.message_text;
-          if (message.is_read === 0) {
-            chatMap[senderId].unread_count += 1;
+        if (senderType) {
+          if (!chatMap[senderId]) {
+            chatMap[senderId] = {
+              id: senderId,
+              type: senderType,
+              name: message.sender_name || 'Unknown Sender',
+              profile_picture: message.sender_profile_picture || "/path/to/default-profile.jpg",
+              last_message: message.message_text,
+              unread_count: message.is_read === 0 ? 1 : 0,
+            };
+          } else {
+            chatMap[senderId].last_message = message.message_text;
+            if (message.is_read === 0) {
+              chatMap[senderId].unread_count += 1;
+            }
           }
         }
-      }
-    });
-
-    const chatList = Object.values(chatMap);
-    setChats(chatList);
-    setLoading(false);
-  } catch (error) {
-    console.error('Error fetching chats:', error);
-    setLoading(false);
-  }
-}, [chatType]);
-
-
+      });
   
+      const chatList = Object.values(chatMap);
+      setChats(chatList);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching chats:', error);
+      setLoading(false);
+    }
+  }, [chatType]);
   
   // Fetch messages for the selected chat
   const fetchMessages = async (senderId, senderType) => {
@@ -112,40 +105,37 @@ const fetchChats = useCallback(async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/messages', {
         params: {
-          receiver_type: 'doctor',  // The receiver is the doctor
-          receiver_id: doctorId,    // The logged-in doctor's ID
-          sender_id: senderId,      // The sender's ID (user or doctor)
+          receiver_type: 'doctor',
+          receiver_id: doctorId,
+          sender_id: senderId,
         },
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      setMessages(response.data.messages);  // Set the messages for the selected chat
-      setCurrentChat({ id: senderId, type: senderType });  // Set the current chat info
+      setMessages(response.data.messages);  
+      setCurrentChat({ id: senderId, name: response.data.messages[0].sender_name, profile_picture: response.data.messages[0].sender_profile_picture, type: senderType });  // Set the current chat info with profile
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
-};
-
-  
-  
+  };
 
   useEffect(() => {
-    fetchDoctorInfo();  // Fetch the doctor's info on component mount
+    fetchDoctorInfo();  
   }, []);
 
   useEffect(() => {
     if (doctorId) {
-      fetchChats();  // Fetch chats once the doctorId is available
+      fetchChats();  
     }
-  }, [doctorId, chatType, fetchChats]);  // Include chatType and fetchChats in the dependency array
+  }, [doctorId, chatType, fetchChats]);  
   
 
   const handleChatTypeSwitch = (type) => {
-    setChatType(type);  // Update the chat type (patient or doctor)
-    setCurrentChat(null);  // Reset the current chat when switching
-    fetchChats();  // Fetch chats for the updated type
+    setChatType(type);  
+    setCurrentChat(null);  
+    fetchChats();  
   };
 
   return (
@@ -153,7 +143,6 @@ const fetchChats = useCallback(async () => {
       <Sidebar />
       <div className="chat-content">
         <div className="chat-list">
-          {/* Search Bar */}
           <input 
             type="text" 
             placeholder="Search by name..." 
@@ -162,7 +151,6 @@ const fetchChats = useCallback(async () => {
             className="search-bar"
           />
 
-          {/* Tabs for switching between patients and doctors */}
           <div className="chat-tabs">
             <button
               className={`tab-button ${chatType === 'patient' ? 'active' : ''}`}
@@ -178,7 +166,6 @@ const fetchChats = useCallback(async () => {
             </button>
           </div>
 
-          {/* Loading Spinner */}
           {loading ? (
             <div>Loading...</div>
           ) : (
