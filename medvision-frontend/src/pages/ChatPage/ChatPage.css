@@ -1,0 +1,85 @@
+/* General styling for the chat page */
+.chat-page {
+  display: flex;
+  height: 90vh; /* Height remains at 90% of the viewport */
+  min-height: 600px; /* Ensuring a minimum height */
+}
+
+/* Main content with chat list and chat window */
+.chat-content {
+  display: flex;
+  width: 100%;
+}
+
+/* Chat list section */
+.chat-list {
+  width: 25%; /* Adjusted width for the chat list */
+  padding: 10px;
+  background-color: #f7f7f7;
+  border-right: 1px solid #e0e0e0;
+  margin-left: 280px; /* Adjust to match sidebar width */
+  margin-right: 20px; /* Added margin-right for space between chat list and window */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Ensures alignment at the top */
+  border-radius: 30px;
+  margin-top: 30px;
+  height: 100%;
+}
+
+/* Search bar styling */
+.search-bar {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  width: 95%;
+  border: 1px solid #ccc;
+}
+
+/* Chat tabs styling */
+.chat-tabs {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 8px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 16px;
+}
+
+.tab-button.active {
+  border-bottom: 2px solid teal;
+  color: teal;
+}
+
+/* Chat window section */
+.chat-window {
+  width: 50%; /* Reduced width for the chat window */
+  background-color: #f9f9f9;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 30px;
+  margin-top: 30px;
+  margin-left: 20px; /* Added margin-left for space between chat list and window */
+  height: 100%;
+}
+
+/* Placeholder for when no chat is selected */
+.no-chat-selected {
+  color: #999;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Adjust message list items */
+.message-list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: calc(100% - 50px); /* Ensures the chat list has enough space and scrolls if necessary */
+}
