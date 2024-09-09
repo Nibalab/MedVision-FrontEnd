@@ -114,7 +114,6 @@ const fetchChats = useCallback(async () => {
         params: {
           receiver_type: 'doctor',  // The receiver is the doctor
           receiver_id: doctorId,    // The logged-in doctor's ID
-          sender_type: senderType,  // The type of the sender (user or doctor)
           sender_id: senderId,      // The sender's ID (user or doctor)
         },
         headers: {
@@ -127,7 +126,10 @@ const fetchChats = useCallback(async () => {
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
-  };
+};
+
+  
+  
 
   useEffect(() => {
     fetchDoctorInfo();  // Fetch the doctor's info on component mount
