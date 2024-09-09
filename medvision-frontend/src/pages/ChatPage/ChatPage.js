@@ -35,6 +35,27 @@ const ChatPage = () => {
     }
   };
   
+  // Mark message as read when opened
+  const markMessageAsRead = async (messageId) => {
+    const token = localStorage.getItem('token');
+  
+    try {
+      const response = await axios({
+        method: 'put',
+        url: `http://127.0.0.1:8000/api/messages/${messageId}/read`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      console.log('Message marked as read:', response.data);
+    } catch (error) {
+      console.error('Error marking message as read:', error);
+    }
+  };
+  
+  
 
   // Fetch all chats for the logged-in doctor
   const fetchChats = useCallback(async () => {
@@ -96,30 +117,46 @@ const ChatPage = () => {
   // Fetch messages for the selected chat
   const fetchMessages = async (senderId, senderType) => {
     const token = localStorage.getItem('token');
-
+  
     if (!doctorId || !senderId) {
       console.error('Doctor ID or Sender ID is missing');
       return;
     }
-
+  
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/messages', {
         params: {
-          receiver_type: 'doctor',
-          receiver_id: doctorId,
-          sender_id: senderId,
+          receiver_type: 'doctor',  // The receiver is the doctor
+          receiver_id: doctorId,    // The logged-in doctor's ID
+          sender_id: senderId,      // The sender's ID (user or doctor)
         },
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      setMessages(response.data.messages);  
-      setCurrentChat({ id: senderId, name: response.data.messages[0].sender_name, profile_picture: response.data.messages[0].sender_profile_picture, type: senderType });  // Set the current chat info with profile
+  
+      const fetchedMessages = response.data.messages;
+      setMessages(fetchedMessages);
+  
+      // Mark each unread message as read
+      fetchedMessages.forEach((message) => {
+        if (!message.is_read) {
+          markMessageAsRead(message.id);  // Call the function to mark the message as read
+        }
+      });
+  
+      setCurrentChat({
+        id: senderId,
+        name: fetchedMessages[0].sender_name,
+        profile_picture: fetchedMessages[0].sender_profile_picture,
+        type: senderType,
+      });
+  
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchDoctorInfo();  
