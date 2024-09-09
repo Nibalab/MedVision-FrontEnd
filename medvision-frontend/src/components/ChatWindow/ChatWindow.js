@@ -1,49 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
+import './ChatWindow.css'; // Use the scoped CSS
 
-const ChatWindow = ({ messages, currentChat, socket }) => {
-  const [newMessage, setNewMessage] = useState('');
-
-  // Handle sending a message
-  const sendMessage = () => {
-    if (newMessage.trim()) {
-      const messageData = {
-        sender_id: currentChat.sender_id,
-        receiver_id: currentChat.receiver_id,
-        message_text: newMessage,
-      };
-
-      // Emit the message to Socket.IO server
-      socket.emit('message', messageData);
-
-      // Optionally, save the message to the backend using axios
-
-      setNewMessage('');  // Clear input field
-    }
-  };
-
+const ChatWindow = ({ messages, currentChat }) => {
   return (
-    <div className="chat-window">
+    <div className="chat-window-container">
+      {/* Header with the chat participant's name and profile picture */}
       <div className="chat-header">
-        <img src={currentChat.profile_picture || '/path/to/default-profile.jpg'} alt={currentChat.name} className="chat-avatar" />
-        <h4>{currentChat.name}</h4>
+        <img
+          src={currentChat.profile_picture || '/path/to/default-profile.jpg'}
+          alt={currentChat.name}
+          className="profile-picture"
+        />
+        <h3 className="chat-participant-name">{currentChat.name}</h3>
       </div>
 
-      <div className="message-history">
-        {messages.map((msg, index) => (
-          <div key={index} className={`message ${msg.sender_id === currentChat.sender_id ? 'sent' : 'received'}`}>
-            <p>{msg.message_text}</p>
+      {/* Message container, where messages from the receiver appear on the left and sender on the right */}
+      <div className="chat-messages">
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`chat-message ${
+              message.sender_id === currentChat.id ? 'receiver' : 'sender'
+            }`}
+          >
+            <div className="message-bubble">
+              <p>{message.message_text}</p>
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="message-input">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type a message..."
-        />
-        <button onClick={sendMessage}>Send</button>
+      {/* Input area for sending messages */}
+      <div className="message-input-container">
+        <input type="text" className="message-input" placeholder="Type here ..." />
+        <button className="send-button">Send</button>
       </div>
     </div>
   );

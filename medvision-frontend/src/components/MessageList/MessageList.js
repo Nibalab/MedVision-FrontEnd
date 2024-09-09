@@ -12,7 +12,14 @@ const MessageList = ({ chats, fetchMessages }) => {
         <div
           key={index}
           className="chat-item"
-          onClick={() => fetchMessages(chat.id, chat.type)} // Fetch messages when the chat is clicked
+          onClick={() => {
+            console.log('Clicked chat:', chat);  // Log to ensure id is present
+            if (chat.id) {  // Check if id is defined before calling fetchMessages
+              fetchMessages(chat.id, chat.type);
+            } else {
+              console.error('Sender ID is missing in chat object:', chat);
+            }
+          }}
         >
           <div className="chat-avatar">
             <img src={chat.profile_picture || '/path/to/default-profile.jpg'} alt={chat.name} />
@@ -31,5 +38,6 @@ const MessageList = ({ chats, fetchMessages }) => {
     </div>
   );
 };
+
 
 export default MessageList;

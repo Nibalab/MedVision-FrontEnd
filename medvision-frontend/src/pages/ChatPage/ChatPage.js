@@ -17,53 +17,89 @@ const ChatPage = () => {
   // Fetch the doctor info using the token
   const fetchDoctorInfo = async () => {
     const token = localStorage.getItem('token');  // Assuming the token is stored in localStorage
-
+  
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/me', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setDoctorId(response.data.user.id);  // Store the doctor ID in state
+  
+      if (response.data.user && response.data.user.id) {
+        setDoctorId(response.data.user.id);  // Store the doctor ID in state
+        console.log('Doctor ID:', response.data.user.id);  // Check if Doctor ID is set properly
+      } else {
+        console.error('No doctor ID in the response');
+      }
     } catch (error) {
       console.error('Error fetching doctor information:', error);
     }
   };
-
-  // Fetch the list of chats based on the search query (searching both patients and doctors)
-  const fetchChats = useCallback(async () => {
-    // Don't make a request if the search query is empty
-    if (!searchQuery.trim()) {
-      console.warn('Search query is empty');
-      return;
-    }
-  
-    setLoading(true);  // Set loading to true before fetching
-    const token = localStorage.getItem('token');
-    
-    try {
-      const response = await axios.get('http://127.0.0.1:8000/api/search', {
-        params: { query: searchQuery },  // Pass the search query to the search API
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      // Combine the search results for doctors and users (patients)
-      const combinedResults = [
-        ...response.data.doctors.map(doctor => ({ ...doctor, name: doctor.doctor_name, type: 'doctor' })),  // Use doctor_name
-        ...response.data.patients.map(patient => ({ ...patient, type: 'patient' }))
-      ];
-  
-      setChats(combinedResults);  // Set the combined results as chats
-      setLoading(false);  // Set loading to false after fetching
-    } catch (error) {
-      console.error('Error fetching chats:', error);
-      setLoading(false);  // Set loading to false even if there's an error
-    }
-  }, [searchQuery]);
   
 
+  // Fetch all chats for the logged-in doctor
+  // Fetch all chats for the logged-in doctor
+const fetchChats = useCallback(async () => {
+  setLoading(true);
+  const token = localStorage.getItem('token');
+
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/messages', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const messages = response.data.messages;
+    const chatMap = {};
+
+    messages.forEach((message) => {
+      const senderId = message.sender_id;  // Use the sender_id from the response
+
+      if (!senderId) {
+        console.error('Sender ID is missing in message:', message);
+        return;
+      }
+
+      // Determine sender type based on whether chatType is 'patient' or 'doctor'
+      const senderType = (chatType === 'patient' && message.sender_type.includes('User'))
+        ? 'patient'
+        : (chatType === 'doctor' && message.sender_type.includes('Doctor'))
+        ? 'doctor'
+        : null;
+
+      // Only process the messages that match the current chatType
+      if (senderType) {
+        if (!chatMap[senderId]) {
+          chatMap[senderId] = {
+            id: senderId,
+            type: senderType,
+            name: message.sender_name || 'Unknown Sender',
+            profile_picture: message.sender_profile_picture || "/path/to/default-profile.jpg",
+            last_message: message.message_text,
+            unread_count: message.is_read === 0 ? 1 : 0,
+          };
+        } else {
+          chatMap[senderId].last_message = message.message_text;
+          if (message.is_read === 0) {
+            chatMap[senderId].unread_count += 1;
+          }
+        }
+      }
+    });
+
+    const chatList = Object.values(chatMap);
+    setChats(chatList);
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching chats:', error);
+    setLoading(false);
+  }
+}, [chatType]);
+
+
+  
+  
   // Fetch messages for the selected chat
   const fetchMessages = async (senderId, senderType) => {
     const token = localStorage.getItem('token');
@@ -98,20 +134,16 @@ const ChatPage = () => {
   }, []);
 
   useEffect(() => {
-    if (searchQuery) {
-      fetchChats();  // Fetch chats once a search query is entered
+    if (doctorId) {
+      fetchChats();  // Fetch chats once the doctorId is available
     }
-  }, [searchQuery, fetchChats]);
+  }, [doctorId, chatType, fetchChats]);  // Include chatType and fetchChats in the dependency array
+  
 
   const handleChatTypeSwitch = (type) => {
     setChatType(type);  // Update the chat type (patient or doctor)
     setCurrentChat(null);  // Reset the current chat when switching
     fetchChats();  // Fetch chats for the updated type
-  };
-
-  const handleSearch = (e) => {
-    const query = e.target.value.trim();  // Trim spaces from the input
-    setSearchQuery(query);  // Update the search query based on input
   };
 
   return (
@@ -124,7 +156,7 @@ const ChatPage = () => {
             type="text" 
             placeholder="Search by name..." 
             value={searchQuery} 
-            onChange={handleSearch} 
+            onChange={(e) => setSearchQuery(e.target.value.trim())} 
             className="search-bar"
           />
 
