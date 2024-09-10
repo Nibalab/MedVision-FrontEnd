@@ -45,7 +45,7 @@ const PatientSignup = () => {
     data.append('password_confirmation', formData.password_confirmation); 
 
     if (selectedFile) {
-        data.append('profilePicture', selectedFile);
+        data.append('profile_picture', selectedFile);
     }
 
     try {
