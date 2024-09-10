@@ -43,7 +43,7 @@
   .navbar-logout {
     display: flex;
     align-items: center;
-    gap: 15px; /* Added more space between the logout text and the icon */
+    gap: 15px; 
     color: white;
     font-weight: bold;
   }
@@ -56,7 +56,7 @@
     font-size: 16px;
   }
   
-  /* Add hover effect for logout button */
+
   .navbar-logout button:hover {
     text-decoration: underline;
   }
