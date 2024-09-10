@@ -4,15 +4,15 @@
     align-items: center;
     background-color: #00a7a7;
     padding: 15px 50px;
-    height: 90px; /* Set a fixed height for the navbar */
-    box-sizing: border-box; /* Ensures padding doesn't increase height */
+    height: 90px; 
+    box-sizing: border-box; 
   }
   
   /* Keep logo within navbar height */
   .navbar-logo img {
     max-height: 200px; /* Ensure logo fits within the navbar height */
     object-fit: contain; /* Prevent distortion of the image */
-    width: auto; 
+    width: auto;
     margin-top: 50px;
   }
   
@@ -25,13 +25,20 @@
   
   .navbar-links li a {
     text-decoration: none;
-    color: white;
+    color: black; /* Default color of the links set to black */
     font-weight: bold;
     font-size: 18px; /* Adjusted font size for better readability */
+    transition: color 0.3s ease, border-bottom 0.3s ease; /* Smooth transition */
   }
   
   .navbar-links li a.active {
-    border-bottom: 2px solid white;
+    color: white; /* Turn white when active */
+    border-bottom: 2px solid white; /* Underline when active */
+  }
+  
+  /* Hover effect to change link color */
+  .navbar-links li a:hover {
+    color: white;
   }
   
   .navbar-logout {
