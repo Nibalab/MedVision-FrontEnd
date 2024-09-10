@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './MessageList.css'; // Import the CSS file for styles
+import './MessageList.css';
 
 const MessageList = ({ chats, fetchMessages }) => {
-  const [activeChatId, setActiveChatId] = useState(null); // Track the active chat for better UX
+  const [activeChatId, setActiveChatId] = useState(null);
 
   if (!chats.length) {
     return <div>No messages found.</div>;
@@ -13,14 +13,11 @@ const MessageList = ({ chats, fetchMessages }) => {
       {chats.map((chat, index) => (
         <div
           key={index}
-          className={`chat-item ${activeChatId === chat.id ? 'active' : ''}`} // Highlight active chat
+          className={`chat-item ${activeChatId === chat.id ? 'active' : ''}`}
           onClick={() => {
-            console.log('Clicked chat:', chat);  // Log to ensure id is present
-            if (chat.id) {  // Check if id is defined before calling fetchMessages
-              setActiveChatId(chat.id); // Set active chat for highlighting
-              fetchMessages(chat.id, chat.type);  // Fetch messages for the specific chat
-            } else {
-              console.error('Sender ID is missing in chat object:', chat);
+            if (chat.id) {
+              setActiveChatId(chat.id);
+              fetchMessages(chat.id, chat.type);
             }
           }}
         >
