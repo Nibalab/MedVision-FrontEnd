@@ -4,7 +4,7 @@ import io from 'socket.io-client'; // Import Socket.IO for real-time updates
 import Sidebar from '../../components/Sidebar/Sidebar';
 import MessageList from '../../components/MessageList/MessageList';
 import ChatWindow from '../../components/ChatWindow/ChatWindow';
-import './ChatPage.css'; 
+import './ChatPage.css';
 
 // Initialize the socket connection
 const socket = io('http://localhost:3001');
@@ -38,27 +38,22 @@ const ChatPage = () => {
       console.error('Error fetching doctor information:', error);
     }
   };
-  
+
   // Mark message as read when opened
   const markMessageAsRead = async (messageId) => {
     const token = localStorage.getItem('token');
   
     try {
-      const response = await axios({
-        method: 'put',
-        url: `http://127.0.0.1:8000/api/messages/${messageId}/read`,
+      await axios.put(`http://127.0.0.1:8000/api/messages/${messageId}/read`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
-  
-      console.log('Message marked as read:', response.data);
     } catch (error) {
       console.error('Error marking message as read:', error);
     }
   };
-  
 
   // Fetch all chats for the logged-in doctor
   const fetchChats = useCallback(async () => {
@@ -83,11 +78,12 @@ const ChatPage = () => {
           return;
         }
 
-        const senderType = (chatType === 'patient' && message.sender_type.includes('User'))
+        const senderType = (chatType === 'patient' && message.sender_type && message.sender_type.includes('User'))
           ? 'patient'
-          : (chatType === 'doctor' && message.sender_type.includes('Doctor'))
+          : (chatType === 'doctor' && message.sender_type && message.sender_type.includes('Doctor'))
           ? 'doctor'
           : null;
+
 
         if (senderType) {
           if (!chatMap[senderId]) {
@@ -116,53 +112,77 @@ const ChatPage = () => {
       setLoading(false);
     }
   }, [chatType]);
-  
+
   // Fetch messages for the selected chat
-  const fetchMessages = async (senderId, senderType) => {
-    const token = localStorage.getItem('token');
-  
-    if (!doctorId || !senderId) {
-      console.error('Doctor ID or Sender ID is missing');
-      return;
-    }
-  
-    try {
-      const response = await axios.get('http://127.0.0.1:8000/api/messages', {
-        params: {
-          receiver_type: 'doctor',  
-          receiver_id: doctorId,   
-          sender_id: senderId,      
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      const fetchedMessages = response.data.messages;
-      setMessages(fetchedMessages);
-  
-      // Mark each unread message as read
-      fetchedMessages.forEach((message) => {
-        if (!message.is_read) {
-          markMessageAsRead(message.id);  
-        }
-      });
-  
-      setCurrentChat({
-        id: senderId,
-        name: fetchedMessages[0].sender_name,
-        profile_picture: fetchedMessages[0].sender_profile_picture,
-        type: senderType,
-      });
-  
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-    }
-  };
+  // Fetch messages for the selected chat
+const fetchMessages = async (senderId, senderType) => {
+  const token = localStorage.getItem('token');
+
+  if (!doctorId || !senderId) {
+    console.error('Doctor ID or Sender ID is missing');
+    return;
+  }
+
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/messages', {
+      params: {
+        receiver_type: 'doctor',  
+        receiver_id: doctorId,   
+        sender_id: senderId,      
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // Reverse the fetched messages to display newest at the bottom
+    const fetchedMessages = response.data.messages.reverse();
+    setMessages(fetchedMessages);
+
+    // Mark each unread message as read
+    fetchedMessages.forEach((message) => {
+      if (!message.is_read) {
+        markMessageAsRead(message.id);  
+      }
+    });
+
+    setCurrentChat({
+      id: senderId,
+      name: fetchedMessages[0].sender_name,
+      profile_picture: fetchedMessages[0].sender_profile_picture,
+      type: senderType,
+    });
+
+  } catch (error) {
+    console.error('Error fetching messages:', error);
+  }
+};
+
 
   // Add a new message to the chat without reloading
   const addNewMessage = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
+  // Send new message and ensure it's stored in the DB
+  const sendMessage = async (messageText) => {
+    const token = localStorage.getItem('token');
+    try {
+      await axios.post('http://127.0.0.1:8000/api/messages', {
+        sender_id: doctorId,
+        receiver_id: currentChat.id,
+        message_text: messageText,
+        sender_type: 'doctor',
+        receiver_type: currentChat.type,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   };
 
   useEffect(() => {
@@ -173,9 +193,8 @@ const ChatPage = () => {
     if (doctorId) {
       fetchChats();  
     }
-  }, [doctorId, chatType, fetchChats]);  
-  
-  // Handle incoming new messages from the Socket.IO server
+  }, [doctorId, chatType, fetchChats]);
+
   useEffect(() => {
     socket.on('message', (newMessage) => {
       if (currentChat && newMessage.sender_id === currentChat.id) {
@@ -183,7 +202,6 @@ const ChatPage = () => {
       }
     });
 
-    // Clean up the listener when the component unmounts
     return () => {
       socket.off('message');
     };
@@ -235,7 +253,10 @@ const ChatPage = () => {
             <ChatWindow
               messages={messages}
               currentChat={currentChat}
-              addNewMessage={addNewMessage}  // Pass down the function to append new messages
+              addNewMessage={addNewMessage}
+              doctorId={doctorId}
+              sendMessage={sendMessage}
+              reverseMessages={true} // This ensures the messages are ordered from bottom to top
             />
           ) : (
             <div className="no-chat-selected">Select a conversation to start</div>
