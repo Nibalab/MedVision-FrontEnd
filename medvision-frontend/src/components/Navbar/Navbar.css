@@ -16,11 +16,10 @@
     margin-top: 50px;
   }
   
-  /* Increased space between navigation links */
   .navbar-links {
     display: flex;
     list-style-type: none;
-    gap: 100px; /* Increased gap between navigation links */
+    gap: 100px; 
   }
   
   .navbar-links li a {
