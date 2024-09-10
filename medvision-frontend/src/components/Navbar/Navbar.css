@@ -8,10 +8,10 @@
     box-sizing: border-box; 
   }
   
-  /* Keep logo within navbar height */
+  
   .navbar-logo img {
-    max-height: 200px; /* Ensure logo fits within the navbar height */
-    object-fit: contain; /* Prevent distortion of the image */
+    max-height: 200px; 
+    object-fit: contain; 
     width: auto;
     margin-top: 50px;
   }
