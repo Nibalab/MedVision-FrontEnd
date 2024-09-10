@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFacebook, FaInstagram } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
@@ -8,11 +8,14 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-contact">
           <h3>Contact Us</h3>
-          <p>Email: MedVision@gmail.com</p>
+          <p><a href="mailto:MedVision@gmail.com">MedVision@gmail.com</a></p>
         </div>
         <div className="footer-social">
-          <FaFacebook size={24} />
-          <FaInstagram size={24} />
+          <FaFacebook />
+          <FaInstagram />
+          <FaTwitter />
+          <FaLinkedin />
+          <FaYoutube />
         </div>
         <div className="footer-copyright">
           <p>&copy; 2024 MedVision. All rights reserved.</p>

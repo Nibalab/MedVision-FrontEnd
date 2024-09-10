@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'; 
 import './Navbar.css';
-import logo from '../../Images/Logo2.png'; // Assuming the logo is stored here
-import { FaSignOutAlt } from 'react-icons/fa'; // Logout icon from React Icons
+import logo from '../../Images/Logo2.png'; 
+import { FaSignOutAlt } from 'react-icons/fa'; 
 
 const Navbar = () => {
   return (

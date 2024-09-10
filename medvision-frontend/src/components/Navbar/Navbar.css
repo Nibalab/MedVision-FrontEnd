@@ -3,23 +3,31 @@
     justify-content: space-between;
     align-items: center;
     background-color: #00a7a7;
-    padding: 15px 30px;
+    padding: 15px 50px;
+    height: 90px; /* Set a fixed height for the navbar */
+    box-sizing: border-box; /* Ensures padding doesn't increase height */
   }
   
+  /* Keep logo within navbar height */
   .navbar-logo img {
-    height: 50px;
+    max-height: 200px; /* Ensure logo fits within the navbar height */
+    object-fit: contain; /* Prevent distortion of the image */
+    width: auto; 
+    margin-top: 50px;
   }
   
+  /* Increased space between navigation links */
   .navbar-links {
     display: flex;
     list-style-type: none;
-    gap: 20px;
+    gap: 100px; /* Increased gap between navigation links */
   }
   
   .navbar-links li a {
     text-decoration: none;
     color: white;
     font-weight: bold;
+    font-size: 18px; /* Adjusted font size for better readability */
   }
   
   .navbar-links li a.active {
@@ -29,7 +37,7 @@
   .navbar-logout {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px; /* Added more space between the logout text and the icon */
     color: white;
     font-weight: bold;
   }
@@ -40,5 +48,10 @@
     color: white;
     cursor: pointer;
     font-size: 16px;
+  }
+  
+  /* Add hover effect for logout button */
+  .navbar-logout button:hover {
+    text-decoration: underline;
   }
   

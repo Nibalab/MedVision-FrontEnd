@@ -1,30 +1,50 @@
 .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #00a7a7;
-    padding: 20px 0;
+    padding: 15px 50px;
+    height: 90px; /* Match the height of the navbar */
+    box-sizing: border-box;
     color: white;
   }
   
   .footer-content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
+    width: 100%;
   }
   
   .footer-contact {
     font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .footer-contact a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .footer-contact a:hover {
+    text-decoration: underline;
   }
   
   .footer-social {
+    margin-top: 30px;
     display: flex;
-    gap: 15px;
+    justify-content: center; /* Center the icons */
+    gap: 20px; /* Space between social icons */
+    flex-grow: 1; /* Make social media icons centered in the middle of the footer */
   }
   
   .footer-social svg {
     cursor: pointer;
+    font-size: 24px; /* Set consistent icon size */
   }
   
   .footer-copyright {
-    font-size: 12px;
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: bold;
   }
   
