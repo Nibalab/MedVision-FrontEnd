@@ -31,11 +31,11 @@
   }
   
   .navbar-links li a.active {
-    color: white; /* Turn white when active */
-    border-bottom: 2px solid white; /* Underline when active */
+    color: white; 
+    border-bottom: 2px solid white; 
   }
   
-  /* Hover effect to change link color */
+ 
   .navbar-links li a:hover {
     color: white;
   }
