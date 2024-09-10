@@ -15,10 +15,8 @@ const MessageList = ({ chats, fetchMessages }) => {
           key={index}
           className={`chat-item ${activeChatId === chat.id ? 'active' : ''}`}
           onClick={() => {
-            if (chat.id) {
-              setActiveChatId(chat.id);
-              fetchMessages(chat.id, chat.type);
-            }
+            setActiveChatId(chat.id); // Set active chat
+            fetchMessages(chat.id, chat.type); // Fetch messages and update currentChat
           }}
         >
           <div className="chat-avatar">

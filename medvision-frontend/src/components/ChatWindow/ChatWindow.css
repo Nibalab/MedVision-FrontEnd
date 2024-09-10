@@ -6,6 +6,7 @@
     background-color: #fff;
     border-radius: 40px;
     overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
 }
 
 /* Header styling with profile picture and name */
@@ -22,6 +23,7 @@
     height: 50px;
     border-radius: 50%;
     margin-right: 15px;
+    object-fit: cover; /* Ensures the image covers the full circle */
 }
 
 .chat-window-container .chat-participant-name {
@@ -33,9 +35,9 @@
 .chat-window-container .chat-messages {
     flex-grow: 1;
     display: flex;
-    flex-direction: column; /* Natural flow of messages from top to bottom */
+    flex-direction: column;
     padding: 20px;
-    overflow-y: auto;  /* Enable scrolling when messages overflow */
+    overflow-y: auto; /* Enable scrolling when messages overflow */
     gap: 10px;
     justify-content: flex-start; /* Ensure messages start at the top and new ones go to the bottom */
 }
@@ -60,11 +62,12 @@
 /* Message bubble design */
 .chat-window-container .message-bubble {
     max-width: 60%;
-    padding: 10px;
-    border-radius: 15px;
-    font-size: 16px;
+    padding: 12px;
+    border-radius: 20px;
+    font-size: 15px;
     word-wrap: break-word;
-    overflow-wrap: break-word; /* Ensure long words are wrapped properly */
+    overflow-wrap: break-word;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for message bubbles */
 }
 
 /* Sent message bubbles (right, grey) */
@@ -92,15 +95,41 @@
     border-top: 1px solid #e0e0e0;
 }
 
+/* Input field */
 .chat-window-container .message-input {
     flex-grow: 1;
-    padding: 10px;
+    padding: 12px 40px; /* Padding adjusted to accommodate the attachment icon */
     border: 1px solid #ccc;
-    border-radius: 20px;
+    border-radius: 25px;
     outline: none;
     font-size: 16px;
+    background-color: #fff;
+    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
 }
 
+/* Styling for the attachment icon */
+.attachment-label {
+    position: relative;
+    margin-right: -35px; /* Adjust this value to properly position the icon inside the input */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.attachment-label svg {
+    color: #888; /* Grey color for the icon */
+}
+
+.attachment-label svg:hover {
+    color: #00796b; /* Change color on hover */
+}
+
+/* Hidden file input */
+.attachment-input {
+    display: none;
+}
+
+/* Send button */
 .chat-window-container .send-button {
     background-color: #009688;
     color: white;
@@ -109,6 +138,7 @@
     border: none;
     margin-left: 10px;
     cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
 }
 
 .chat-window-container .send-button:hover {

@@ -2,20 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import './ChatWindow.css';
 import axios from 'axios';
 import io from 'socket.io-client';
+import { AiOutlinePaperClip } from 'react-icons/ai'; 
 
 // Initialize the socket outside of the component to avoid multiple connections
-const socket = io('http://localhost:3001'); // Adjust this URL to match your server's configuration
+const socket = io('http://localhost:3001'); 
 
 const ChatWindow = ({ messages, currentChat, addNewMessage, doctorId }) => {
   const [newMessage, setNewMessage] = useState(''); // State for message input
+  const [attachment, setAttachment] = useState(null); // State for file attachment
   const messagesEndRef = useRef(null); // Reference for scrolling to the bottom
 
-  // Debugging doctorId
-  useEffect(() => {
-    console.log('Doctor ID:', doctorId); // Check if doctorId is passed correctly
-  }, [doctorId]);
-
-  // Scroll to the bottom of the chat window when new messages are added
+  // Scroll to the bottom of the chat window when new messages are added or the chat changes
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -23,56 +20,44 @@ const ChatWindow = ({ messages, currentChat, addNewMessage, doctorId }) => {
   };
 
   useEffect(() => {
-    // Scroll to the bottom when the chat is opened or when new messages are added
+    // Scroll to the bottom when messages or chat changes
     scrollToBottom();
-  }, [messages]);
+  }, [messages, currentChat]);
 
+  // Listen for new messages via socket
   useEffect(() => {
-    // Listen for incoming messages from the server
+    // Ensure that messages from the correct chat are added
     socket.on('message', (message) => {
-      if (message.sender_id !== doctorId) {
-        addNewMessage(message); // Add the incoming message to the chat window if it's not from the current user
+      if (message.sender_id !== doctorId && message.sender_id === currentChat.id) {
+        addNewMessage(message); // Only add if the message is for the current chat
       }
     });
 
-    // Cleanup the socket event on component unmount
+    // Cleanup socket event on unmount or when currentChat changes
     return () => {
       socket.off('message');
     };
-  }, [addNewMessage, doctorId]);
+  }, [addNewMessage, doctorId, currentChat]);
 
-  // Send message function (backend integration)
+  // Send a message function (backend integration)
   const sendMessage = async (messageText, senderId, receiverId, senderType = 'doctor', receiverType = 'user', attachment = null) => {
-    const token = localStorage.getItem('token'); // Ensure you're sending the token for authentication
-  
-    // Log the senderId and receiverId to debug
-    console.log('Sender ID (before conversion):', senderId);
-    console.log('Receiver ID (before conversion):', receiverId);
-  
+    const token = localStorage.getItem('token'); 
+
     // Ensure senderId and receiverId are integers
     const senderIdInt = parseInt(senderId, 10);
     const receiverIdInt = parseInt(receiverId, 10);
-  
-    // Log after conversion
-    console.log('Sender ID (after conversion):', senderIdInt);
-    console.log('Receiver ID (after conversion):', receiverIdInt);
 
-    if (isNaN(senderIdInt) || isNaN(receiverIdInt)) {
-      console.error('Sender or receiver ID is NaN');
-      return null; // Don't attempt to send the message if IDs are invalid
-    }
-  
     const formData = new FormData();
     formData.append('message_text', messageText);
-    formData.append('sender_id', senderIdInt);  // Send sender_id as an integer
-    formData.append('receiver_id', receiverIdInt);  // Send receiver_id as an integer
+    formData.append('sender_id', senderIdInt); 
+    formData.append('receiver_id', receiverIdInt); 
     formData.append('sender_type', senderType);
     formData.append('receiver_type', receiverType);
-  
+
     if (attachment) {
       formData.append('attachment', attachment); // Add attachment if present
     }
-  
+
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/messages', formData, {
         headers: {
@@ -80,50 +65,44 @@ const ChatWindow = ({ messages, currentChat, addNewMessage, doctorId }) => {
           'Content-Type': 'multipart/form-data',
         },
       });
-  
-      console.log('Message sent:', response.data);
-      return response.data; // Handle response as needed
+
+      return response.data;
     } catch (error) {
-      if (error.response) {
-        console.error('Error response:', error.response.data);
-      } else {
-        console.error('Error sending message:', error);
-      }
-      return null;
+      console.error('Error sending message:', error);
     }
   };
   
+  // Handle sending a new message
   const handleSendMessage = async () => {
-    if (newMessage.trim() === '') return;
+    if (newMessage.trim() === '' && !attachment) return;
 
     const messageData = {
       message_text: newMessage,
-      sender_id: parseInt(doctorId, 10),  // Ensure sender_id is an integer
-      receiver_id: parseInt(currentChat.id, 10),  // Ensure receiver_id is an integer
+      sender_id: doctorId,  
+      receiver_id: currentChat.id,  
       created_at: new Date().toISOString(),
       is_read: false,
     };
 
-    console.log('Attempting to send message:', messageData);
+    // Send the message to the backend
+    await sendMessage(newMessage, doctorId, currentChat.id, 'doctor', currentChat.type, attachment);
 
-    // Send the message to the backend (using the sendMessage function)
-    const sentMessage = await sendMessage(newMessage, doctorId, currentChat.id, 'doctor', 'user');
+    // Emit the new message via Socket.IO
+    socket.emit('message', messageData);
 
-    // Check if the message was successfully sent before proceeding
-    if (sentMessage) {
-      // Emit the new message via Socket.IO to the server
-      socket.emit('message', messageData);
+    // Append the new message to the chat (locally)
+    addNewMessage(messageData);
 
-      // Append the new message to the chat (locally)
-      addNewMessage({
-        ...messageData,
-        id: sentMessage.id, // Use the message ID returned from the backend
-      });
+    // Clear the input field and attachment after sending
+    setNewMessage('');
+    setAttachment(null);
+  };
 
-      // Clear the input field after sending
-      setNewMessage(''); // Make sure input is cleared after sending
-    } else {
-      console.error('Failed to send message');
+  // Handle file attachment change
+  const handleAttachmentChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setAttachment(file); 
     }
   };
 
@@ -136,7 +115,9 @@ const ChatWindow = ({ messages, currentChat, addNewMessage, doctorId }) => {
           alt={currentChat.name}
           className="profile-picture"
         />
-        <h3 className="chat-participant-name">{currentChat.name}</h3>
+        <h3 className="chat-participant-name">
+          {currentChat.name || 'Unknown Sender'}
+        </h3>
       </div>
 
       {/* Message container */}
@@ -144,9 +125,7 @@ const ChatWindow = ({ messages, currentChat, addNewMessage, doctorId }) => {
         {messages.map((message, index) => (
           <div
             key={index}
-            className={`chat-message ${
-              message.sender_id === doctorId ? 'sender' : 'receiver'
-            }`}
+            className={`chat-message ${message.sender_id === doctorId ? 'sender' : 'receiver'}`}
           >
             <div className="message-bubble">
               <p>{message.message_text}</p>
@@ -159,12 +138,17 @@ const ChatWindow = ({ messages, currentChat, addNewMessage, doctorId }) => {
 
       {/* Input area for sending messages */}
       <div className="message-input-container">
+        <label className="attachment-label">
+          <AiOutlinePaperClip size={24} />
+          <input type="file" onChange={handleAttachmentChange} className="attachment-input" />
+        </label>
+        
         <input
           type="text"
           className="message-input"
           placeholder="Type here ..."
-          value={newMessage} // Bind input value to newMessage state
-          onChange={(e) => setNewMessage(e.target.value)} // Update newMessage state when input changes
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
         />
         <button className="send-button" onClick={handleSendMessage}>
           Send
