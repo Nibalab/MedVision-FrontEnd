@@ -3,7 +3,7 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
-import { FaSearch } from 'react-icons/fa'; 
+import { FaSearch, FaCheckCircle } from 'react-icons/fa'; 
 import Calendar from 'react-calendar';
 import TimePicker from 'react-time-picker';
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa'; 
@@ -19,7 +19,8 @@ const DoctorsPage = () => {
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState('10:00');
-    const [patientId, setPatientId] = useState(null); // Set to null initially
+    const [patientId, setPatientId] = useState(null);
+    const [showModal, setShowModal] = useState(false); // Added for modal visibility
 
     // Get profile picture or default
     const getProfilePicture = (doctor) => {
@@ -45,7 +46,6 @@ const DoctorsPage = () => {
             alert('Patient ID not sent, please log in.');
         }
     }, []);
-    
 
     // Fetch doctors based on search
     const fetchDoctors = async (name) => {
@@ -99,12 +99,16 @@ const DoctorsPage = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}` // Include token in the headers
                 }
             });
-            alert('Appointment request submitted successfully!');
+            setShowModal(true); // Show the success modal
             console.log(response.data);
         } catch (error) {
             console.error('Error submitting appointment:', error);
             alert('Failed to submit appointment. Please try again.');
         }
+    };
+
+    const closeModal = () => {
+        setShowModal(false); // Close modal
     };
 
     return (
@@ -207,6 +211,17 @@ const DoctorsPage = () => {
             </div>
 
             <Footer />
+
+            {/* Success Modal */}
+            {showModal && (
+                <div className="modal-overlay">
+                    <div className="success-modal">
+                        <FaCheckCircle className="success-icon" />
+                        <p className="modal-message">Appointment request submitted successfully!</p>
+                        <button className="modal-close-btn" onClick={closeModal}>Close</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
