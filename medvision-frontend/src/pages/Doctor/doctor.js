@@ -10,13 +10,22 @@ const DoctorsPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    // Helper function to handle profile picture paths
+    const getProfilePicture = (doctor) => {
+        if (doctor.profile_picture && !doctor.profile_picture.startsWith('http')) {
+            // Prepend the base URL if the image is stored locally
+            return `http://localhost:8000/storage/${doctor.profile_picture.replace('public/', '')}`;
+        }
+        return doctor.profile_picture || '/default-avatar.png';
+    };
+
+    // Fetch doctors based on search term
     const fetchDoctors = async (name) => {
         setLoading(true);
         setError('');
         try {
             const response = await axios.get(`http://localhost:8000/api/doctors/search?name=${name}`);
             setDoctors(response.data);
-            console.log(response.data);  // Debug: Check the response structure
         } catch (err) {
             console.error('Error fetching doctors:', err);
             setError(err.response?.data?.message || 'Error fetching doctors');
@@ -25,12 +34,18 @@ const DoctorsPage = () => {
         }
     };
 
+    // Debounce function to avoid multiple requests as the user types
     useEffect(() => {
         if (searchTerm) {
-            fetchDoctors(searchTerm);
+            const delayDebounceFn = setTimeout(() => {
+                fetchDoctors(searchTerm);
+            }, 300); // 300ms debounce delay
+
+            return () => clearTimeout(delayDebounceFn);
         }
     }, [searchTerm]);
 
+    // Search input handler
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
     };
@@ -62,7 +77,7 @@ const DoctorsPage = () => {
                         doctors.map((doctor) => (
                             <div key={doctor.id} className="doctor-item">
                                 <img
-                                    src={doctor.profile_picture || '/default-avatar.png'}
+                                    src={getProfilePicture(doctor)}
                                     alt={doctor.name}
                                     className="doctor-avatar"
                                 />

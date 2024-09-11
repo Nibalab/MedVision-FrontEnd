@@ -1,8 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom'; 
+import { NavLink } from 'react-router-dom';
 import './Navbar.css';
-import logo from '../../Images/Logo2.png'; 
-import { FaSignOutAlt } from 'react-icons/fa'; 
+import logo from '../../Images/Logo2.png';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 const Navbar = () => {
   return (
@@ -12,21 +12,41 @@ const Navbar = () => {
       </div>
       <ul className="navbar-links">
         <li>
-          <NavLink exact to="/patient-dashboard" activeClassName="active">Home</NavLink>
+          <NavLink
+            to="/patient-dashboard"
+            className={({ isActive }) => (isActive ? 'active' : '')}
+          >
+            Home
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/reports" activeClassName="active">Reports</NavLink>
+          <NavLink
+            to="/reports"
+            className={({ isActive }) => (isActive ? 'active' : '')}
+          >
+            Reports
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/doctors" activeClassName="active">Doctors</NavLink>
+          <NavLink
+            to="/doctors"
+            className={({ isActive }) => (isActive ? 'active' : '')}
+          >
+            Doctors
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/messages" activeClassName="active">Messages</NavLink>
+          <NavLink
+            to="/messages"
+            className={({ isActive }) => (isActive ? 'active' : '')}
+          >
+            Messages
+          </NavLink>
         </li>
       </ul>
       <div className="navbar-logout">
         <FaSignOutAlt />
-        <button onClick={() => alert("Logging out...")}>Logout</button>
+        <button onClick={() => alert('Logging out...')}>Logout</button>
       </div>
     </nav>
   );
