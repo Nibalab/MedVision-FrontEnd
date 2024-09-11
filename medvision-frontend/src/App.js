@@ -9,12 +9,11 @@ import Schedule from '../src/pages/SchedulePage/SchedulePage';
 import Messages from './pages/ChatPage/ChatPage';
 import PatientDashboard from '../src/pages/PatientDashboard/PatientDashboard';
 import Doctor from '../src/pages/Doctor/doctor';
-import io from 'socket.io-client';  // Import Socket.IO client
+import io from 'socket.io-client';  
 
 function App() {
   useEffect(() => {
-    // Initialize the connection to the Socket.IO server
-    const socket = io('http://localhost:3001'); // Ensure this matches your socket server's URL and port
+    const socket = io('http://localhost:3001'); 
 
     // Handle connection event
     socket.on('connect', () => {
