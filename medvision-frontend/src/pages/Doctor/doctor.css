@@ -9,6 +9,8 @@
 .doctor-page-content {
   flex: 1;
   padding: 20px;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center;
 }
 
 /* Search bar */
@@ -17,10 +19,24 @@
   margin-bottom: 20px;
 }
 
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 30px;
+  font-size: 18px;
+  color: #ccc;
+}
+
 .search-input {
   width: 60%;
-  padding: 10px;
-  border-radius: 25px;
+  padding: 12px 50px;
+  border-radius: 30px;
   border: 1px solid #ccc;
   font-size: 16px;
   outline: none;
@@ -39,7 +55,8 @@
   border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .doctor-avatar {
@@ -49,7 +66,11 @@
   object-fit: cover;
 }
 
-/* Button for appointment */
+.doctor-details {
+  flex: 1;
+  margin-left: 20px;
+}
+
 .appointment-btn {
   background-color: #00a7a7;
   color: white;
@@ -63,23 +84,110 @@
   background-color: #007b7b;
 }
 
-/* Pagination */
-.doctor-pagination {
+/* Pagination styling */
+.pagination-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.prev-page, .next-page {
+.prev-page,
+.next-page {
   background-color: #00a7a7;
   color: white;
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin: 0 10px;
 }
 
-.prev-page:hover, .next-page:hover {
+.prev-page:hover,
+.next-page:hover {
   background-color: #007b7b;
+}
+
+/* Appointment Container */
+.appointment-container {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  gap: 20px; /* Add some gap between doctor info and form */
+  padding: 20px;
+}
+
+/* Doctor Info Section */
+.doctor-info {
+  flex: 0.3;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  min-height: 480px;
+}
+
+.doctor-avatar-large {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.doctor-info h3 {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.doctor-contact-info p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Appointment Form Section */
+.appointment-form {
+  flex: 0.5;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.appointment-form h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Form row to align date and time side by side */
+.appointment-form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.appointment-submit-btn {
+  background-color: #00a7a7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto;
+}
+
+.appointment-submit-btn:hover {
+  background-color: #007b7b;
+}
+
+/* Calendar and Time Picker styling */
+.calendar {
+  margin-right: 10px;
+  flex: 1;
+}
+
+.time-picker {
+  margin-left: 10px;
+  flex: 1;
 }
