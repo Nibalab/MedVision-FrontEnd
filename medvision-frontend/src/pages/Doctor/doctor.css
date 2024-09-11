@@ -1,19 +1,17 @@
-/* Overall container */
 .doctor-page-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Main content styling */
 .doctor-page-content {
   flex: 1;
   padding: 20px;
-  justify-content: center; /* Center the content horizontally */
+  justify-content: center; 
   align-items: center;
 }
 
-/* Search bar */
+
 .doctor-search {
   text-align: center;
   margin-bottom: 20px;
