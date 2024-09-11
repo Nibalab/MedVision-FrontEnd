@@ -8,7 +8,7 @@ import Dashboard from '../src/pages/DoctorDashboard/DoctorDashboard';
 import Schedule from '../src/pages/SchedulePage/SchedulePage';
 import Messages from './pages/ChatPage/ChatPage';
 import PatientDashboard from '../src/pages/PatientDashboard/PatientDashboard';
-import Doctor from '../src/pages/Doctor/doctor';
+import Doctor from './pages/Doctor/doctor';
 import io from 'socket.io-client';  
 
 function App() {

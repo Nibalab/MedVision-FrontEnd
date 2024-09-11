@@ -1,0 +1,85 @@
+/* Overall container */
+.doctor-page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content styling */
+.doctor-page-content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Search bar */
+.doctor-search {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 60%;
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+}
+
+/* Doctor list */
+.doctors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.doctor-item {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.doctor-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Button for appointment */
+.appointment-btn {
+  background-color: #00a7a7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.appointment-btn:hover {
+  background-color: #007b7b;
+}
+
+/* Pagination */
+.doctor-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.prev-page, .next-page {
+  background-color: #00a7a7;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.prev-page:hover, .next-page:hover {
+  background-color: #007b7b;
+}

@@ -19,12 +19,12 @@
   .navbar-links {
     display: flex;
     list-style-type: none;
-    gap: 100px; 
+    gap: 70px; 
   }
   
   .navbar-links li a {
     text-decoration: none;
-    color: black; 
+    color: white; 
     font-weight: bold;
     font-size: 18px; 
     transition: color 0.3s ease, border-bottom 0.3s ease; 
