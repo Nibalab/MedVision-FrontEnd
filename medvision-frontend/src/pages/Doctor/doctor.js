@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import { FaSearch } from 'react-icons/fa'; 
@@ -18,7 +19,9 @@ const DoctorsPage = () => {
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState('10:00');
+    const [patientId, setPatientId] = useState(null); // Set to null initially
 
+    // Get profile picture or default
     const getProfilePicture = (doctor) => {
         if (doctor.profile_picture && !doctor.profile_picture.startsWith('http')) {
             return `http://localhost:8000/storage/${doctor.profile_picture.replace('public/', '')}`;
@@ -26,6 +29,25 @@ const DoctorsPage = () => {
         return doctor.profile_picture || '/default-avatar.png';
     };
 
+    // Retrieve patient ID from JWT token stored in local storage
+    useEffect(() => {
+        const token = localStorage.getItem('token'); // Assuming the token is stored as 'token'
+        if (token) {
+            try {
+                const decoded = jwtDecode(token);
+                console.log(decoded); // Debugging: Check the structure of the decoded token
+                setPatientId(decoded.id || decoded.sub); // Use 'sub' if 'id' is not present
+            } catch (err) {
+                console.error("Error decoding token:", err);
+                alert('Invalid token, please log in again.');
+            }
+        } else {
+            alert('Patient ID not sent, please log in.');
+        }
+    }, []);
+    
+
+    // Fetch doctors based on search
     const fetchDoctors = async (name) => {
         setLoading(true);
         setError('');
@@ -45,7 +67,6 @@ const DoctorsPage = () => {
             const delayDebounceFn = setTimeout(() => {
                 fetchDoctors(searchTerm);
             }, 300);
-
             return () => clearTimeout(delayDebounceFn);
         }
     }, [searchTerm]);
@@ -58,9 +79,32 @@ const DoctorsPage = () => {
         setSelectedDoctor(doctor);
     };
 
-    const handleAppointmentSubmit = (e) => {
+    const handleAppointmentSubmit = async (e) => {
         e.preventDefault();
-        alert(`Appointment requested with ${selectedDoctor.name} on ${selectedDate.toDateString()} at ${selectedTime}`);
+        if (!patientId) {
+            alert('Patient ID not found, please log in.');
+            return;
+        }
+
+        const appointmentData = {
+            patient_id: patientId,  // Patient ID from decoded token
+            doctor_id: selectedDoctor.id,
+            appointment_date: selectedDate.toISOString().split('T')[0],  // Format to YYYY-MM-DD
+            appointment_time: selectedTime
+        };
+
+        try {
+            const response = await axios.post('http://localhost:8000/api/appointments', appointmentData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}` // Include token in the headers
+                }
+            });
+            alert('Appointment request submitted successfully!');
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error submitting appointment:', error);
+            alert('Failed to submit appointment. Please try again.');
+        }
     };
 
     return (
