@@ -110,9 +110,9 @@
 /* Appointment Container */
 .appointment-container {
   display: flex;
-  justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
-  gap: 20px; /* Add some gap between doctor info and form */
+  justify-content: center; 
+  align-items: center; 
+  gap: 20px; 
   padding: 20px;
 }
 
