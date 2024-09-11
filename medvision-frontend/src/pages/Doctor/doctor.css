@@ -40,7 +40,6 @@
   outline: none;
 }
 
-/* Doctor list */
 .doctors-list {
   display: flex;
   flex-direction: column;
@@ -82,7 +81,6 @@
   background-color: #007b7b;
 }
 
-/* Pagination styling */
 .pagination-container {
   display: flex;
   justify-content: center;
@@ -105,7 +103,6 @@
   background-color: #007b7b;
 }
 
-/* Appointment Container */
 .appointment-container {
   display: flex;
   justify-content: center; 
@@ -114,7 +111,6 @@
   padding: 20px;
 }
 
-/* Doctor Info Section */
 .doctor-info {
   flex: 0.3;
   background-color: #f5f5f5;
@@ -143,7 +139,6 @@
   gap: 8px;
 }
 
-/* Appointment Form Section */
 .appointment-form {
   flex: 0.5;
   background-color: #f5f5f5;
@@ -156,7 +151,6 @@
   margin-bottom: 20px;
 }
 
-/* Form row to align date and time side by side */
 .appointment-form-row {
   display: flex;
   justify-content: space-between;
