@@ -20,7 +20,7 @@ function App() {
     return () => {
       socket.disconnect();
     };
-  }, []);  // Empty dependency array to run once when the component mounts
+  }, []);  
 
   return (
     <Router>
