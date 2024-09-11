@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
-import { FaSearch } from 'react-icons/fa'; // Importing search icon
+import { FaSearch } from 'react-icons/fa'; 
 import Calendar from 'react-calendar';
 import TimePicker from 'react-time-picker';
-import { FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa'; // Importing icons
+import { FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa'; 
 import 'react-calendar/dist/Calendar.css';
 import 'react-time-picker/dist/TimePicker.css';
 import './doctor.css';
