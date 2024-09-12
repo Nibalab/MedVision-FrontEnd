@@ -71,10 +71,10 @@
   padding: 20px;
 }
 
-/* Adjust message list items */
+
 .message-list {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  height: calc(100% - 50px); /* Ensures the chat list has enough space and scrolls if necessary */
+  height: calc(100% - 50px); 
 }
