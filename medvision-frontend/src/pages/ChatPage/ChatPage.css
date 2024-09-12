@@ -1,7 +1,7 @@
 .chat-page {
   display: flex;
   height: 90vh; 
-  min-height: 600px; /* Ensuring a minimum height */
+  min-height: 600px; 
 }
 
 /* Main content with chat list and chat window */
