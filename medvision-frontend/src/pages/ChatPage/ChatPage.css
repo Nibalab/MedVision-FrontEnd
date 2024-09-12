@@ -51,9 +51,9 @@
   color: teal;
 }
 
-/* Chat window section */
+
 .chat-window {
-  width: 50%; /* Reduced width for the chat window */
+  width: 50%; 
   background-color: #f9f9f9;
   padding: 10px;
   display: flex;
