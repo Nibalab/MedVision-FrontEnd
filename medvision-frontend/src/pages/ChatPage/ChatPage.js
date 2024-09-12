@@ -9,7 +9,7 @@ import './ChatPage.css';
 const socket = io('http://localhost:3001');
 
 const ChatPage = () => {
-  const [currentChat, setCurrentChat] = useState(null); // Track the selected chat
+  const [currentChat, setCurrentChat] = useState(null); 
   const [chatType, setChatType] = useState('patient');   
   const [messages, setMessages] = useState([]);          
   const [chats, setChats] = useState([]);                
@@ -105,7 +105,7 @@ const ChatPage = () => {
   const fetchMessages = async (senderId, senderType) => {
     const token = localStorage.getItem('token');
     
-    if (!doctorId || !senderId) {  // Ensure doctorId and senderId are not null
+    if (!doctorId || !senderId) {  
       console.error('Doctor ID or Sender ID is missing');
       return;
     }
@@ -113,7 +113,7 @@ const ChatPage = () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/messages', {
         params: {
-          receiver_type: 'doctor',  // Correct receiver type
+          receiver_type: 'doctor',  
           receiver_id: doctorId,    // Receiver ID is the doctor
           sender_id: senderId,      // Sender ID must be passed
         },
