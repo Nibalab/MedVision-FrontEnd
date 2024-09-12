@@ -115,7 +115,7 @@ const ChatPage = () => {
         params: {
           receiver_type: 'doctor',  
           receiver_id: doctorId,    
-          sender_id: senderId,      // Sender ID must be passed
+          sender_id: senderId,      
         },
         headers: {
           Authorization: `Bearer ${token}`,
