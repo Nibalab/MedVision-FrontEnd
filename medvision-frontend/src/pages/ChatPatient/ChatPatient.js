@@ -30,7 +30,7 @@ const ChatPatient = () => {
 
         if (response.data && response.data.user && response.data.user.id) {
           console.log('Fetched patient ID:', response.data.user.id);
-          setPatientId(response.data.user.id); // This should set the correct patient ID
+          setPatientId(response.data.user.id); 
         } else {
           console.error('Error: No valid patient ID found in the response.');
         }
