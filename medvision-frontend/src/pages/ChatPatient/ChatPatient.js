@@ -90,10 +90,8 @@ const ChatPatient = () => {
         },
       });
   
-      const fetchedMessages = response.data.messages.reverse(); // Show newest at the bottom
+      const fetchedMessages = response.data.messages.reverse(); 
       setMessages(fetchedMessages);
-  
-     
       setCurrentChat({
         id: doctorId,
         name: fetchedMessages[0]?.sender_name || 'Unknown Doctor',
