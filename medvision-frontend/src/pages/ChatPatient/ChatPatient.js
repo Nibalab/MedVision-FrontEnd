@@ -128,8 +128,8 @@ const ChatPatient = () => {
           sender_id: Number(patientId),
           receiver_id: Number(currentChat.id),
           message_text: messageText.trim(),
-          sender_type: 'user',  // Sender is always 'user' (patient)
-          receiver_type: 'doctor',  // Receiver is always 'doctor'
+          sender_type: 'user',  
+          receiver_type: 'doctor',  
         },
         {
           headers: {
