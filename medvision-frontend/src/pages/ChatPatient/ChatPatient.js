@@ -42,7 +42,6 @@ const ChatPatient = () => {
     }
   };
 
-  // Search functionality for finding doctors based on the query
   const fetchChats = useCallback(async () => {
     if (!searchQuery.trim()) {
       return;
