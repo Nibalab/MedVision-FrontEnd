@@ -122,7 +122,7 @@ const ChatPage = () => {
         },
       });
   
-      const fetchedMessages = response.data.messages.reverse(); // Newest at the bottom
+      const fetchedMessages = response.data.messages.reverse(); 
       setMessages(fetchedMessages);
   
       fetchedMessages.forEach((message) => {
