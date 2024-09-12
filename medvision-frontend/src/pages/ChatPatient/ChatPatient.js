@@ -114,7 +114,6 @@ const ChatPatient = () => {
     );
   };
 
-  // Send message from patient to doctor
   const sendMessage = async (messageText) => {
     if (!currentChat || !currentChat.id || !messageText.trim() || isNaN(patientId)) {
       console.error('Missing required fields or invalid patientId:', { currentChat, messageText, patientId });
