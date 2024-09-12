@@ -195,7 +195,7 @@ const ChatPatient = () => {
             addNewMessage={addNewMessage}
             senderId={patientId}       
             senderType="user"          
-            receiverType="doctor"      // Receiver type is 'doctor'
+            receiverType="doctor"      
             sendMessage={sendMessage}   // Pass the sendMessage function to ChatWindow
           />
           
