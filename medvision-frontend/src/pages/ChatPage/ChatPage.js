@@ -114,7 +114,7 @@ const ChatPage = () => {
       const response = await axios.get('http://127.0.0.1:8000/api/messages', {
         params: {
           receiver_type: 'doctor',  
-          receiver_id: doctorId,    // Receiver ID is the doctor
+          receiver_id: doctorId,    
           sender_id: senderId,      // Sender ID must be passed
         },
         headers: {
