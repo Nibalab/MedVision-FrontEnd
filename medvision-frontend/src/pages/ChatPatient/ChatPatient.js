@@ -17,7 +17,7 @@ const ChatPatient = () => {
   const [patientId, setPatientId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Fetch patient information from the backend using /api/me
+  
   const fetchPatientInfo = async () => {
     const token = localStorage.getItem('token');
     if (token) {
