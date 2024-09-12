@@ -4,7 +4,6 @@
   min-height: 600px; 
 }
 
-/* Main content with chat list and chat window */
 .chat-content {
   display: flex;
   width: 100%;
