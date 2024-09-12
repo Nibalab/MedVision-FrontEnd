@@ -9,13 +9,12 @@
   width: 100%;
 }
 
-/* Chat list section */
 .chat-list {
-  width: 25%; /* Adjusted width for the chat list */
+  width: 25%; 
   padding: 10px;
   background-color: #f7f7f7;
   border-right: 1px solid #e0e0e0;
-  margin-left: 280px; /* Adjust to match sidebar width */
+  margin-left: 280px; 
   margin-right: 20px; /* Added margin-right for space between chat list and window */
   display: flex;
   flex-direction: column;
