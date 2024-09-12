@@ -83,7 +83,7 @@ const ChatPatient = () => {
       const response = await axios.get('http://localhost:8000/api/messages', {
         params: {
           receiver_id: patientId, 
-          sender_id: doctorId,     // or where the patient is the sender
+          sender_id: doctorId,     
         },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -93,7 +93,7 @@ const ChatPatient = () => {
       const fetchedMessages = response.data.messages.reverse(); // Show newest at the bottom
       setMessages(fetchedMessages);
   
-      // Update current chat
+     
       setCurrentChat({
         id: doctorId,
         name: fetchedMessages[0]?.sender_name || 'Unknown Doctor',
