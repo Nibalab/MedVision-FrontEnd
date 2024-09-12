@@ -151,7 +151,7 @@ const ChatPatient = () => {
   };
 
   useEffect(() => {
-    fetchPatientInfo(); // Fetch the patient ID when the component loads
+    fetchPatientInfo(); 
   }, []);
 
   useEffect(() => {
