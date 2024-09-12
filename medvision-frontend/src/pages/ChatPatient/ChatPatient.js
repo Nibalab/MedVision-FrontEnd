@@ -18,7 +18,14 @@ const ChatPatient = () => {
     const [patientId, setPatientId] = useState(null); 
     const [searchQuery, setSearchQuery] = useState(''); 
 
-    
+    // Helper function to get the correct profile picture URL
+    const getProfilePicture = (doctor) => {
+        if (doctor.profile_picture && !doctor.profile_picture.startsWith('http')) {
+            return `http://localhost:8000/storage/${doctor.profile_picture.replace('public/', '')}`;
+        }
+        return doctor.profile_picture || '/default-avatar.png';
+    };
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -50,7 +57,7 @@ const ChatPatient = () => {
                 id: doctor.id,
                 type: 'doctor',
                 name: doctor.name,
-                profile_picture: doctor.profile_picture || '/default-avatar.png',
+                profile_picture: getProfilePicture(doctor), // Use the helper function here
                 last_message: 'Start chatting...',
                 unread_count: 0,
             }));
@@ -123,7 +130,6 @@ const ChatPatient = () => {
         }
     };
 
-    
     useEffect(() => {
         socket.on('message', (newMessage) => {
             if (currentChat && newMessage.sender_id === currentChat.id) {
@@ -135,7 +141,6 @@ const ChatPatient = () => {
         };
     }, [currentChat]);
 
-   
     useEffect(() => {
         fetchChats();
     }, [fetchChats]);
