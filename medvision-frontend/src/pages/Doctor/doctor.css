@@ -22,23 +22,25 @@
   align-items: center;
   justify-content: center;
   position: relative;
-}
-
-.search-icon {
-  position: absolute;
-  left: 30px;
-  font-size: 18px;
-  color: #ccc;
+  width: 60%; /* Make sure the container and input share the same width */
 }
 
 .search-input {
-  width: 60%;
-  padding: 12px 50px;
+  width: 100%; /* Takes full width of the container */
+  padding: 12px 20px 12px 50px; /* Padding for left space to fit the icon */
   border-radius: 30px;
   border: 1px solid #ccc;
   font-size: 16px;
   outline: none;
 }
+
+.search-icon {
+  position: absolute;
+  left: 20px; /* Adjust based on how close/far you want the icon from the input's left border */
+  font-size: 18px;
+  color: #ccc;
+}
+
 
 .doctors-list {
   display: flex;
@@ -228,4 +230,25 @@
 
 .modal-close-btn:hover {
   background-color: #007b7b;
+}
+/* Back to Search Button Styling */
+.back-to-search-btn {
+  background-color: #00a7a7;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.back-to-search-btn:hover {
+  background-color: #007b7b;
+}
+
+.back-to-search-btn svg {
+  margin-right: 8px;
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
-import { FaSearch, FaCheckCircle } from 'react-icons/fa'; 
+import { FaSearch, FaCheckCircle, FaArrowLeft } from 'react-icons/fa'; 
 import Calendar from 'react-calendar';
 import TimePicker from 'react-time-picker';
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa'; 
@@ -117,47 +117,54 @@ const DoctorsPage = () => {
 
             <div className="doctor-page-content">
                 {selectedDoctor ? (
-                    <div className="appointment-container">
-                        <div className="doctor-info">
-                            <img
-                                src={getProfilePicture(selectedDoctor)}
-                                alt={selectedDoctor.name}
-                                className="doctor-avatar-large"
-                            />
-                            <h3>{selectedDoctor.name}</h3>
-                            <p>{selectedDoctor.specialization}</p>
-                            <div className="doctor-contact-info">
-                                <p><FaMapMarkerAlt /> {selectedDoctor.address || 'Location not available'}</p>
-                                <p><FaEnvelope /> {selectedDoctor.email}</p>
-                                <p><FaPhone /> {selectedDoctor.contact_number || 'Phone number not available'}</p>
+                    <>
+                        {/* Back to Search Button */}
+                        <button className="back-to-search-btn" onClick={() => setSelectedDoctor(null)}>
+                            <FaArrowLeft /> Back to Search
+                        </button>
+
+                        <div className="appointment-container">
+                            <div className="doctor-info">
+                                <img
+                                    src={getProfilePicture(selectedDoctor)}
+                                    alt={selectedDoctor.name}
+                                    className="doctor-avatar-large"
+                                />
+                                <h3>{selectedDoctor.name}</h3>
+                                <p>{selectedDoctor.specialization}</p>
+                                <div className="doctor-contact-info">
+                                    <p><FaMapMarkerAlt /> {selectedDoctor.address || 'Location not available'}</p>
+                                    <p><FaEnvelope /> {selectedDoctor.email}</p>
+                                    <p><FaPhone /> {selectedDoctor.contact_number || 'Phone number not available'}</p>
+                                </div>
+                            </div>
+
+                            <div className="appointment-form">
+                                <h3>Request an appointment</h3>
+                                <form onSubmit={handleAppointmentSubmit}>
+                                    <div className="appointment-form-row">
+                                        <div className="calendar">
+                                            <label>Choose a date:</label>
+                                            <Calendar
+                                                onChange={setSelectedDate}
+                                                value={selectedDate}
+                                            />
+                                        </div>
+
+                                        <div className="time-picker">
+                                            <label>Choose a time:</label>
+                                            <TimePicker
+                                                onChange={setSelectedTime}
+                                                value={selectedTime}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" className="appointment-submit-btn">Submit</button>
+                                </form>
                             </div>
                         </div>
-
-                        <div className="appointment-form">
-                            <h3>Request an appointment</h3>
-                            <form onSubmit={handleAppointmentSubmit}>
-                                <div className="appointment-form-row">
-                                    <div className="calendar">
-                                        <label>Choose a date:</label>
-                                        <Calendar
-                                            onChange={setSelectedDate}
-                                            value={selectedDate}
-                                        />
-                                    </div>
-
-                                    <div className="time-picker">
-                                        <label>Choose a time:</label>
-                                        <TimePicker
-                                            onChange={setSelectedTime}
-                                            value={selectedTime}
-                                        />
-                                    </div>
-                                </div>
-
-                                <button type="submit" className="appointment-submit-btn">Submit</button>
-                            </form>
-                        </div>
-                    </div>
+                    </>
                 ) : (
                     <>
                         <div className="doctor-search">
