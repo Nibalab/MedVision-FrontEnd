@@ -244,7 +244,7 @@ const ChatPage = () => {
             addNewMessage={addNewMessage}
             senderId={doctorId}    
             senderType="doctor"    
-            receiverType={chatType === 'patient' ? 'user' : 'doctor'} // Dynamically set receiver type
+            receiverType={chatType === 'patient' ? 'user' : 'doctor'} 
             sendMessage={sendMessage}
             reverseMessages={true}
             />
