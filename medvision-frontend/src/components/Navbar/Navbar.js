@@ -37,7 +37,7 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to="/messages"
+            to="/Patient-messages"
             className={({ isActive }) => (isActive ? 'active' : '')}
           >
             Messages
