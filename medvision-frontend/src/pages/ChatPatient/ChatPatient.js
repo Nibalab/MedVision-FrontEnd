@@ -77,7 +77,6 @@ const ChatPatient = () => {
     }
   }, [searchQuery]);
 
-  // Fetch messages for the selected doctor
   const fetchMessages = async (doctorId) => {
     const token = localStorage.getItem('token');
     try {
