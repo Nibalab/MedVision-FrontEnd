@@ -1,19 +1,19 @@
-
+/* Main chat page container for ChatPatient */
 .chat-patient-page {
     display: flex;
     flex-direction: column;
     height: 100vh; /* Full height of the viewport */
 }
 
-/* Chat container with chat list and chat window */
-.chat-container {
+/* Chat container with chat list and chat window for ChatPatient */
+.chat-patient-container {
     display: flex;
     flex: 1; /* Ensures chat container grows to fill available space */
     overflow: hidden; /* Prevents content from spilling outside container */
 }
 
-/* Chat list section */
-.chat-list {
+/* Chat list section for ChatPatient */
+.chat-patient-list {
     width: 25%; /* Adjust the width of the chat list */
     padding: 10px;
     background-color: #f7f7f7;
@@ -25,8 +25,8 @@
     max-height: 480px;
 }
 
-/* Search bar styling */
-.search-bar {
+/* Search bar styling for ChatPatient */
+.chat-patient-search-bar {
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 20px;
@@ -34,8 +34,8 @@
     border: 1px solid #ccc;
 }
 
-/* Chat window section */
-.chat-window {
+/* Chat window section for ChatPatient */
+.chat-patient-window {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -47,8 +47,8 @@
     max-height: 480px; /* Allows scrolling inside the chat window */
 }
 
-/* Message input section */
-.chat-input-area {
+/* Message input section for ChatPatient */
+.chat-patient-input-area {
     display: flex;
     align-items: center;
     padding: 15px;
@@ -57,23 +57,23 @@
     flex-shrink: 0; /* Prevents input area from shrinking */
 }
 
-/* Full height of the window except footer */
-.chat-messages {
+/* Full height of the window except footer for ChatPatient */
+.chat-patient-messages {
     flex: 1;
     overflow-y: auto; /* Ensures the message area is scrollable */
     padding: 20px;
     background-color: #fff;
 }
 
-/* Placeholder for when no chat is selected */
-.no-chat-selected {
+/* Placeholder for when no chat is selected for ChatPatient */
+.chat-patient-no-chat-selected {
     color: #999;
     text-align: center;
     padding: 20px;
 }
 
-/* Footer styling */
-.footer {
+/* Footer styling for ChatPatient */
+.chat-patient-footer {
     background-color: #00695c;
     color: white;
     text-align: center;

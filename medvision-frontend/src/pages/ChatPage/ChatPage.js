@@ -239,12 +239,14 @@ const ChatPage = () => {
         <div className="chat-window">
           {currentChat ? (
             <ChatWindow
-              messages={messages}
-              currentChat={currentChat} // Pass currentChat to ChatWindow
-              addNewMessage={addNewMessage}
-              doctorId={doctorId}
-              sendMessage={sendMessage}
-              reverseMessages={true}
+            messages={messages}
+            currentChat={currentChat}
+            addNewMessage={addNewMessage}
+            senderId={doctorId}    // Use senderId here
+            senderType="doctor"    // Sender type is 'doctor'
+            receiverType={chatType === 'patient' ? 'user' : 'doctor'} // Dynamically set receiver type
+            sendMessage={sendMessage}
+            reverseMessages={true}
             />
           ) : (
             <div className="no-chat-selected">Select a conversation to start</div>
