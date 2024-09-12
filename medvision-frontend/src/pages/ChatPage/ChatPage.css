@@ -1,6 +1,6 @@
 .chat-page {
   display: flex;
-  height: 90vh; /* Height remains at 90% of the viewport */
+  height: 90vh; 
   min-height: 600px; /* Ensuring a minimum height */
 }
 
