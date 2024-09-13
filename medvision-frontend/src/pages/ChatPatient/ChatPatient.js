@@ -119,17 +119,19 @@ const ChatPatient = () => {
       console.error('Missing required fields or invalid patientId:', { currentChat, messageText, patientId });
       return;
     }
-
+  
     const token = localStorage.getItem('token');
+  
     try {
+      // Send the message to the backend
       const response = await axios.post(
         'http://127.0.0.1:8000/api/patient/messages',
         {
           sender_id: Number(patientId),
           receiver_id: Number(currentChat.id),
           message_text: messageText.trim(),
-          sender_type: 'user',  
-          receiver_type: 'doctor',  
+          sender_type: 'user',
+          receiver_type: 'doctor',
         },
         {
           headers: {
@@ -138,9 +140,35 @@ const ChatPatient = () => {
           },
         }
       );
-
+  
       const newMessage = response.data;
       addNewMessage(newMessage);
+  
+      // Check if this is a new chat and log currentChat
+      console.log('Current Chat:', currentChat);
+  
+      const chatExists = chats.some((chat) => chat.id === currentChat.id);
+      console.log('Chat exists:', chatExists);
+  
+      if (!chatExists) {
+        // Create the new chat object
+        const newChat = {
+          id: currentChat.id,
+          name: currentChat.name,
+          profile_picture: currentChat.profile_picture,
+          last_message: newMessage.message_text,
+          unread_count: 0, // No unread messages since we are the sender
+        };
+  
+        console.log('New Chat:', newChat);
+  
+        // Add the new chat to the chats list
+        setChats((prevChats) => {
+          const updatedChats = [...prevChats, newChat];
+          console.log('Updated Chats:', updatedChats);
+          return updatedChats;
+        });
+      }
     } catch (error) {
       if (error.response && error.response.status === 422) {
         console.error('Validation error:', error.response.data);
@@ -149,10 +177,15 @@ const ChatPatient = () => {
       }
     }
   };
+  
+  
 
   useEffect(() => {
-    fetchPatientInfo(); 
-  }, []);
+    fetchPatientInfo();  // Fetch the patient info when the component mounts
+    fetchChats();        // Fetch the chats when the component mounts
+  }, [fetchChats]);  // Add fetchChats to the dependency array
+  
+  
 
   useEffect(() => {
     socket.on('message', (newMessage) => {

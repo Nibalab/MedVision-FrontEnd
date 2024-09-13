@@ -69,7 +69,8 @@ const ChatWindow = ({ messages, currentChat, addNewMessage, senderId, senderType
 
   const handleSendMessage = async () => {
     if (newMessage.trim() === '' && !attachment) return;
-
+  
+    // Optimistically add the message to the chat window
     const messageData = {
       message_text: newMessage,
       sender_id: senderId,
@@ -77,16 +78,25 @@ const ChatWindow = ({ messages, currentChat, addNewMessage, senderId, senderType
       created_at: new Date().toISOString(),
       is_read: false,
     };
-
-    await sendMessage(newMessage, senderId, currentChat.id, senderType, receiverType, attachment);
-
-    socket.emit('message', messageData);
-
+  
+    // Optimistically update the UI
     addNewMessage(messageData);
-
-    setNewMessage('');
-    setAttachment(null);
+  
+    try {
+      // Send the message to the server
+      const response = await sendMessage(newMessage, senderId, currentChat.id, senderType, receiverType, attachment);
+  
+      // Emit the message via the socket once successfully saved on the server
+      socket.emit('message', response);
+  
+      // Clear the input fields
+      setNewMessage('');
+      setAttachment(null);
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   };
+  
 
   const handleAttachmentChange = (e) => {
     const file = e.target.files[0];
