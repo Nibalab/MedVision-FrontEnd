@@ -64,12 +64,12 @@
     padding: 20px;
 }
 
-/* Footer styling for ChatPatient */
+
 .chat-patient-footer {
     background-color: #00695c;
     color: white;
     text-align: center;
     padding: 15px 0;
-    flex-shrink: 0; /* Ensures footer stays at the bottom */
+    flex-shrink: 0; 
     margin-top: auto; /* Pushes footer to the bottom when content is small */
 }
