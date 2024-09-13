@@ -10,6 +10,7 @@ import Messages from './pages/ChatPage/ChatPage';
 import PatientDashboard from '../src/pages/PatientDashboard/PatientDashboard';
 import Doctor from './pages/Doctor/doctor';
 import ChatPatient from './pages/ChatPatient/ChatPatient';
+import Patient from './pages/PatientPage/PatientPage';
 import io from 'socket.io-client';  
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/patient-dashboard" element={<PatientDashboard />} /> 
         <Route path="/doctors" element={<Doctor />} /> 
         <Route path="/Patient-messages" element={<ChatPatient />} /> 
+        <Route path="/patient" element={<Patient />} /> 
       </Routes>
     </Router>
   );

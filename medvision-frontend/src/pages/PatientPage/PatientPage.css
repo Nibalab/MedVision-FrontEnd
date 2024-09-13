@@ -1,0 +1,77 @@
+/* Scope everything under .patient-page */
+.patient-page-container {
+    display: flex;
+  }
+  
+.patient-page .main-content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 270px; /* Adjust depending on the width of your Sidebar */
+  }
+  
+.patient-page .patient-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+.patient-page .patient-table th, 
+.patient-page .patient-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+  
+.patient-page .search-bar {
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+.patient-page .pagination {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+.patient-page .pagination button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: #fff;
+  }
+  
+.patient-page .pagination button.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+  }
+  
+.patient-page .main-content h1 {
+    margin-bottom: 20px;
+  }
+  
+.patient-page .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+.patient-page .icon-button svg {
+    font-size: 20px;
+    color: #007bff;
+  }
+  
+.patient-page .icon-button:hover svg {
+    color: #0056b3;
+  }
+
+.patient-page .no-patients {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    padding: 20px;
+  }
