@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import './MessageList.css';
 
+const getProfilePicture = (chat) => {
+  if (chat.profile_picture && !chat.profile_picture.startsWith('http')) {
+    return `http://localhost:8000/storage/${chat.profile_picture.replace('public/', '')}`;
+  }
+  return chat.profile_picture || '/default-avatar.png';
+};
+
 const MessageList = ({ chats, fetchMessages }) => {
   const [activeChatId, setActiveChatId] = useState(null);
 
@@ -20,7 +27,7 @@ const MessageList = ({ chats, fetchMessages }) => {
           }}
         >
           <div className="chat-avatar">
-            <img src={chat.profile_picture || '/path/to/default-profile.jpg'} alt={chat.name || 'Unknown'} />
+            <img src={getProfilePicture(chat)} alt={chat.name || 'Unknown'} />
           </div>
           <div className="chat-info">
             <p className="chat-name">{chat.name || 'Unknown Sender'}</p>
