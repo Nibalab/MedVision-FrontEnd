@@ -77,6 +77,9 @@ const ChatPatient = () => {
     }
   }, [searchQuery]);
 
+
+  
+
   const fetchMessages = async (doctorId) => {
     const token = localStorage.getItem('token');
     try {
@@ -148,14 +151,10 @@ const ChatPatient = () => {
       const newMessage = response.data;
       addNewMessage(newMessage);
   
-      // Check if this is a new chat and log currentChat
-      console.log('Current Chat:', currentChat);
-  
+      // Check if this is a new chat
       const chatExists = chats.some((chat) => chat.id === currentChat.id);
-      console.log('Chat exists:', chatExists);
-  
       if (!chatExists) {
-        // Create the new chat object
+        // Add the new chat to the message list if it's a new conversation
         const newChat = {
           id: currentChat.id,
           name: currentChat.name,
@@ -164,24 +163,24 @@ const ChatPatient = () => {
           unread_count: 0, // No unread messages since we are the sender
         };
   
-        console.log('New Chat:', newChat);
-  
-        // Add the new chat to the chats list
-        setChats((prevChats) => {
-          const updatedChats = [...prevChats, newChat];
-          console.log('Updated Chats:', updatedChats);
-          return updatedChats;
-        });
+        setChats((prevChats) => [...prevChats, newChat]);
+      } else {
+        // Update the last message for the existing chat
+        setChats((prevChats) =>
+          prevChats.map((chat) =>
+            chat.id === currentChat.id
+              ? { ...chat, last_message: newMessage.message_text }
+              : chat
+          )
+        );
       }
     } catch (error) {
-      if (error.response && error.response.status === 422) {
-        console.error('Validation error:', error.response.data);
-      } else {
-        console.error('Error sending message:', error);
-      }
+      console.error('Error sending message:', error);
     }
   };
   
+
+
   
 
  useEffect(() => {
@@ -191,16 +190,27 @@ const ChatPatient = () => {
 
   
 
-  useEffect(() => {
-    socket.on('message', (newMessage) => {
-      if (currentChat && newMessage.sender_id === currentChat.id) {
-        addNewMessage(newMessage);
-      }
-    });
-    return () => {
-      socket.off('message');
-    };
-  }, [currentChat]);
+useEffect(() => {
+  socket.on('message', (newMessage) => {
+    if (currentChat && newMessage.sender_id === currentChat.id) {
+      addNewMessage(newMessage);
+    } else {
+      // Increment the unread count for the chat if it's not the current chat
+      setChats((prevChats) =>
+        prevChats.map((chat) =>
+          chat.id === newMessage.sender_id || chat.id === newMessage.receiver_id
+            ? { ...chat, unread_count: (chat.unread_count || 0) + 1 }
+            : chat
+        )
+      );
+    }
+  });
+
+  return () => {
+    socket.off('message');
+  };
+}, [currentChat]);
+
 
   useEffect(() => {
     fetchChats();

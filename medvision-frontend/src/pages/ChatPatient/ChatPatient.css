@@ -1,8 +1,7 @@
-/* Main chat page container for ChatPatient */
 .chat-patient-page {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Full height of the viewport */
+    height: 100vh;
 }
 
 /* Chat container with chat list and chat window for ChatPatient */
