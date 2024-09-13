@@ -1,56 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './PatientPage.css';
-import { FaDownload, FaFileAlt } from 'react-icons/fa'; // Using icons from react-icons
-import Sidebar from '../../components/Sidebar/Sidebar'; // Add Sidebar Component
+import { FaDownload, FaFileAlt, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import Sidebar from '../../components/Sidebar/Sidebar';
 
 const PatientPage = () => {
-  const [patients, setPatients] = useState([]); // Initialize as an empty array
-  const [filteredPatients, setFilteredPatients] = useState([]); // Initialize as an empty array
+  const [allPatients, setAllPatients] = useState([]); // Store all patients for searching across pages
+  const [filteredPatients, setFilteredPatients] = useState([]); // Patients to display after filtering
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const [totalPages, setTotalPages] = useState(1); // Total pages state
 
-  // Function to fetch patients
-  const fetchPatients = async () => {
-    const token = localStorage.getItem('token');
-  
-    if (!token) {
-      console.error('No token found');
-      return;
-    }
-  
-    try {
-      const response = await axios.get('http://127.0.0.1:8000/api/patients', {
-        headers: {
-          Authorization: `Bearer ${token}`, // Attach token
-        },
-      });
-  
-      // Log response to inspect structure
-      console.log(response.data);
-  
-      if (response.data.success && Array.isArray(response.data.patients.data)) {
-        setPatients(response.data.patients.data); // Extract array if nested inside 'data'
-        setFilteredPatients(response.data.patients.data); // Initialize filtered patients
-      } else {
-        console.error('API did not return an array of patients:', response.data);
-      }
-    } catch (error) {
-      console.error('Error fetching patients:', error);
-    }
-  };
-  
+  const token = localStorage.getItem('token');
+  const patientsPerPage = 10; // Number of patients to show per page
 
   // Function to download the patient report
   const handleDownload = async (patientId) => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/patients/${patientId}/download`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         responseType: 'blob',
       });
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `patient_${patientId}_report.pdf`); // Specify file name
+      link.setAttribute('download', `patient_${patientId}_report.pdf`);
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -59,24 +36,80 @@ const PatientPage = () => {
     }
   };
 
-  // Function to handle search by patient name
+  // Handle switching pages
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
+      const startIndex = (nextPage - 1) * patientsPerPage;
+      setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage)); // Update visible patients
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      const prevPage = currentPage - 1;
+      setCurrentPage(prevPage);
+      const startIndex = (prevPage - 1) * patientsPerPage;
+      setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage)); // Update visible patients
+    }
+  };
+
+  // Function to handle search by patient name across all pages
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
+
     if (query === '') {
-      setFilteredPatients(patients); // Show all patients when search is empty
-    } else if (Array.isArray(patients)) {
-      const filtered = patients.filter((patient) =>
+      // Show patients for the current page if search is empty
+      const startIndex = (currentPage - 1) * patientsPerPage;
+      setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage));
+    } else {
+      // Filter all patients by name
+      const filtered = allPatients.filter((patient) =>
         patient.name.toLowerCase().includes(query)
       );
-      setFilteredPatients(filtered);
+      setFilteredPatients(filtered); // Show all matching patients
+      setTotalPages(1); // Disable pagination during search
     }
   };
 
   useEffect(() => {
-    // Fetch patients when the component mounts
-    fetchPatients();
-  }, []);
+    const fetchAllPatients = async () => {
+      try {
+        let page = 1;
+        let allFetchedPatients = [];
+        let lastPage = 1;
+
+        // Fetch all pages of patients
+        do {
+          const response = await axios.get('http://127.0.0.1:8000/api/patients', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              page: page,
+            },
+          });
+
+          const { data, last_page } = response.data.patients;
+          allFetchedPatients = [...allFetchedPatients, ...data];
+          lastPage = last_page;
+          page++;
+        } while (page <= lastPage);
+
+        // Update states
+        setAllPatients(allFetchedPatients); // Store all patients
+        setFilteredPatients(allFetchedPatients.slice(0, patientsPerPage)); // Show first page
+        setTotalPages(Math.ceil(allFetchedPatients.length / patientsPerPage)); // Calculate total pages
+
+      } catch (error) {
+        console.error('Error fetching all patients:', error);
+      }
+    };
+
+    fetchAllPatients(); // Fetch all patients when the component mounts
+  }, [token, patientsPerPage]);
 
   return (
     <div className="patient-page-container">
@@ -130,6 +163,29 @@ const PatientPage = () => {
             )}
           </tbody>
         </table>
+
+        {/* Pagination Section */}
+        {searchQuery === '' && ( // Show pagination only if no search query is active
+          <div className="pagination">
+            <button
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+              className="pagination-button"
+            >
+              <FaArrowLeft /> Previous
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className="pagination-button"
+            >
+              Next <FaArrowRight />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
