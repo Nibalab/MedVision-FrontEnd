@@ -131,12 +131,15 @@ const ChatPage = () => {
         }
       });
   
-      setCurrentChat({
-        id: senderId,
-        name: fetchedMessages[0]?.sender_name || 'Unknown Sender',
-        profile_picture: fetchedMessages[0]?.sender_profile_picture || '/path/to/default-profile.jpg',
-        type: senderType,
-      });
+      if (fetchedMessages.length > 0) {
+        const firstMessage = fetchedMessages[0];
+        setCurrentChat({
+          id: senderId,
+          name: firstMessage.sender_name || 'Unknown Sender',
+          profile_picture: firstMessage.sender_profile_picture || '/path/to/default-profile.jpg',
+          type: senderType,
+        });
+      }
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
