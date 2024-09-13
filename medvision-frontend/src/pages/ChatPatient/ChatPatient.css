@@ -4,16 +4,14 @@
     height: 100vh;
 }
 
-/* Chat container with chat list and chat window for ChatPatient */
 .chat-patient-container {
     display: flex;
-    flex: 1; /* Ensures chat container grows to fill available space */
-    overflow: hidden; /* Prevents content from spilling outside container */
+    flex: 1; 
+    overflow: hidden; 
 }
 
-/* Chat list section for ChatPatient */
 .chat-patient-list {
-    width: 25%; /* Adjust the width of the chat list */
+    width: 25%; 
     padding: 10px;
     background-color: #f7f7f7;
     border-right: 1px solid #e0e0e0;
@@ -24,7 +22,6 @@
     max-height: 480px;
 }
 
-/* Search bar styling for ChatPatient */
 .chat-patient-search-bar {
     padding: 10px;
     margin-bottom: 20px;
@@ -33,7 +30,6 @@
     border: 1px solid #ccc;
 }
 
-/* Chat window section for ChatPatient */
 .chat-patient-window {
     flex: 1;
     display: flex;
@@ -43,10 +39,9 @@
     border-radius: 30px;
     margin-left: 20px;
     overflow-y: auto;
-    max-height: 480px; /* Allows scrolling inside the chat window */
+    max-height: 480px; 
 }
 
-/* Message input section for ChatPatient */
 .chat-patient-input-area {
     display: flex;
     align-items: center;
