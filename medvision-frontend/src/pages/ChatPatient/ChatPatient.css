@@ -51,7 +51,6 @@
     flex-shrink: 0; 
 }
 
-/* Full height of the window except footer for ChatPatient */
 .chat-patient-messages {
     flex: 1;
     overflow-y: auto; /* Ensures the message area is scrollable */
