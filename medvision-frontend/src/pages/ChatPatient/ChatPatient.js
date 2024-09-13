@@ -82,16 +82,18 @@ const ChatPatient = () => {
     try {
       const response = await axios.get('http://localhost:8000/api/messages', {
         params: {
-          receiver_id: patientId, 
-          sender_id: doctorId,     
+          sender_id: patientId,  // Authenticated patient as sender
+          receiver_id: doctorId, // The doctor as receiver
         },
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
   
-      const fetchedMessages = response.data.messages.reverse(); 
+      // Combine sent and received messages
+      const fetchedMessages = response.data.messages.reverse(); // Show newest messages at the bottom
       setMessages(fetchedMessages);
+  
       setCurrentChat({
         id: doctorId,
         name: fetchedMessages[0]?.sender_name || 'Unknown Doctor',
@@ -102,6 +104,8 @@ const ChatPatient = () => {
       console.error('Error fetching messages:', error);
     }
   };
+  
+  
   
   const addNewMessage = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -180,11 +184,11 @@ const ChatPatient = () => {
   
   
 
-  useEffect(() => {
-    fetchPatientInfo();  // Fetch the patient info when the component mounts
-    fetchChats();        // Fetch the chats when the component mounts
-  }, [fetchChats]);  // Add fetchChats to the dependency array
-  
+ useEffect(() => {
+  fetchPatientInfo();  // Fetch the patient info when the component mounts
+  fetchChats();        // Fetch the chats when the component mounts
+}, [fetchChats]);  // Add fetchChats to the dependency array
+
   
 
   useEffect(() => {
