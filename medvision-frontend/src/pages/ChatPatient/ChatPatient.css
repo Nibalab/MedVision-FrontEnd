@@ -48,7 +48,7 @@
     padding: 15px;
     border-top: 1px solid #ddd;
     background-color: #f7f7f7;
-    flex-shrink: 0; /* Prevents input area from shrinking */
+    flex-shrink: 0; 
 }
 
 /* Full height of the window except footer for ChatPatient */
