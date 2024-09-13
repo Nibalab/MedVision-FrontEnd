@@ -93,20 +93,25 @@ const ChatPatient = () => {
         },
       });
   
-      // Combine sent and received messages
       const fetchedMessages = response.data.messages.reverse(); // Show newest messages at the bottom
-      setMessages(fetchedMessages);
   
+      // Instead of fetching the doctor's information from the messages, fetch the doctor's profile from the chat data (e.g., from chats or doctor search).
+      const selectedDoctor = chats.find(chat => chat.id === doctorId); 
+  
+      // Ensure that we set the correct information for the chat participant (the doctor)
       setCurrentChat({
-        id: doctorId,
-        name: fetchedMessages[0]?.sender_name || 'Unknown Doctor',
-        profile_picture: fetchedMessages[0]?.sender_profile_picture || '/default-avatar.png',
+        id: selectedDoctor.id,
+        name: selectedDoctor.name,
+        profile_picture: selectedDoctor.profile_picture || '/default-avatar.png',
         type: 'doctor',
       });
+  
+      setMessages(fetchedMessages);
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
   };
+  
   
   
   

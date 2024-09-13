@@ -11,6 +11,13 @@ const ChatWindow = ({ messages, currentChat, addNewMessage, senderId, senderType
   const [attachment, setAttachment] = useState(null);
   const messagesEndRef = useRef(null);
 
+  const getProfilePicture = (profilePicture) => {
+    if (profilePicture && !profilePicture.startsWith('http')) {
+      return `http://localhost:8000/storage/${profilePicture.replace('public/', '')}`;
+    }
+    return profilePicture || '/default-avatar.png';
+  };
+
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -109,7 +116,7 @@ const ChatWindow = ({ messages, currentChat, addNewMessage, senderId, senderType
     <div className="chat-window-container">
       <div className="chat-header">
         <img
-          src={currentChat.profile_picture || '/path/to/default-profile.jpg'}
+          src={getProfilePicture(currentChat.profile_picture)}
           alt={currentChat.name}
           className="profile-picture"
         />
