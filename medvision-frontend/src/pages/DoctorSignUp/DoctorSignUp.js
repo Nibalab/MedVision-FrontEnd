@@ -59,7 +59,7 @@ const DoctorSignup = () => {
     } catch (error) {
         console.error('Error registering doctor:', error);
         if (error.response) {
-            // Print server-side validation errors
+            
             setErrorMessage(error.response.data.message || 'Registration failed. Please try again.');
             if (error.response.data.errors) {
                 for (const key in error.response.data.errors) {
