@@ -128,7 +128,7 @@ const PatientPage = () => {
         } while (page <= lastPage);
 
 
-        setAllPatients(allFetchedPatients); // Store all patients
+        setAllPatients(allFetchedPatients); 
         setFilteredPatients(allFetchedPatients.slice(0, patientsPerPage)); // Show first page
         setTotalPages(Math.ceil(allFetchedPatients.length / patientsPerPage)); // Calculate total pages
 
