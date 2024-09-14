@@ -77,7 +77,7 @@ const ReportsPage = () => {
 
   return (
     <div className="reports-page-container">
-      <Navbar /> {/* Navbar component */}
+      <Navbar /> 
       <div className="main-content reports-page">
         <h1>Reports</h1>
         <div className="table-container">
