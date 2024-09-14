@@ -33,7 +33,7 @@ const PatientPage = () => {
     try {
       const formData = new FormData();
       formData.append('report_document', file);
-      formData.append('patient_id', patientId); // Add patient id
+      formData.append('patient_id', patientId); 
 
       const response = await axios.post(`http://127.0.0.1:8000/api/patients/${patientId}/upload-report`, formData, {
         headers: {
