@@ -100,7 +100,7 @@ const PatientPage = () => {
         patient.name.toLowerCase().includes(query)
       );
       setFilteredPatients(filtered); 
-      setTotalPages(1); // Disable pagination during search
+      setTotalPages(1); 
     }
   };
 
