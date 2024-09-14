@@ -57,7 +57,6 @@ const SchedulePage = () => {
           </button>
         </div>
 
-        {/* Display today's date if in daily view */}
         {view === 'day' && <h2>{moment().format('dddd, MMMM Do')}</h2>}
 
         {/* Calendar Component */}
