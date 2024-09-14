@@ -24,7 +24,7 @@ const SchedulePage = () => {
     .then(response => {
       const formattedAppointments = response.data.map(appointment => {
         const startDate = new Date(`${appointment.appointment_date}T${appointment.appointment_time}`);
-        const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Assuming each appointment is 1 hour
+        const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); 
         return {
           id: appointment.id,
           title: `Appointment with Patient ${appointment.patient_id}`,
