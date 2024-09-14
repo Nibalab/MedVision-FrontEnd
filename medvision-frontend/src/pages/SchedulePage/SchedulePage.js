@@ -3,7 +3,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import axios from 'axios';
-import './SchedulePage.css'; // Custom styles for schedule page
+import './SchedulePage.css'; 
 import Sidebar from '../../components/Sidebar/Sidebar'; // Assuming you have this component
 
 const localizer = momentLocalizer(moment);
