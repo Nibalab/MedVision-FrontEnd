@@ -30,7 +30,6 @@ const DoctorSignup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Basic validation
     if (formData.password !== formData.password_confirmation) {
         setErrorMessage('Passwords do not match');
         return;
