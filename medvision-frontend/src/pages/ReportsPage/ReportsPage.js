@@ -11,7 +11,7 @@ const ReportsPage = () => {
   const [totalPages, setTotalPages] = useState(1); 
 
   const token = localStorage.getItem('token');
-  const reportsPerPage = 10; // Number of reports to show per page
+  const reportsPerPage = 10; 
 
   // Function to download the report from the database
   const handleDownloadReport = async (reportId) => {
