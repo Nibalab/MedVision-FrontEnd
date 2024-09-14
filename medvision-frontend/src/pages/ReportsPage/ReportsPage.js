@@ -43,7 +43,7 @@ const ReportsPage = () => {
           },
         });
 
-        console.log('Reports:', response.data.reports); // Log to inspect response
+        console.log('Reports:', response.data.reports); 
 
         const fetchedReports = response.data.reports;
         setReports(fetchedReports.slice(0, reportsPerPage)); // Show first page
