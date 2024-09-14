@@ -29,7 +29,6 @@ const DoctorsPage = () => {
         return doctor.profile_picture || '/default-avatar.png';
     };
 
-    // Retrieve patient ID from JWT token stored in local storage
     useEffect(() => {
         const token = localStorage.getItem('token'); // Assuming the token is stored as 'token'
         if (token) {
