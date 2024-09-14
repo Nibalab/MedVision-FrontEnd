@@ -21,7 +21,7 @@ const DoctorSignup = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle file change
+ 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
