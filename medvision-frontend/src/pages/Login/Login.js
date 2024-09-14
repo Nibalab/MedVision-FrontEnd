@@ -28,7 +28,7 @@ const LoginPage = () => {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
 
-      // Navigate based on user role
+  
       const { role } = user;
       if (role === 'doctor') {
         navigate('/doctor-dashboard');
