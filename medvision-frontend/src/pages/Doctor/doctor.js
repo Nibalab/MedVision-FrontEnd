@@ -87,7 +87,7 @@ const DoctorsPage = () => {
         const appointmentData = {
             patient_id: patientId,  
             doctor_id: selectedDoctor.id,
-            appointment_date: selectedDate.toISOString().split('T')[0],  // Format to YYYY-MM-DD
+            appointment_date: selectedDate.toISOString().split('T')[0],  
             appointment_time: selectedTime
         };
 
