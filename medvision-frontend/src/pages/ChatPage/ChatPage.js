@@ -145,10 +145,6 @@ const ChatPage = () => {
     }
   };
   
-  
-  
-  
-
   const addNewMessage = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setChats((prevChats) =>
