@@ -30,7 +30,7 @@ const DoctorsPage = () => {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem('token'); // Assuming the token is stored as 'token'
+        const token = localStorage.getItem('token'); 
         if (token) {
             try {
                 const decoded = jwtDecode(token);
