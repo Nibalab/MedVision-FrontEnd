@@ -71,7 +71,7 @@ const ReportsPage = () => {
       const prevPage = currentPage - 1;
       setCurrentPage(prevPage);
       const startIndex = (prevPage - 1) * reportsPerPage;
-      setReports(reports.slice(startIndex, startIndex + reportsPerPage)); // Update visible reports
+      setReports(reports.slice(startIndex, startIndex + reportsPerPage)); 
     }
   };
 
