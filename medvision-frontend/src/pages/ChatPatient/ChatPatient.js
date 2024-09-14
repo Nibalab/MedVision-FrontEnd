@@ -85,7 +85,7 @@ const ChatPatient = () => {
     try {
       const response = await axios.get('http://localhost:8000/api/messages', {
         params: {
-          sender_id: patientId,  // Authenticated patient as sender
+          sender_id: patientId,  
           receiver_id: doctorId, // The doctor as receiver
         },
         headers: {
