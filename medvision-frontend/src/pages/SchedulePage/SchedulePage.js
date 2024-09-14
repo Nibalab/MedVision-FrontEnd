@@ -42,7 +42,6 @@ const SchedulePage = () => {
     <div className="schedule-page-container">
       <Sidebar />
       <div className="main-content">
-        {/* View toggle buttons */}
         <div className="view-toggle">
           <button
             className={`toggle-button ${view === 'day' ? 'active' : ''}`}
