@@ -110,8 +110,7 @@ const PatientPage = () => {
         let page = 1;
         let allFetchedPatients = [];
         let lastPage = 1;
-
-        // Fetch all pages of patients
+        
         do {
           const response = await axios.get('http://127.0.0.1:8000/api/patients', {
             headers: {
