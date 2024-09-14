@@ -216,7 +216,6 @@ const DoctorsPage = () => {
 
             <Footer />
 
-            {/* Success Modal */}
             {showModal && (
                 <div className="modal-overlay">
                     <div className="success-modal">
