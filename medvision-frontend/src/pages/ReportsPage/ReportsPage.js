@@ -47,7 +47,7 @@ const ReportsPage = () => {
 
         const fetchedReports = response.data.reports;
         setReports(fetchedReports.slice(0, reportsPerPage)); 
-        setTotalPages(Math.ceil(fetchedReports.length / reportsPerPage)); // Calculate total pages
+        setTotalPages(Math.ceil(fetchedReports.length / reportsPerPage)); 
       } catch (error) {
         console.error('Error fetching reports:', error);
       }
