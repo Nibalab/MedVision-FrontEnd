@@ -34,7 +34,6 @@ const ReportsPage = () => {
     }
   };
 
-  // Fetch reports for the patient
   useEffect(() => {
     const fetchReports = async () => {
       try {
