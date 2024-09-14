@@ -6,7 +6,7 @@
 
 .left-side {
     flex: 1;
-    background-color: #ffffff; /* White background for the left side */
+    background-color: #ffffff; 
     display: flex;
     border-top-right-radius: 50px; /* Adjust radius as needed */
     border-bottom-right-radius: 50px; /* Adjust radius as needed */
