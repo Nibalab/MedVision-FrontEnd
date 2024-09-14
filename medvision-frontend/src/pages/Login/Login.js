@@ -26,8 +26,6 @@ const LoginPage = () => {
     
       const response = await axios.post('http://127.0.0.1:8000/api/login', formData);
       const { token, user } = response.data;
-
-      // Store the token in local storage
       localStorage.setItem('token', token);
 
       // Navigate based on user role
