@@ -97,7 +97,7 @@ const DoctorsPage = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}` 
                 }
             });
-            setShowModal(true); // Show the success modal
+            setShowModal(true); 
             console.log(response.data);
         } catch (error) {
             console.error('Error submitting appointment:', error);
