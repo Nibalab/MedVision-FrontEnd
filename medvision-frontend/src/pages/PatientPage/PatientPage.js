@@ -88,13 +88,11 @@ const PatientPage = () => {
     }
   };
 
-
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
 
     if (query === '') {
-      // Show patients for the current page if search is empty
       const startIndex = (currentPage - 1) * patientsPerPage;
       setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage));
     } else {
