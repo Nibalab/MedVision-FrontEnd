@@ -20,7 +20,7 @@ const DoctorsPage = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState('10:00');
     const [patientId, setPatientId] = useState(null);
-    const [showModal, setShowModal] = useState(false); // Added for modal visibility
+    const [showModal, setShowModal] = useState(false); 
 
     // Get profile picture or default
     const getProfilePicture = (doctor) => {
