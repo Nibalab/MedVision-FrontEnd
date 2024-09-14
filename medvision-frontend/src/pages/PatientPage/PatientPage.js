@@ -88,7 +88,7 @@ const PatientPage = () => {
     }
   };
 
-  // Function to handle search by patient name across all pages
+
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
