@@ -160,7 +160,7 @@ const ChatPatient = () => {
           name: currentChat.name,
           profile_picture: currentChat.profile_picture,
           last_message: newMessage.message_text,
-          unread_count: 0, // No unread messages since we are the sender
+          unread_count: 0, 
         };
   
         setChats((prevChats) => [...prevChats, newChat]);
