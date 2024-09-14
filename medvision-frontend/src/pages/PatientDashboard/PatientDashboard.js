@@ -9,7 +9,6 @@ const PatientDashboard = () => {
       <Navbar />
       
       <div className="patient-dashboard-content">
-        {/* Content for the home page */}
         <div className="patient-dashboard-header">
           <h2>Welcome, John Dohn</h2>
           <p>29 July, 1982</p>
