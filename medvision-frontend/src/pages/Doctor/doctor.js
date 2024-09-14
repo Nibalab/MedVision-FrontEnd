@@ -35,7 +35,7 @@ const DoctorsPage = () => {
             try {
                 const decoded = jwtDecode(token);
                 console.log(decoded); 
-                setPatientId(decoded.id || decoded.sub); // Use 'sub' if 'id' is not present
+                setPatientId(decoded.id || decoded.sub); 
             } catch (err) {
                 console.error("Error decoding token:", err);
                 alert('Invalid token, please log in again.');
