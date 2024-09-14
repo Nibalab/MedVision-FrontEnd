@@ -26,7 +26,7 @@ const DoctorSignup = () => {
     setSelectedFile(event.target.files[0]);
   };
 
-  // Handle form submission
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
