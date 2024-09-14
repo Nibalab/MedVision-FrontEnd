@@ -10,7 +10,7 @@ const localizer = momentLocalizer(moment);
 
 const SchedulePage = () => {
   const [appointments, setAppointments] = useState([]);
-  const [view, setView] = useState('day'); // Manage the view, 'day' or 'week'
+  const [view, setView] = useState('day'); 
 
   useEffect(() => {
     const token = localStorage.getItem('token');
