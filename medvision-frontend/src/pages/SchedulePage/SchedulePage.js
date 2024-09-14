@@ -59,7 +59,6 @@ const SchedulePage = () => {
 
         {view === 'day' && <h2>{moment().format('dddd, MMMM Do')}</h2>}
 
-        {/* Calendar Component */}
         <Calendar
           localizer={localizer}
           events={appointments}
