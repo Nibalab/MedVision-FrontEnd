@@ -106,7 +106,7 @@ const DoctorsPage = () => {
     };
 
     const closeModal = () => {
-        setShowModal(false); // Close modal
+        setShowModal(false); 
     };
 
     return (
