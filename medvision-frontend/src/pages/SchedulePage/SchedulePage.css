@@ -97,7 +97,7 @@
 }
 
 .toggle-button + .toggle-button {
-  margin-left: 0px; /* Overlap buttons slightly */
+  margin-left: 0px; 
 }
 
 .toggle-button:hover {
