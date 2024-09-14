@@ -8,7 +8,7 @@
     flex: 1;
     background-color: #ffffff; 
     display: flex;
-    border-top-right-radius: 50px; /* Adjust radius as needed */
+    border-top-right-radius: 50px; 
     border-bottom-right-radius: 50px; /* Adjust radius as needed */
     justify-content: center;
     align-items: center;
