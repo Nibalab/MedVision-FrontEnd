@@ -147,7 +147,7 @@
   }
 }
 
-/* Smaller screens */
+
 @media (max-width: 480px) {
   .schedule-page .rbc-toolbar-label {
     font-size: 1.4rem;
