@@ -10,7 +10,7 @@ const PatientPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1); 
   const [totalPages, setTotalPages] = useState(1); 
-  const [selectedFiles, setSelectedFiles] = useState({}); // Store file input for each patient
+  const [selectedFiles, setSelectedFiles] = useState({}); 
 
   const token = localStorage.getItem('token');
   const patientsPerPage = 10; // Number of patients to show per page
