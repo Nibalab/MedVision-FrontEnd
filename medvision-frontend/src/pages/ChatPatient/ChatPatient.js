@@ -180,8 +180,6 @@ const ChatPatient = () => {
   
 
 
-  
-
  useEffect(() => {
   fetchPatientInfo();  
   fetchChats();        
