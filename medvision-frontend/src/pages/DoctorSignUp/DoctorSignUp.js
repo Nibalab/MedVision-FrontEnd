@@ -41,7 +41,7 @@ const DoctorSignup = () => {
     data.append('specialization', formData.specialization);
     data.append('phoneNumber', formData.phoneNumber);
     data.append('password', formData.password);
-    data.append('password_confirmation', formData.password_confirmation); // Ensure this matches the backend expectation
+    data.append('password_confirmation', formData.password_confirmation); 
 
     if (selectedFile) {
         data.append('profile_picture', selectedFile);
