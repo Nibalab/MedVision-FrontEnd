@@ -116,7 +116,6 @@ const DoctorsPage = () => {
             <div className="doctor-page-content">
                 {selectedDoctor ? (
                     <>
-                        
                         <button className="back-to-search-btn" onClick={() => setSelectedDoctor(null)}>
                             <FaArrowLeft /> Back to Search
                         </button>
