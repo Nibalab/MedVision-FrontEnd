@@ -137,7 +137,7 @@ const PatientPage = () => {
       }
     };
 
-    fetchAllPatients(); // Fetch all patients when the component mounts
+    fetchAllPatients(); 
   }, [token, patientsPerPage]);
 
   return (
