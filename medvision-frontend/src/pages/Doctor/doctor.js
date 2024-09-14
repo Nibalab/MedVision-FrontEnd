@@ -94,7 +94,7 @@ const DoctorsPage = () => {
         try {
             const response = await axios.post('http://localhost:8000/api/appointments', appointmentData, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}` // Include token in the headers
+                    Authorization: `Bearer ${localStorage.getItem('token')}` 
                 }
             });
             setShowModal(true); // Show the success modal
