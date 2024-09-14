@@ -142,7 +142,7 @@ const PatientPage = () => {
 
   return (
     <div className="patient-page-container">
-      <Sidebar /> {/* Sidebar component */}
+      <Sidebar />
       <div className="main-content patient-page">
         <h1>Patients</h1>
         <input
