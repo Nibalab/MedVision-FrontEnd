@@ -56,7 +56,7 @@ const ReportsPage = () => {
     fetchReports(); 
   }, [token, reportsPerPage]);
 
-  // Handle switching pages
+  
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       const nextPage = currentPage + 1;
