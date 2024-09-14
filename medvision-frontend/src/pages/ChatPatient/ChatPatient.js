@@ -95,8 +95,7 @@ const ChatPatient = () => {
   
       const fetchedMessages = response.data.messages.reverse(); 
       const selectedDoctor = chats.find(chat => chat.id === doctorId); 
-  
-      // Ensure that we set the correct information for the chat participant (the doctor)
+
       setCurrentChat({
         id: selectedDoctor.id,
         name: selectedDoctor.name,
