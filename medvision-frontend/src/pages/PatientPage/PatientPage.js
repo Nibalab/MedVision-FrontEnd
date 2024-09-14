@@ -13,7 +13,7 @@ const PatientPage = () => {
   const [selectedFiles, setSelectedFiles] = useState({}); 
 
   const token = localStorage.getItem('token');
-  const patientsPerPage = 10; // Number of patients to show per page
+  const patientsPerPage = 10; 
 
   // Function to handle file input change for report upload
   const handleFileChange = (e, patientId) => {
