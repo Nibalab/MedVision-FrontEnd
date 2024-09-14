@@ -55,7 +55,7 @@ const DoctorSignup = () => {
         });
 
         console.log('Doctor registered successfully:', response.data);
-        setErrorMessage(''); // Clear any error messages
+        setErrorMessage(''); 
         // Redirect or show success message
     } catch (error) {
         console.error('Error registering doctor:', error);
