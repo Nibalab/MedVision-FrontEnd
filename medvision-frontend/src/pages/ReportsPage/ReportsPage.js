@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 
 const ReportsPage = () => {
-  const [reports, setReports] = useState([]); // Store all reports for the patient
+  const [reports, setReports] = useState([]); 
   const [currentPage, setCurrentPage] = useState(1); // Current page state
   const [totalPages, setTotalPages] = useState(1); // Total pages state
 
