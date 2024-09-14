@@ -130,7 +130,7 @@ const PatientPage = () => {
 
         setAllPatients(allFetchedPatients); 
         setFilteredPatients(allFetchedPatients.slice(0, patientsPerPage)); 
-        setTotalPages(Math.ceil(allFetchedPatients.length / patientsPerPage)); // Calculate total pages
+        setTotalPages(Math.ceil(allFetchedPatients.length / patientsPerPage)); 
 
       } catch (error) {
         console.error('Error fetching all patients:', error);
