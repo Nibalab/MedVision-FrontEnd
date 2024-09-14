@@ -185,9 +185,7 @@ const ChatPatient = () => {
  useEffect(() => {
   fetchPatientInfo();  
   fetchChats();        
-}, [fetchChats]);  // Add fetchChats to the dependency array
-
-  
+}, [fetchChats]);  
 
 useEffect(() => {
   socket.on('message', (newMessage) => {
