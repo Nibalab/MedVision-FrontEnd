@@ -13,7 +13,6 @@ const ReportsPage = () => {
   const token = localStorage.getItem('token');
   const reportsPerPage = 10; 
 
-  // Function to download the report from the database
   const handleDownloadReport = async (reportId) => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/reports/download/${reportId}`, {
