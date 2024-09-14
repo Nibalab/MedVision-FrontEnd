@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './PatientPage.css';
-import { FaDownload, FaFileAlt, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaDownload, FaUpload, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import Sidebar from '../../components/Sidebar/Sidebar';
 
 const PatientPage = () => {
@@ -10,14 +10,50 @@ const PatientPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1); // Current page state
   const [totalPages, setTotalPages] = useState(1); // Total pages state
+  const [selectedFiles, setSelectedFiles] = useState({}); // Store file input for each patient
 
   const token = localStorage.getItem('token');
   const patientsPerPage = 10; // Number of patients to show per page
 
-  // Function to download the patient report
-  const handleDownload = async (patientId) => {
+  // Function to handle file input change for report upload
+  const handleFileChange = (e, patientId) => {
+    setSelectedFiles((prevFiles) => ({
+      ...prevFiles,
+      [patientId]: e.target.files[0],
+    }));
+  };
+
+  // Function to store the report in the database
+  const handleStoreReport = async (patientId) => {
+    const file = selectedFiles[patientId];
+    if (!file) {
+      alert('Please select a file first!');
+      return;
+    }
+
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/patients/${patientId}/download`, {
+      const formData = new FormData();
+      formData.append('report_document', file);
+      formData.append('patient_id', patientId); // Add patient id
+
+      const response = await axios.post(`http://127.0.0.1:8000/api/patients/${patientId}/upload-report`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      alert('Report uploaded successfully!');
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error uploading report:', error);
+    }
+  };
+
+  // Function to download the patient report from the database
+  const handleDownloadReport = async (patientId) => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/patients/${patientId}/download-report`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -27,7 +63,7 @@ const PatientPage = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `patient_${patientId}_report.pdf`);
+      link.setAttribute('download', `patient_${patientId}_report.pdf`); // Specify file name
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -130,8 +166,8 @@ const PatientPage = () => {
               <th>Id no</th>
               <th>Name</th>
               <th>Gender</th>
-              <th>Download</th>
-              <th>Report</th>
+              <th>Download Report</th>
+              <th>Upload Report</th>
             </tr>
           </thead>
           <tbody>
@@ -144,14 +180,21 @@ const PatientPage = () => {
                   <td>
                     <button
                       className="download-button"
-                      onClick={() => handleDownload(patient.id)}
+                      onClick={() => handleDownloadReport(patient.id)}
                     >
                       <FaDownload />
                     </button>
                   </td>
                   <td>
-                    <button className="report-button">
-                      <FaFileAlt />
+                    <input
+                      type="file"
+                      onChange={(e) => handleFileChange(e, patient.id)}
+                    />
+                    <button
+                      className="upload-button"
+                      onClick={() => handleStoreReport(patient.id)}
+                    >
+                      <FaUpload />
                     </button>
                   </td>
                 </tr>
