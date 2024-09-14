@@ -70,13 +70,12 @@
   background-color: #019c90 !important;
 }
 
-/* Sidebar custom styles */
+
 .schedule-page .sidebar {
   background-color: #019c90;
   padding: 20px;
 }
 
-/* View Toggle Buttons */
 .view-toggle {
   display: flex;
   justify-content: center;
