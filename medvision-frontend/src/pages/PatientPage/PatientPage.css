@@ -5,7 +5,7 @@
 .patient-page .main-content {
   flex-grow: 1;
   padding: 20px;
-  margin-left: 270px; /* Adjust depending on the width of your Sidebar */
+  margin-left: 270px; 
 }
 
 .patient-page h1 {
