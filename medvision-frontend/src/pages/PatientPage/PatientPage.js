@@ -5,7 +5,7 @@ import { FaDownload, FaUpload, FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import Sidebar from '../../components/Sidebar/Sidebar';
 
 const PatientPage = () => {
-  const [allPatients, setAllPatients] = useState([]); // Store all patients for searching across pages
+  const [allPatients, setAllPatients] = useState([]); 
   const [filteredPatients, setFilteredPatients] = useState([]); // Patients to display after filtering
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1); // Current page state
