@@ -93,7 +93,7 @@ const ChatPatient = () => {
         },
       });
   
-      const fetchedMessages = response.data.messages.reverse(); // Show newest messages at the bottom
+      const fetchedMessages = response.data.messages.reverse(); 
   
       // Instead of fetching the doctor's information from the messages, fetch the doctor's profile from the chat data (e.g., from chats or doctor search).
       const selectedDoctor = chats.find(chat => chat.id === doctorId); 
