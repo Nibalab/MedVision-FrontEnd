@@ -75,7 +75,7 @@ const PatientPage = () => {
       const nextPage = currentPage + 1;
       setCurrentPage(nextPage);
       const startIndex = (nextPage - 1) * patientsPerPage;
-      setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage)); // Update visible patients
+      setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage)); 
     }
   };
 
