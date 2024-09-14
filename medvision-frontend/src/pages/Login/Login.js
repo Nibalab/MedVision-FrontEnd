@@ -18,7 +18,7 @@ const LoginPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 
