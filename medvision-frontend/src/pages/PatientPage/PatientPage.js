@@ -6,7 +6,7 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 
 const PatientPage = () => {
   const [allPatients, setAllPatients] = useState([]); 
-  const [filteredPatients, setFilteredPatients] = useState([]); // Patients to display after filtering
+  const [filteredPatients, setFilteredPatients] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1); // Current page state
   const [totalPages, setTotalPages] = useState(1); // Total pages state
