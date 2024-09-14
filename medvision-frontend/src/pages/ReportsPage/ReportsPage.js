@@ -137,7 +137,7 @@ const ReportsPage = () => {
           </button>
         </div>
       </div>
-      <Footer /> {/* Footer component */}
+      <Footer />
     </div>
   );
 };
