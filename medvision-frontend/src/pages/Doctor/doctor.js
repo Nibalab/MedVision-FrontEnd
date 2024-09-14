@@ -45,7 +45,7 @@ const DoctorsPage = () => {
         }
     }, []);
 
-    // Fetch doctors based on search
+    
     const fetchDoctors = async (name) => {
         setLoading(true);
         setError('');
