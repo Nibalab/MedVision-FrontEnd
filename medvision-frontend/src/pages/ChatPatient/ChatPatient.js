@@ -183,7 +183,7 @@ const ChatPatient = () => {
   
 
  useEffect(() => {
-  fetchPatientInfo();  // Fetch the patient info when the component mounts
+  fetchPatientInfo();  
   fetchChats();        // Fetch the chats when the component mounts
 }, [fetchChats]);  // Add fetchChats to the dependency array
 
