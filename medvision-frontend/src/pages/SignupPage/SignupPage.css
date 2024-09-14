@@ -1,7 +1,7 @@
 .signup-container {
     display: flex;
     height: 100vh;
-    background-color: #01A29D; /* Background color for the whole container */
+    background-color: #01A29D; 
 }
 
 .left-side {
