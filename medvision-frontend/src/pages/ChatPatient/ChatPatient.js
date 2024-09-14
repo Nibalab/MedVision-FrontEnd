@@ -165,7 +165,6 @@ const ChatPatient = () => {
   
         setChats((prevChats) => [...prevChats, newChat]);
       } else {
-        // Update the last message for the existing chat
         setChats((prevChats) =>
           prevChats.map((chat) =>
             chat.id === currentChat.id
