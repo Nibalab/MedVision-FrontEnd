@@ -200,7 +200,6 @@ const PatientPage = () => {
           </tbody>
         </table>
 
-        {/* Pagination Section */}
         {searchQuery === '' && ( // Show pagination only if no search query is active
           <div className="pagination">
             <button
