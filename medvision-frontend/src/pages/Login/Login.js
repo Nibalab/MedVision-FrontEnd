@@ -23,7 +23,7 @@ const LoginPage = () => {
     event.preventDefault();
 
     try {
-      // Make the API request to login
+    
       const response = await axios.post('http://127.0.0.1:8000/api/login', formData);
 
       // Extract the token and user role from the response
