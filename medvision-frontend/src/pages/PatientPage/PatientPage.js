@@ -9,7 +9,7 @@ const PatientPage = () => {
   const [filteredPatients, setFilteredPatients] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1); 
-  const [totalPages, setTotalPages] = useState(1); // Total pages state
+  const [totalPages, setTotalPages] = useState(1); 
   const [selectedFiles, setSelectedFiles] = useState({}); // Store file input for each patient
 
   const token = localStorage.getItem('token');
