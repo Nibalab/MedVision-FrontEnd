@@ -1,0 +1,86 @@
+.reports-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+.reports-page .main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Pushes content to the left */
+}
+
+.reports-page h1 {
+    text-align: center; /* Align heading to the left */
+    margin-bottom: 20px;
+    margin-right: 200px;
+}
+
+.table-container {
+    width: 80%; /* Adjust this width to your preference */
+    margin: 0; /* Remove auto centering */
+}
+
+.patient-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.patient-table th, 
+.patient-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.patient-table th {
+    background-color: #F0F0F0;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.patient-table td {
+    color: #666;
+}
+
+.download-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 20px;
+}
+
+.download-button:hover {
+    color: #0056b3;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start; /* Align pagination to the left */
+    align-items: center;
+    gap: 20px;
+}
+
+.pagination-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination-button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
