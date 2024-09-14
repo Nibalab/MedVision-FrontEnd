@@ -190,7 +190,6 @@ useEffect(() => {
     if (currentChat && newMessage.sender_id === currentChat.id) {
       addNewMessage(newMessage);
     } else {
-      // Increment the unread count for the chat if it's not the current chat
       setChats((prevChats) =>
         prevChats.map((chat) =>
           chat.id === newMessage.sender_id || chat.id === newMessage.receiver_id
