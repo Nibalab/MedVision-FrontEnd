@@ -22,7 +22,6 @@ const DoctorsPage = () => {
     const [patientId, setPatientId] = useState(null);
     const [showModal, setShowModal] = useState(false); 
 
-    // Get profile picture or default
     const getProfilePicture = (doctor) => {
         if (doctor.profile_picture && !doctor.profile_picture.startsWith('http')) {
             return `http://localhost:8000/storage/${doctor.profile_picture.replace('public/', '')}`;
