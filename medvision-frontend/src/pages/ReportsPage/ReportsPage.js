@@ -116,7 +116,7 @@ const ReportsPage = () => {
   </table>
 </div>
 
-        {/* Pagination Section */}
+       
         <div className="pagination">
           <button
             onClick={handlePreviousPage}
