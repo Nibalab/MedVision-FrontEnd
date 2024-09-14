@@ -152,8 +152,7 @@ const ChatPatient = () => {
   
       const newMessage = response.data;
       addNewMessage(newMessage);
-  
-      // Check if this is a new chat
+
       const chatExists = chats.some((chat) => chat.id === currentChat.id);
       if (!chatExists) {
         // Add the new chat to the message list if it's a new conversation
