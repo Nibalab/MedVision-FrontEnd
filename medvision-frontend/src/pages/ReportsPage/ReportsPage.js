@@ -8,7 +8,7 @@ import Footer from '../../components/Footer/Footer';
 const ReportsPage = () => {
   const [reports, setReports] = useState([]); 
   const [currentPage, setCurrentPage] = useState(1); 
-  const [totalPages, setTotalPages] = useState(1); // Total pages state
+  const [totalPages, setTotalPages] = useState(1); 
 
   const token = localStorage.getItem('token');
   const reportsPerPage = 10; // Number of reports to show per page
