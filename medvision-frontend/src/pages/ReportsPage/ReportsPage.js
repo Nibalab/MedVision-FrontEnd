@@ -53,7 +53,7 @@ const ReportsPage = () => {
       }
     };
 
-    fetchReports(); // Fetch reports when the component mounts
+    fetchReports(); 
   }, [token, reportsPerPage]);
 
   // Handle switching pages
