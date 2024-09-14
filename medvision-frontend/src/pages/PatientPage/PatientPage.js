@@ -22,7 +22,7 @@ const PatientPage = () => {
     }));
   };
 
-  // Function to store the report in the database
+
   const handleStoreReport = async (patientId) => {
     const file = selectedFiles[patientId];
     if (!file) {
