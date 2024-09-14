@@ -96,7 +96,6 @@ const PatientPage = () => {
       const startIndex = (currentPage - 1) * patientsPerPage;
       setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage));
     } else {
-      // Filter all patients by name
       const filtered = allPatients.filter((patient) =>
         patient.name.toLowerCase().includes(query)
       );
