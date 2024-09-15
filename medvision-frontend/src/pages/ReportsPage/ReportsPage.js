@@ -13,19 +13,20 @@ const ReportsPage = () => {
   const token = localStorage.getItem('token');
   const reportsPerPage = 10; 
 
-  const handleDownloadReport = async (reportId) => {
+  const handleDownloadReport = async (report) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/reports/download/${reportId}`, {
+      const patientId = report.patient_id; // Use patient_id from the report object
+      const response = await axios.get(`http://127.0.0.1:8000/api/patients/${patientId}/download-report`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
         responseType: 'blob',
       });
-
+  
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `report_${reportId}.pdf`); 
+      link.setAttribute('download', `report_patient_${patientId}.pdf`);
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -33,6 +34,8 @@ const ReportsPage = () => {
       console.error('Error downloading report:', error);
     }
   };
+  
+  
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -85,7 +88,6 @@ const ReportsPage = () => {
     <thead>
       <tr>
         <th>Doctor</th>
-        <th>Specialization</th>
         <th>Email</th>
         <th>Download</th>
       </tr>
@@ -95,12 +97,11 @@ const ReportsPage = () => {
         reports.map((report) => (
           <tr key={report.id}>
             <td>{report.doctor.name}</td>
-            <td>{report.doctor.specialization}</td>
             <td>{report.doctor.email}</td>
             <td>
               <button
                 className="download-button"
-                onClick={() => handleDownloadReport(report.id)}
+                onClick={() => handleDownloadReport(report)}
               >
                 <FaDownload />
               </button>

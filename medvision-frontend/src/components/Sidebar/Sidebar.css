@@ -62,9 +62,7 @@
   .menu-item.active {
     background-color: #004d40; 
     transform: translateY(-2px);
-    padding-left: 30px; 
-  padding-right: 25px; 
-  width: 80%; 
+  width: 90%; 
   transition: background-color 0.3s, transform 0.2s, width 0.3s, padding 0.3s; 
   
   }
