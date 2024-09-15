@@ -1,3 +1,36 @@
+/* Blurred background when alert is active */
+.blur-background {
+  filter: blur(5px);
+}
+
+/* Modal styling for the alert */
+.alert-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.alert-modal p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.alert-modal .tick-icon {
+  font-size: 48px;
+  color: #28a745;
+}
+
+/* Existing styles */
 .patient-page-container {
   display: flex;
 }
@@ -5,7 +38,7 @@
 .patient-page .main-content {
   flex-grow: 1;
   padding: 20px;
-  margin-left: 270px; 
+  margin-left: 270px;
 }
 
 .patient-page h1 {
@@ -20,7 +53,7 @@
   width: 100%;
   max-width: 400px;
   font-size: 16px;
-  border-radius: 25px; 
+  border-radius: 25px;
   border: 1px solid #ddd;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -45,10 +78,6 @@
   border-bottom: 1px solid #f0f0f0;
   padding: 15px;
   text-align: center;
-}
-
-.patient-page .patient-table td:last-child {
-  border-right: none;
 }
 
 .patient-page .download-button,

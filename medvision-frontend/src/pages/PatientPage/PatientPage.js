@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './PatientPage.css';
-import { FaDownload, FaUpload, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaDownload, FaUpload, FaArrowLeft, FaArrowRight, FaCheckCircle } from 'react-icons/fa'; // Added FaCheckCircle for the tick icon
 import Sidebar from '../../components/Sidebar/Sidebar';
 
 const PatientPage = () => {
-  const [allPatients, setAllPatients] = useState([]); 
-  const [filteredPatients, setFilteredPatients] = useState([]); 
+  const [allPatients, setAllPatients] = useState([]);
+  const [filteredPatients, setFilteredPatients] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [currentPage, setCurrentPage] = useState(1); 
-  const [totalPages, setTotalPages] = useState(1); 
-  const [selectedFiles, setSelectedFiles] = useState({}); 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [selectedFiles, setSelectedFiles] = useState({});
+  const [showAlert, setShowAlert] = useState(false); // Added state for the alert
 
   const token = localStorage.getItem('token');
-  const patientsPerPage = 10; 
+  const patientsPerPage = 10;
 
   const handleFileChange = (e, patientId) => {
     setSelectedFiles((prevFiles) => ({
@@ -21,7 +22,6 @@ const PatientPage = () => {
       [patientId]: e.target.files[0],
     }));
   };
-
 
   const handleStoreReport = async (patientId) => {
     const file = selectedFiles[patientId];
@@ -33,7 +33,7 @@ const PatientPage = () => {
     try {
       const formData = new FormData();
       formData.append('report_document', file);
-      formData.append('patient_id', patientId); 
+      formData.append('patient_id', patientId);
 
       const response = await axios.post(`http://127.0.0.1:8000/api/patients/${patientId}/upload-report`, formData, {
         headers: {
@@ -42,7 +42,12 @@ const PatientPage = () => {
         },
       });
 
-      alert('Report uploaded successfully!');
+      // Show alert for 2 seconds when the file is uploaded successfully
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+
       console.log('Response:', response.data);
     } catch (error) {
       console.error('Error uploading report:', error);
@@ -61,7 +66,7 @@ const PatientPage = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `patient_${patientId}_report.pdf`); 
+      link.setAttribute('download', `patient_${patientId}_report.pdf`);
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -75,7 +80,7 @@ const PatientPage = () => {
       const nextPage = currentPage + 1;
       setCurrentPage(nextPage);
       const startIndex = (nextPage - 1) * patientsPerPage;
-      setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage)); 
+      setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage));
     }
   };
 
@@ -84,7 +89,7 @@ const PatientPage = () => {
       const prevPage = currentPage - 1;
       setCurrentPage(prevPage);
       const startIndex = (prevPage - 1) * patientsPerPage;
-      setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage)); 
+      setFilteredPatients(allPatients.slice(startIndex, startIndex + patientsPerPage));
     }
   };
 
@@ -99,8 +104,8 @@ const PatientPage = () => {
       const filtered = allPatients.filter((patient) =>
         patient.name.toLowerCase().includes(query)
       );
-      setFilteredPatients(filtered); 
-      setTotalPages(1); 
+      setFilteredPatients(filtered);
+      setTotalPages(1);
     }
   };
 
@@ -127,23 +132,21 @@ const PatientPage = () => {
           page++;
         } while (page <= lastPage);
 
-
-        setAllPatients(allFetchedPatients); 
-        setFilteredPatients(allFetchedPatients.slice(0, patientsPerPage)); 
-        setTotalPages(Math.ceil(allFetchedPatients.length / patientsPerPage)); 
-
+        setAllPatients(allFetchedPatients);
+        setFilteredPatients(allFetchedPatients.slice(0, patientsPerPage));
+        setTotalPages(Math.ceil(allFetchedPatients.length / patientsPerPage));
       } catch (error) {
         console.error('Error fetching all patients:', error);
       }
     };
 
-    fetchAllPatients(); 
+    fetchAllPatients();
   }, [token, patientsPerPage]);
 
   return (
     <div className="patient-page-container">
       <Sidebar />
-      <div className="main-content patient-page">
+      <div className={`main-content patient-page ${showAlert ? 'blur-background' : ''}`}>
         <h1>Patients</h1>
         <input
           type="text"
@@ -200,7 +203,7 @@ const PatientPage = () => {
           </tbody>
         </table>
 
-        {searchQuery === '' && ( 
+        {searchQuery === '' && (
           <div className="pagination">
             <button
               onClick={handlePreviousPage}
@@ -222,6 +225,13 @@ const PatientPage = () => {
           </div>
         )}
       </div>
+
+      {showAlert && (
+        <div className="alert-modal">
+          <FaCheckCircle className="tick-icon" />
+          <p>Report uploaded successfully!</p>
+        </div>
+      )}
     </div>
   );
 };
