@@ -111,12 +111,8 @@ const PatientDashboard = () => {
               {notifications.confirmedAppointments.length > 0 ? (
                 notifications.confirmedAppointments.map((appointment, index) => (
                   <li key={index}>
-                    {appointment.doctor && appointment.doctor.name ? (
-                      `Your appointment with Dr. ${appointment.doctor.name} on ${new Date(appointment.date).toLocaleDateString()} has been confirmed`
-                    ) : (
-                      'Your appointment has been confirmed'
-                    )}
-                  </li>
+    Your appointment with Dr. {appointment.doctor.user.name} on {new Date(appointment.appointment_date).toLocaleDateString()} has been confirmed
+  </li>
                 ))
               ) : (
                 <li>No confirmed appointments</li>
