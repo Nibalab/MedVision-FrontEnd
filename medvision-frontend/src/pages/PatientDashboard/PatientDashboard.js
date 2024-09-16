@@ -6,13 +6,11 @@ import './PatientDashboard.css';
 
 const PatientDashboard = () => {
   const [patient, setPatient] = useState(null);
-
-  const getProfilePicture = (patient) => {
-    if (patient.profile_picture && !patient.profile_picture.startsWith('http')) {
-      return `http://localhost:8000/storage/${patient.profile_picture.replace('public/', '')}`;
-    }
-    return patient.profile_picture || '/default-avatar.png';
-  };
+  const [notifications, setNotifications] = useState({
+    messages: [],
+    confirmedAppointments: [],
+    newReports: [],
+  });
 
   useEffect(() => {
     const fetchPatientInfo = async () => {
@@ -29,7 +27,37 @@ const PatientDashboard = () => {
       }
     };
 
+    const fetchNotifications = async () => {
+      const token = localStorage.getItem('token');
+      try {
+        // Fetch new messages from doctors
+        const messagesResponse = await axios.get('http://127.0.0.1:8000/api/patient/message', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // Fetch confirmed appointments
+        const appointmentsResponse = await axios.get('http://127.0.0.1:8000/api/patient/confirmed-appointments', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // Fetch new reports uploaded by doctors
+        const reportsResponse = await axios.get('http://127.0.0.1:8000/api/patient/new-reports', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // Set notifications state
+        setNotifications({
+          messages: messagesResponse.data.messages || [],
+          confirmedAppointments: appointmentsResponse.data.confirmedAppointments || [],
+          newReports: reportsResponse.data.newReports || [],
+        });
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+
     fetchPatientInfo();
+    fetchNotifications();
   }, []);
 
   if (!patient) {
@@ -43,7 +71,6 @@ const PatientDashboard = () => {
       <div className="patient-dashboard-content">
         <div className="patient-profile">
           <div className="profile-picture">
-            {/* If the patient has a profile picture, display it; otherwise, use a placeholder */}
             <img
               src={getProfilePicture(patient)}
               alt="Profile"
@@ -65,9 +92,50 @@ const PatientDashboard = () => {
           <div className="notifications">
             <h3>Notifications</h3>
             <ul>
-              <li>You have 1 message from Dr. Kadi</li>
-              <li>Your upcoming appointment needs confirmation</li>
-              <li>Your recent Report has been annotated</li>
+              {/* Display new messages */}
+              {notifications.messages.length > 0 ? (
+                notifications.messages.map((message, index) => (
+                  <li key={index}>
+                    {message.doctor && message.doctor.name ? (
+                      `You have a new message from Dr. ${message.doctor.name}`
+                    ) : (
+                      'You have a new message'
+                    )}
+                  </li>
+                ))
+              ) : (
+                <li>No new messages</li>
+              )}
+
+              {/* Display confirmed appointments */}
+              {notifications.confirmedAppointments.length > 0 ? (
+                notifications.confirmedAppointments.map((appointment, index) => (
+                  <li key={index}>
+                    {appointment.doctor && appointment.doctor.name ? (
+                      `Your appointment with Dr. ${appointment.doctor.name} on ${new Date(appointment.date).toLocaleDateString()} has been confirmed`
+                    ) : (
+                      'Your appointment has been confirmed'
+                    )}
+                  </li>
+                ))
+              ) : (
+                <li>No confirmed appointments</li>
+              )}
+
+              {/* Display new reports */}
+              {notifications.newReports.length > 0 ? (
+                notifications.newReports.map((report, index) => (
+                  <li key={index}>
+                    {report.doctor && report.doctor.name ? (
+                      `Dr. ${report.doctor.name} has uploaded a new report on ${new Date(report.uploaded_at).toLocaleDateString()}`
+                    ) : (
+                      'A new report has been uploaded'
+                    )}
+                  </li>
+                ))
+              ) : (
+                <li>No new reports</li>
+              )}
             </ul>
           </div>
 
@@ -77,7 +145,6 @@ const PatientDashboard = () => {
               <p><strong>Brain CT Scan</strong></p>
               <p>8/6/2024</p>
               <p>Annotated</p>
-              {/* Change <a> to a <button> for non-navigable action */}
               <button className="view-report-button">View</button>
             </div>
           </div>
@@ -93,6 +160,13 @@ const PatientDashboard = () => {
       <Footer />
     </div>
   );
+};
+
+const getProfilePicture = (patient) => {
+  if (patient.profile_picture && !patient.profile_picture.startsWith('http')) {
+    return `http://localhost:8000/storage/${patient.profile_picture.replace('public/', '')}`;
+  }
+  return patient.profile_picture || '/default-avatar.png';
 };
 
 export default PatientDashboard;
