@@ -3,6 +3,7 @@ import axios from 'axios';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import './PatientDashboard.css';
+import { FiDownload } from 'react-icons/fi'; // Icon for the download button
 
 const PatientDashboard = () => {
   const [patient, setPatient] = useState(null);
@@ -11,6 +12,8 @@ const PatientDashboard = () => {
     confirmedAppointments: [],
     newReports: [],
   });
+  const [latestReport, setLatestReport] = useState(null); // Store latest report
+  const [nextAppointment, setNextAppointment] = useState(null); // Store next confirmed appointment
 
   useEffect(() => {
     const fetchPatientInfo = async () => {
@@ -40,6 +43,13 @@ const PatientDashboard = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
+        // Get future appointments and find the next one
+        const futureAppointments = appointmentsResponse.data.confirmedAppointments.filter(appointment => 
+          new Date(appointment.appointment_date) > new Date()
+        );
+        const nextConfirmedAppointment = futureAppointments.length > 0 ? futureAppointments[0] : null;
+        setNextAppointment(nextConfirmedAppointment);
+
         // Fetch new reports uploaded by doctors
         const reportsResponse = await axios.get('http://127.0.0.1:8000/api/patient/new-reports', {
           headers: { Authorization: `Bearer ${token}` },
@@ -56,10 +66,53 @@ const PatientDashboard = () => {
       }
     };
 
+    const fetchLatestReport = async () => {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/patient/latest-report', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setLatestReport(response.data.latestReport);
+      } catch (error) {
+        console.error('Error fetching latest report:', error);
+      }
+    };
+
     fetchPatientInfo();
     fetchNotifications();
+    fetchLatestReport();
   }, []);
 
+  const downloadReport = async () => {
+    const token = localStorage.getItem('token');
+    
+    if (!patient || !patient.id) {
+      console.error('Patient ID is missing');
+      return;
+    }
+  
+    const patientId = patient.id;
+  
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/patients/${patientId}/download-report`, {
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: 'blob',  // Ensure response is treated as a file
+      });
+  
+      // Create a download link for the file
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'report.pdf');  // Specify file name
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+  
+    } catch (error) {
+      console.error('Error downloading report:', error);
+    }
+  };
+  
   if (!patient) {
     return <p>Loading...</p>; // Loading state
   }
@@ -67,7 +120,6 @@ const PatientDashboard = () => {
   return (
     <div className="patient-dashboard-container">
       <Navbar />
-      
       <div className="patient-dashboard-content">
         <div className="patient-profile">
           <div className="profile-picture">
@@ -92,7 +144,6 @@ const PatientDashboard = () => {
           <div className="notifications">
             <h3>Notifications</h3>
             <ul>
-              {/* Display new messages */}
               {notifications.messages.length > 0 ? (
                 notifications.messages.map((message, index) => (
                   <li key={index}>
@@ -107,18 +158,16 @@ const PatientDashboard = () => {
                 <li>No new messages</li>
               )}
 
-              {/* Display confirmed appointments */}
               {notifications.confirmedAppointments.length > 0 ? (
                 notifications.confirmedAppointments.map((appointment, index) => (
                   <li key={index}>
-    Your appointment with Dr. {appointment.doctor.user.name} on {new Date(appointment.appointment_date).toLocaleDateString()} has been confirmed
-  </li>
+                    Your appointment with Dr. {appointment.doctor.user.name} on {new Date(appointment.appointment_date).toLocaleDateString()} has been confirmed
+                  </li>
                 ))
               ) : (
                 <li>No confirmed appointments</li>
               )}
 
-              {/* Display new reports */}
               {notifications.newReports.length > 0 ? (
                 notifications.newReports.map((report, index) => (
                   <li key={index}>
@@ -136,23 +185,34 @@ const PatientDashboard = () => {
           </div>
 
           <div className="recent-reports">
-            <h3>Recent Reports</h3>
-            <div>
-              <p><strong>Brain CT Scan</strong></p>
-              <p>8/6/2024</p>
-              <p>Annotated</p>
-              <button className="view-report-button">View</button>
-            </div>
+            <h3>Recent Report</h3>
+            {latestReport ? (
+              <div>
+                <p><strong>{latestReport?.ctScan?.name || 'CT Scan'}</strong></p>
+                <p>{new Date(latestReport?.created_at).toLocaleDateString()}</p>
+                <p>Uploaded by Dr. {latestReport?.doctor?.name || 'Unknown'}</p>
+                <button className="download-report-button" onClick={downloadReport}>
+                  <FiDownload /> Download
+                </button>
+              </div>
+            ) : (
+              <p>No recent report available</p>
+            )}
           </div>
 
           <div className="next-appointment">
             <h3>Next Appointment</h3>
-            <p>Tuesday, 10 August 2024</p>
-            <p>10:00 AM - Dr. Rami Kadi ~ Neurologist</p>
+            {nextAppointment ? (
+              <div>
+                <p>{new Date(nextAppointment.appointment_date).toLocaleDateString()}</p>
+                <p>{nextAppointment.appointment_time} - Dr. {nextAppointment.doctor.user.name} ~ {nextAppointment.doctor.specialization}</p>
+              </div>
+            ) : (
+              <p>No upcoming appointments</p>
+            )}
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );
