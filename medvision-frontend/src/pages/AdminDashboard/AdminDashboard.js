@@ -1,22 +1,71 @@
-import React from 'react';
-import SidebarAdmin from '../../components/SidebarAdmin/SidebarAdmin';  // Make sure this path is correct
-import './AdminDashboard.css';  // Custom CSS for the Admin Dashboard
+import React, { useEffect, useState } from 'react';
+import SidebarAdmin from '../../components/SidebarAdmin/SidebarAdmin'; 
+import DoctorSummaryChart from '../../components/DoctorSummaryChart/DoctorDummaryChart';
+import PatientSummaryChart from '../../components/PatientSummaryChart/PatientSummaryChart';
+import axios from 'axios';
+import './AdminDashboard.css'; 
 
 const AdminDashboard = () => {
+  const [stats, setStats] = useState({
+    newDoctors: 0,
+    oldDoctors: 0,
+    totalDoctors: 0,
+    newPatients: 0,
+    oldPatients: 0,
+    totalPatients: 0,
+  });
+
+ 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    
+    axios.get('http://127.0.0.1:8000/api/admin-dashboard/stats', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(response => {
+      const { newDoctors, oldDoctors, totalDoctors, newPatients, oldPatients, totalPatients } = response.data;
+      setStats({
+        newDoctors,
+        oldDoctors,
+        totalDoctors,
+        newPatients,
+        oldPatients,
+        totalPatients,
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching admin stats:', error);
+    });
+  }, []);
+
   return (
     <div className="admin-dashboard">
-      <SidebarAdmin />  {/* Sidebar for the admin dashboard */}
+      <SidebarAdmin />  
       <div className="admin-dashboard-content">
-        <div className="dashboard-summary">
-          {/* Here you can include the summary components for doctors and patients */}
-          <h2>Welcome to the Admin Dashboard</h2>
-          <p>Manage Doctors, Patients, and other key system features here.</p>
-          
-          {/* Summary components for example */}
-          <div className="summary-section">
-            {/* Insert other components like summary charts or other content here */}
-            <h3>Overview</h3>
-            {/* Add summary or stats here */}
+        <h1>Summary</h1>
+
+        <div className="summary-charts-container">
+          <div className="summary-chart">
+            <h3>Doctor Summary </h3>
+            <DoctorSummaryChart 
+              newDoctors={stats.newDoctors}
+              oldDoctors={stats.oldDoctors}
+              totalDoctors={stats.totalDoctors}
+            />
+          </div>
+
+
+          <div className="summary-chart">
+            <h3>Patient Summary </h3>
+            <PatientSummaryChart 
+              newPatients={stats.newPatients}
+              oldPatients={stats.oldPatients}
+              totalPatients={stats.totalPatients}
+            />
           </div>
         </div>
       </div>
