@@ -165,16 +165,17 @@ const DoctorsPage = () => {
                 ) : (
                     <>
                         <div className="doctor-search">
-                            <div className="search-bar-container">
-                                <FaSearch className="search-icon" />
-                                <input
-                                    type="text"
-                                    placeholder="Search for a doctor"
-                                    value={searchTerm}
-                                    onChange={handleSearch}
-                                    className="search-input"
-                                />
-                            </div>
+                        <div className="doctor-search-bar-container">
+                         <FaSearch className="doctor-search-icon" />
+                            <input
+                              type="text"
+                              placeholder="Search for a doctor"
+                              value={searchTerm}
+                              onChange={handleSearch}
+                              className="doctor-search-input"
+                             />
+                        </div>
+
                         </div>
 
                         {loading && <p>Loading doctors...</p>}
