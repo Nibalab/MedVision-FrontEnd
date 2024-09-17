@@ -1,0 +1,70 @@
+/* SidebarAdmin.css */
+.sidebar-admin-container {
+    width: 200px;
+    height: 85vh;
+    background-color: #01a29d;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px;
+    position: fixed;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+    margin-top: 25px;
+  }
+  
+  .admin-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .admin-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+  }
+  
+  .menu-items-admin {
+    width: 100%;
+  }
+  
+  .menu-item-admin {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 10px 0;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .menu-item-admin svg {
+    margin-right: 10px;
+  }
+  
+  .menu-item-admin:hover,
+  .menu-item-admin.active {
+    background-color: #004d40;
+    transform: translateY(-2px);
+  }
+  
+  .logout-section-admin {
+    width: 100%;
+  }
+  
+  .logout-section-admin .menu-item-admin {
+    color: white;
+  }
+  
+  .logout-section-admin .menu-item-admin:hover {
+    background-color: #00332f;
+    transform: translateY(-2px);
+  }
+  

@@ -1,0 +1,26 @@
+/* AdminDashboard.css */
+.admin-dashboard {
+    display: flex;
+  }
+  
+  .admin-dashboard-content {
+    flex: 1;
+    margin-left: 280px; /* This gives space for the Sidebar */
+    padding: 20px; /* Padding for content */
+  }
+  
+  .dashboard-summary {
+    background-color: #f9f9f9;
+    padding: 20px;
+    min-height: 100vh; /* Ensure the dashboard content fills the screen */
+    margin-top: 20px;
+  }
+  
+  .summary-section {
+    margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
