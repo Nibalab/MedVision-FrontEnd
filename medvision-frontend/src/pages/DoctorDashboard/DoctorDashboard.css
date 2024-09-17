@@ -41,7 +41,10 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 15px;
+  display: block; /* Center the image horizontally */
+  margin: 0 auto; /* Center the image horizontally */
 }
+
 
 .modal-content button {
   margin-top: 20px;

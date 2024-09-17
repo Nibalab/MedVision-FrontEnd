@@ -18,13 +18,19 @@ const DoctorDashboard = () => {
   const [appointmentRequests, setAppointmentRequests] = useState([]); 
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
+  const getProfilePicture = (doctor) => {
+    if (doctor.profile_picture && !doctor.profile_picture.startsWith('http')) {
+      return `http://localhost:8000/storage/${doctor.profile_picture.replace('public/', '')}`;
+    }
+    return doctor.profile_picture || '/default-avatar.png';
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
       return;
     }
 
-   
     axios.get('http://127.0.0.1:8000/api/doctor-dashboard/stats', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -49,7 +55,6 @@ const DoctorDashboard = () => {
       console.error('Error fetching stats:', error);
     });
 
-    
     axios.get('http://127.0.0.1:8000/api/doctor-dashboard/pending-appointments', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -71,14 +76,12 @@ const DoctorDashboard = () => {
     setSelectedAppointment(null); 
   };
 
- 
   const acceptAppointment = (appointmentId) => {
     const token = localStorage.getItem('token');
     axios.put(`http://127.0.0.1:8000/api/appointments/${appointmentId}/accept`, 
       { status: 'confirmed' }, 
       { headers: { Authorization: `Bearer ${token}` } })
     .then(() => {
-      
       setAppointmentRequests(prevRequests => prevRequests.filter(req => req.id !== appointmentId));
     })
     .catch(error => {
@@ -86,14 +89,12 @@ const DoctorDashboard = () => {
     });
   };
 
-  
   const declineAppointment = (appointmentId) => {
     const token = localStorage.getItem('token');
     axios.put(`http://127.0.0.1:8000/api/appointments/${appointmentId}/decline`, 
       { status: 'canceled' }, 
       { headers: { Authorization: `Bearer ${token}` } })
     .then(() => {
-     
       setAppointmentRequests(prevRequests => prevRequests.filter(req => req.id !== appointmentId));
     })
     .catch(error => {
@@ -170,7 +171,7 @@ const DoctorDashboard = () => {
               <h2>Patient Details</h2>
               {selectedAppointment.patient.profile_picture && (
                 <img 
-                  src={selectedAppointment.patient.profile_picture} 
+                  src={getProfilePicture(selectedAppointment.patient)}  // Using getProfilePicture function
                   alt={`${selectedAppointment.patient.name}'s profile`} 
                   className="patient-profile-picture"
                 />
