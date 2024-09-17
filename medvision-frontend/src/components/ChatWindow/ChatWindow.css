@@ -4,9 +4,8 @@
     flex-direction: column;
     height: 100%;
     background-color: #fff;
-    border-radius: 40px;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
 }
 
 /* Header styling with profile picture and name */
@@ -21,7 +20,7 @@
 .chat-window-container .profile-picture {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
+    border-radius: 10%;
     margin-right: 15px;
     object-fit: cover; /* Ensures the image covers the full circle */
 }
@@ -62,7 +61,7 @@
 /* Message bubble design */
 .chat-window-container .message-bubble {
     max-width: 60%;
-    padding: 12px;
+    padding: 7px;
     border-radius: 20px;
     font-size: 15px;
     word-wrap: break-word;
