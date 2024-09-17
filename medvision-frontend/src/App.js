@@ -15,6 +15,7 @@ import Reports from './pages/ReportsPage/ReportsPage';
 import Upload from './pages/UploadPage/UploadPage';
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
 import DoctorAdminPage from './pages/DoctorAdminPage/DoctorAdminPage';
+import PatientAdminPage from './pages/PatientAdminPage/PatientAdminPage';
 import io from 'socket.io-client';  
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/upload" element={<Upload />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} /> 
         <Route path="/doctorsAdmin" element={<DoctorAdminPage />} /> 
+        <Route path="/patientsAdmin" element={<PatientAdminPage />} />
       </Routes>
     </Router>
   );
