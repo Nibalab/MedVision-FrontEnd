@@ -38,14 +38,14 @@ const SidebarAdmin = () => {
           <span>Dashboard</span>
         </NavLink>
         <NavLink 
-          to="/doctors" 
+          to="/doctorsAdmin" 
           className={({ isActive }) => isActive ? "menu-item-admin active" : "menu-item-admin"}
         >
           <User size={20} />
           <span>Doctors</span>
         </NavLink>
         <NavLink 
-          to="/patients" 
+          to="/patientsAdmin" 
           className={({ isActive }) => isActive ? "menu-item-admin active" : "menu-item-admin"}
         >
           <User size={20} />

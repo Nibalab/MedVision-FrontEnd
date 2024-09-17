@@ -1,0 +1,108 @@
+/* Container */
+.doctor-admin-page {
+    display: flex;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  /* Sidebar */
+  .sidebar-admin-container {
+    width: 200px;
+    background-color: #01a29d;
+    height: 85vh;
+    padding: 20px;
+    border-radius: 20px;
+    margin: 20px;
+  }
+  
+  .sidebar-admin-container h2 {
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Main Content */
+  .doctor-content {
+    margin-left: 220px;
+    padding: 20px;
+    width: 100%;
+    margin-left: 280px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Search Bar */
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    width: 40%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  /* Table */
+  .doctor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .doctor-table th, .doctor-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .doctor-table th {
+    background-color: #01a29d;
+    color: white;
+  }
+  
+  .doctor-table td {
+    background-color: #fff;
+  }
+  
+  .doctor-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Buttons and Icons */
+  .view-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .view-button:hover {
+    background-color: #45a049;
+  }
+  
+  .delete-icon {
+    color: #010101;
+    cursor: pointer;
+  }
+  
+  .delete-icon:hover {
+    color: #d32f2f;
+  }
+  
+  /* Sidebar Menu Active Link */
+  .menu-item-admin.active {
+    background-color: #004d40;
+    color: white;
+  }
+  
