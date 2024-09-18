@@ -1,0 +1,53 @@
+.upload-page-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .upload-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background-color: #f8f8f8;
+  }
+  
+  .upload-content h1 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .dropzone {
+    width: 400px;
+    height: 250px;
+    border: 2px dashed #007bff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  
+  .dropzone p {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+  }
+  
+  .submit-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  

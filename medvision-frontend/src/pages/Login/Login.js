@@ -12,17 +12,24 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
+  
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+    
       const response = await axios.post('http://127.0.0.1:8000/api/login', formData);
-      const { role } = response.data.user;
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+
+  
+      const { role } = user;
       if (role === 'doctor') {
         navigate('/doctor-dashboard');
       } else if (role === 'patient') {
@@ -61,11 +68,11 @@ const LoginPage = () => {
             <a href="/forgot-password" className="forgot-password-link">Forgot Password?</a>
           </div>
           <div className="login-terms-wrapper">
-    <input type="checkbox" className="terms-checkbox" id="terms-checkbox" required />
-    <label htmlFor="terms-checkbox">
-        Accept the <a href="/terms">Terms and Conditions</a> and <a href="/privacy">Privacy Policy</a>
-    </label>
-</div>
+            <input type="checkbox" className="terms-checkbox" id="terms-checkbox" required />
+            <label htmlFor="terms-checkbox">
+                Accept the <a href="/terms">Terms and Conditions</a> and <a href="/privacy">Privacy Policy</a>
+            </label>
+          </div>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit" className="login-button">Login</button>
           <p>Don't have an account? <a href="/register">Sign up</a></p>

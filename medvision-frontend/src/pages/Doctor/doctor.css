@@ -1,0 +1,261 @@
+/* Doctor Page Container */
+.doctor-page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.doctor-page-content {
+  flex: 1;
+  padding: 20px;
+  justify-content: center; 
+  align-items: center;
+}
+
+/* Doctor Search */
+.doctor-search {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.doctor-search-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 60%; /* Make sure the container and input share the same width */
+}
+
+.doctor-search-input {
+  width: 100%; /* Takes full width of the container */
+  padding: 12px 20px 12px 50px; /* Padding for left space to fit the icon */
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+}
+
+.doctor-search-icon {
+  position: absolute;
+  left: 15px; /* Adjust based on how close/far you want the icon from the input's left border */
+  font-size: 18px;
+  color: #ccc;
+  z-index: 10;
+}
+
+/* Doctors List */
+.doctors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.doctor-item {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.doctor-details {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.appointment-btn {
+  background-color: #00a7a7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.appointment-btn:hover {
+  background-color: #007b7b;
+}
+
+/* Pagination Container */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.prev-page,
+.next-page {
+  background-color: #00a7a7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.prev-page:hover,
+.next-page:hover {
+  background-color: #007b7b;
+}
+
+/* Appointment Container */
+.appointment-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  gap: 20px; 
+  padding: 20px;
+}
+
+.doctor-info {
+  flex: 0.3;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  min-height: 480px;
+}
+
+.doctor-avatar-large {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.doctor-info h3 {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.doctor-contact-info p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Appointment Form */
+.appointment-form {
+  flex: 0.5;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.appointment-form h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.appointment-form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.appointment-submit-btn {
+  background-color: #00a7a7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto;
+}
+
+.appointment-submit-btn:hover {
+  background-color: #007b7b;
+}
+
+.calendar {
+  margin-right: 10px;
+  flex: 1;
+}
+
+.time-picker {
+  margin-left: 10px;
+  flex: 1;
+}
+
+/* Success Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.success-modal {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.success-icon {
+  font-size: 50px;
+  color: #4CAF50;
+  margin-bottom: 20px;
+}
+
+.modal-message {
+  font-size: 18px;
+  color: #333;
+}
+
+.modal-close-btn {
+  background-color: #00a7a7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.modal-close-btn:hover {
+  background-color: #007b7b;
+}
+
+/* Back to Search Button Styling */
+.back-to-search-btn {
+  background-color: #00a7a7;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.back-to-search-btn:hover {
+  background-color: #007b7b;
+}
+
+.back-to-search-btn svg {
+  margin-right: 8px;
+}

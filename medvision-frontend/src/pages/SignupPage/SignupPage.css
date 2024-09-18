@@ -1,15 +1,15 @@
 .signup-container {
     display: flex;
     height: 100vh;
-    background-color: #01A29D; /* Background color for the whole container */
+    background-color: #01A29D; 
 }
 
 .left-side {
     flex: 1;
-    background-color: #ffffff; /* White background for the left side */
+    background-color: #ffffff; 
     display: flex;
-    border-top-right-radius: 50px; /* Adjust radius as needed */
-    border-bottom-right-radius: 50px; /* Adjust radius as needed */
+    border-top-right-radius: 50px; 
+    border-bottom-right-radius: 50px; 
     justify-content: center;
     align-items: center;
 }

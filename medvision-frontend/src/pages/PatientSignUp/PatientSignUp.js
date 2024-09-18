@@ -16,38 +16,36 @@ const PatientSignup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Handle input changes
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle file change
+
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  // Handle form submission
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Basic validation
     if (formData.password !== formData.password_confirmation) {
         setErrorMessage('Passwords do not match');
         return;
     }
 
-    // Prepare form data for API request
     const data = new FormData();
     data.append('name', formData.name);
     data.append('email', formData.email);
     data.append('gender', formData.gender);
     data.append('phoneNumber', formData.phoneNumber);
     data.append('password', formData.password);
-    data.append('password_confirmation', formData.password_confirmation); // Ensure this matches the backend expectation
+    data.append('password_confirmation', formData.password_confirmation); 
 
     if (selectedFile) {
-        data.append('profilePicture', selectedFile);
+        data.append('profile_picture', selectedFile);
     }
 
     try {
@@ -70,7 +68,6 @@ const PatientSignup = () => {
         }
     }
 };
-
 
   return (
     <div className="patient-signup-container">

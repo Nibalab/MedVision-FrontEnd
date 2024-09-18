@@ -16,22 +16,20 @@ const DoctorSignup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Handle input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle file change
+ 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  // Handle form submission
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Basic validation
     if (formData.password !== formData.password_confirmation) {
         setErrorMessage('Passwords do not match');
         return;
@@ -43,10 +41,10 @@ const DoctorSignup = () => {
     data.append('specialization', formData.specialization);
     data.append('phoneNumber', formData.phoneNumber);
     data.append('password', formData.password);
-    data.append('password_confirmation', formData.password_confirmation); // Ensure this matches the backend expectation
+    data.append('password_confirmation', formData.password_confirmation); 
 
     if (selectedFile) {
-        data.append('profilePicture', selectedFile);
+        data.append('profile_picture', selectedFile);
     }
 
     try {
@@ -57,12 +55,11 @@ const DoctorSignup = () => {
         });
 
         console.log('Doctor registered successfully:', response.data);
-        setErrorMessage(''); // Clear any error messages
-        // Redirect or show success message
+        setErrorMessage(''); 
     } catch (error) {
         console.error('Error registering doctor:', error);
         if (error.response) {
-            // Print server-side validation errors
+            
             setErrorMessage(error.response.data.message || 'Registration failed. Please try again.');
             if (error.response.data.errors) {
                 for (const key in error.response.data.errors) {
