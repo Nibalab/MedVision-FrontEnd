@@ -1,43 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Home, Upload, Calendar, User, MessageSquare, LogOut } from 'lucide-react';
 import axios from 'axios';
 import './Sidebar.css';
+import { UserContext } from '../../context/UserContext';
 
 const Sidebar = () => {
-  const [doctorName, setDoctorName] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
+ const {doctorName, profilePicture} = useContext(UserContext)
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setTimeout(() => {
-      const token = localStorage.getItem('token');
-      
-      if (!token) {
-        console.error('No token found');
-        navigate('/'); 
-        return;
-      }
 
-      axios.get('http://127.0.0.1:8000/api/me', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(response => {
-        const user = response.data.user;
-        setDoctorName(user.name);
-        setProfilePicture(user.profile_picture);
-      })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
-        if (error.response && error.response.status === 401) {
-          localStorage.removeItem('token');
-          navigate('/');
-        }
-      });
-    }, 5); 
-  }, [navigate]);
 
   const handleLogout = () => {
     const token = localStorage.getItem('token');

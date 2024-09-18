@@ -112,6 +112,8 @@ const ChatWindow = ({ messages, currentChat, addNewMessage, senderId, senderType
     }
   };
 
+
+
   return (
     <div className="chat-window-container">
       <div className="chat-header">

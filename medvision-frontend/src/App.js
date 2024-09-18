@@ -17,6 +17,7 @@ import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
 import DoctorAdminPage from './pages/DoctorAdminPage/DoctorAdminPage';
 import PatientAdminPage from './pages/PatientAdminPage/PatientAdminPage';
 import io from 'socket.io-client';  
+import UserProvider from './context/UserContext';
 
 function App() {
   useEffect(() => {
@@ -30,7 +31,8 @@ function App() {
   }, []);  
 
   return (
-    <Router>
+<UserProvider>
+<Router>
       <Routes>
         <Route path="/" element={<LoginPage />} /> 
         <Route path="/register/doctor" element={<DoctorSignup />} />
@@ -50,6 +52,8 @@ function App() {
         <Route path="/patientsAdmin" element={<PatientAdminPage />} />
       </Routes>
     </Router>
+</UserProvider>
+   
   );
 }
 
