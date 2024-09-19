@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import Sidebar from "../../components/Sidebar/Sidebar"; // Assuming you have a Sidebar component
-import "./UploadPage.css"; // Add appropriate styling
+import Sidebar from "../../components/Sidebar/Sidebar"; 
+import "./UploadPage.css"; 
 import axios from "axios";
 
 const UploadPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [alertMessage, setAlertMessage] = useState(""); // State to manage alert message
+  const [detecting, setDetecting] = useState(false);
 
-  // Use react-dropzone to manage file drop and selection
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedFiles) => {
@@ -15,7 +16,6 @@ const UploadPage = () => {
     },
   });
 
-  const [detecting, setDetecting] = useState(false);
   const detectCancerForChestCtScanImages = async (base64) => {
     try {
       setDetecting(true);
@@ -27,33 +27,34 @@ const UploadPage = () => {
       );
 
       let { result } = res.data;
-      alert(result);
+      setAlertMessage(result); // Set the alert message
     } catch (error) {
-      alert("Something went wrong");
+      setAlertMessage("Something went wrong");
     } finally {
       setDetecting(false);
     }
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selectedFile) {
-      alert("Please upload a CT scan image!");
+      setAlertMessage("Please upload a CT scan image!");
       return;
     }
 
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      const base64String = reader.result.split(",")[1]; // Get base64 part only
-      console.log("Base64 String:", base64String);
+      const base64String = reader.result.split(",")[1];
 
-      // Call the API with the base64 string
       detectCancerForChestCtScanImages(base64String);
     };
 
-    reader.readAsDataURL(selectedFile); // Read the file as a data URL
+    reader.readAsDataURL(selectedFile);
+  };
+
+  const closeAlert = () => {
+    setAlertMessage("");
   };
 
   return (
@@ -66,20 +67,28 @@ const UploadPage = () => {
         ) : (
           <div className="dropzone" {...getRootProps()}>
             <input {...getInputProps()} />
-            {selectedFile ? (
-              <p>{selectedFile.name}</p>
-            ) : (
-              <p>Upload the CT Scan here</p>
-            )}
+            {selectedFile ? <p>{selectedFile.name}</p> : <p>Upload the CT Scan here</p>}
           </div>
         )}
 
         <button className="submit-button" onClick={handleSubmit}>
           Submit
         </button>
+
+        {/* Custom alert modal */}
+        {alertMessage && (
+          <div className="upload-alert-modal">
+            <div className="upload-alert-content">
+              <p>{alertMessage}</p>
+              <button className="upload-alert-button" onClick={closeAlert}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default UploadPage;
+export default UploadPage;
