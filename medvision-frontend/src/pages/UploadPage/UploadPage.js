@@ -1,63 +1,85 @@
-import React, { useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import Sidebar from '../../components/Sidebar/Sidebar'; // Assuming you have a Sidebar component
-import './UploadPage.css'; // Add appropriate styling
+import React, { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import Sidebar from "../../components/Sidebar/Sidebar"; // Assuming you have a Sidebar component
+import "./UploadPage.css"; // Add appropriate styling
+import axios from "axios";
 
 const UploadPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   // Use react-dropzone to manage file drop and selection
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
+    accept: "image/*",
     onDrop: (acceptedFiles) => {
       setSelectedFile(acceptedFiles[0]);
-    }
+    },
   });
+
+  const [detecting, setDetecting] = useState(false);
+  const detectCancerForChestCtScanImages = async (base64) => {
+    try {
+      setDetecting(true);
+      const res = await axios.post(
+        "https://6f01-34-125-85-17.ngrok-free.app/detect-ct-scan-image",
+        {
+          image_base64: base64,
+        }
+      );
+
+      let { result } = res.data;
+      alert(result);
+    } catch (error) {
+      alert("Something went wrong");
+    } finally {
+      setDetecting(false);
+    }
+  };
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selectedFile) {
-      alert('Please upload a CT scan image!');
+      alert("Please upload a CT scan image!");
       return;
     }
 
-    // Create form data to submit the file
-    const formData = new FormData();
-    formData.append('file', selectedFile);
+    const reader = new FileReader();
 
-    // Make a POST request to upload the image (you need to set up this endpoint)
-    fetch('http://localhost:8000/api/upload', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('File uploaded successfully:', data);
-        alert('File uploaded successfully!');
-      })
-      .catch((error) => {
-        console.error('Error uploading file:', error);
-      });
+    reader.onloadend = () => {
+      const base64String = reader.result.split(",")[1]; // Get base64 part only
+      console.log("Base64 String:", base64String);
+
+      // Call the API with the base64 string
+      detectCancerForChestCtScanImages(base64String);
+    };
+
+    reader.readAsDataURL(selectedFile); // Read the file as a data URL
   };
 
   return (
     <div className="upload-page-container">
-      <Sidebar /> {/* Assuming you have the Sidebar component */}
+      <Sidebar />
       <div className="upload-content">
         <h1>Upload CT Scan</h1>
-        <div className="dropzone" {...getRootProps()}>
-          <input {...getInputProps()} />
-          {selectedFile ? (
-            <p>{selectedFile.name}</p>
-          ) : (
-            <p>Upload the CT Scan here</p>
-          )}
-        </div>
-        <button className="submit-button" onClick={handleSubmit}>Submit</button>
+        {detecting ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="dropzone" {...getRootProps()}>
+            <input {...getInputProps()} />
+            {selectedFile ? (
+              <p>{selectedFile.name}</p>
+            ) : (
+              <p>Upload the CT Scan here</p>
+            )}
+          </div>
+        )}
+
+        <button className="submit-button" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
     </div>
   );
 };
 
-export default UploadPage;
+export default UploadPage;
