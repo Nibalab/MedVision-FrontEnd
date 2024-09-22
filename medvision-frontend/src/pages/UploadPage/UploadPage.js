@@ -20,7 +20,7 @@ const UploadPage = () => {
     try {
       setDetecting(true);
       const res = await axios.post(
-        "https://6f01-34-125-85-17.ngrok-free.app/detect-ct-scan-image",
+        "https://116e-34-34-55-103.ngrok-free.app/detect-ct-scan-image",
         {
           image_base64: base64,
         }

@@ -22,10 +22,10 @@ const SignupPage = () => {
         <div className="right-side">
           <h2>Sign Up</h2>
           <button className="signup-button doctor" onClick={handleDoctorSignup}>
-            Sign up as a Doctor
+            Sign Up as a Doctor
           </button>
           <button className="signup-button patient" onClick={handlePatientSignup}>
-            Sign up as a Patient
+            Sign Up as a Patient
           </button>
         </div>
       </div>

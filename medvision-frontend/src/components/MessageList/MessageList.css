@@ -1,47 +1,44 @@
-/* Styles for the message list */
 .message-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
     overflow-y: auto;
-    height: calc(100% - 50px); /* Allows scrolling if the list is too long */
+    height: calc(100% - 50px); 
   }
   
-  /* Individual chat item */
   .chat-item {
     display: flex;
     align-items: center;
-    background-color: #F4F3F3; /* Updated background color */
-    padding: 12px; /* Adjusted padding for smaller size */
-    border-radius: 30px; /* Increased border-radius */
+    background-color: #ffffff; 
+    padding: 12px; 
+    border-radius: 30px; 
     cursor: pointer;
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
     border: 1px solid #e0e0e0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Drop-shadow effect */
-    width: 90%; /* Reduced width */
-    height: 60px; /* Reduced height */
-    margin: 0 auto; /* Center the chat item */
+
+    width: 90%; 
+    height: 60px; 
+    margin: 0 auto; 
   }
   
   .chat-item:hover {
-    background-color: #ececec; /* Slight hover effect */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    background-color: #ececec; 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
   }
   
-  /* Profile picture section */
+  
   .chat-avatar {
     flex-shrink: 0;
     margin-right: 10px;
   }
   
   .chat-avatar img {
-    width: 40px; /* Reduced avatar size */
+    width: 40px; 
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
   }
   
-  /* Chat info section */
   .chat-info {
     flex: 1;
     overflow: hidden;
@@ -50,7 +47,7 @@
   .chat-name {
     font-weight: bold;
     margin-bottom: 3px;
-    font-size: 14px; /* Slightly smaller font */
+    font-size: 14px; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -58,15 +55,14 @@
   
   .chat-message {
     color: #777;
-    font-size: 12px; /* Slightly smaller font */
+    font-size: 12px; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   
-  /* Notification dot for unread messages */
   .chat-notification-dot {
-    width: 18px; /* Slightly reduced size */
+    width: 18px; 
     height: 18px;
     background-color: #ff5656;
     border-radius: 50%;

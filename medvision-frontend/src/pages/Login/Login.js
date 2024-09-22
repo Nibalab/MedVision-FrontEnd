@@ -47,7 +47,7 @@ const LoginPage = () => {
     <div className="login-container">
       <div className="login-left-side">
         <form className="login-box" onSubmit={handleSubmit}>
-          <h2>Login</h2>
+          <h2>LogIn</h2>
           <input 
             type="email" 
             name="email" 
@@ -67,15 +67,10 @@ const LoginPage = () => {
           <div className="login-options">
             <a href="/forgot-password" className="forgot-password-link">Forgot Password?</a>
           </div>
-          <div className="login-terms-wrapper">
-            <input type="checkbox" className="terms-checkbox" id="terms-checkbox" required />
-            <label htmlFor="terms-checkbox">
-                Accept the <a href="/terms">Terms and Conditions</a> and <a href="/privacy">Privacy Policy</a>
-            </label>
-          </div>
+        
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <button type="submit" className="login-button">Login</button>
-          <p>Don't have an account? <a href="/register">Sign up</a></p>
+          <button type="submit" className="login-button">LogIn</button>
+          <p>Don't have an account? <a href="/register">Sign Up</a></p>
         </form>
       </div>
       <div className="login-right-side">
